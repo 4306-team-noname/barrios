@@ -13,7 +13,7 @@ Barrios Technologies project for Angelo State CS 4306 - Software Engineering
 - [Devin Vyain]()
 
 ## Documentation
-[Project Wik](https://github.com/4306-team-noname/barrios/wiki)
+[Project Wiki](https://github.com/4306-team-noname/barrios/wiki)
 
 ## Project Tracking
 [Github Projects](https://github.com/4306-team-noname/barrios/projects?query=is%3Aopen) (open tasks)
