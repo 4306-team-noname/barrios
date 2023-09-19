@@ -9,8 +9,8 @@ Barrios Technologies project for Angelo State CS 4306 - Software Engineering
 - [Jeff Caldwell](https://github.com/nemo-omen)
 
 ## Client Contacts
-[Ginger Kerrick]()
-[Devin Vyain]()
+- [Ginger Kerrick]()
+- [Devin Vyain]()
 
 ## Documentation
 [Project Wik](https://github.com/4306-team-noname/barrios/wiki)
