@@ -47,58 +47,45 @@ data item.
 |            |                                                         |
 |            | stored_items_only_                                      |
 |            | inventory_mgmt_system_consumables_20220101-20230905.csv |
-| -------    | ------------------------------------------------------- |
 | Food RS    | inventory_mgmt_system_consumables_20220101-20230905.csv |
 |            |                                                         |
 |            | stored_items_only_                                      |
 |            | inventory_mgmt_system_consumables_20220101-20230905.csv |
-| -------    | ------------------------------------------------------- |
 | EDV        | inventory_mgmt_system_consumables_20220101-20230905.csv |
 |            |                                                         |
 |            | stored_items_only_                                      |
 |            | inventory_mgmt_system_consumables_20220101-20230905.csv |
-| -------    | ------------------------------------------------------- |
 | KTO        | inventory_mgmt_system_consumables_20220101-20230905.csv |
 |            |                                                         |
 |            | stored_items_only_                                      |
 |            | inventory_mgmt_system_consumables_20220101-20230905.csv |
-| -------    | ------------------------------------------------------- |
 | ACY Filter | inventory_mgmt_system_consumables_20220101-20230905.csv |
 |            |                                                         |
 |            | stored_items_only_                                      |
 |            | inventory_mgmt_system_consumables_20220101-20230905.csv |
-| -------    | ------------------------------------------------------- |
 | Filter     | inventory_mgmt_system_consumables_20220101-20230905.csv |
 | Inserts    |                                                         |
 |            | stored_items_only_                                      |
 |            | inventory_mgmt_system_consumables_20220101-20230905.csv |
-| -------    | ------------------------------------------------------- |
 | Pretreat   | inventory_mgmt_system_consumables_20220101-20230905.csv |
 | Tanks      |                                                         |
 |            | stored_items_only_                                      |
 |            | inventory_mgmt_system_consumables_20220101-20230905.csv |
-| -------    | ------------------------------------------------------- |
 | Water US   | u                                                       |
 |            | s_weekly_consumable_water_summary_20220102-20230903.csv |
 | -------    | ------------------------------------------------------- |
 | Water RS   | rsa_consumable_water_summary_20220103-20230828.csv      |
-| -------    | ------------------------------------------------------- |
 | Gas US     | us                                                      |
 |            | _rs_weekly_consumable_gas_summary_20220102-20230903.csv |
-| -------    | ------------------------------------------------------- |
 | Gas RS     | us                                                      |
 |            | _rs_weekly_consumable_gas_summary_20220102-20230903.csv |
-| -------    | ------------------------------------------------------- |
 | Flight     | iss_flight_plan_20220101-20251231.csv                   |
 | Plan       |                                                         |
 | Vehicles   |                                                         |
-| -------    | ------------------------------------------------------- |
 | Flight     | iss_flight_plan_20220101-20251231.csv                   |
 | Plan EVAs  |                                                         |
-| -------    | ------------------------------------------------------- |
 | Flight     | iss_flight_plan_crew_20220101-20251321.csv              |
 | Plan Crew  |                                                         |
-| -------    | ------------------------------------------------------- |
 | Definition | thresholds_limits_definition.csv                        |
 | Tables     |                                                         |
 |            | ims_consumables_category_lookup.csv                     |
@@ -106,18 +93,14 @@ data item.
 |            | iss_flight_plan_crew_nationality_lookup.csv             |
 |            |                                                         |
 |            | rates_definition.csv                                    |
-| -------    | ------------------------------------------------------- |
 | Historical | rates_definition.csv                                    |
 | Usage Rate |                                                         |
 | Parameters |                                                         |
-| -------    | ------------------------------------------------------- |
 | Historical | USOS On Orbit O2 Example Analysis.png                   |
 | Analysis   |                                                         |
 | Samples    |                                                         |
-| -------    | ------------------------------------------------------- |
 | Data       | Data Dictionary.xlsx                                    |
 | Dictionary |                                                         |
-| -------    | ------------------------------------------------------- |
 
 **Assumptions:**
 
