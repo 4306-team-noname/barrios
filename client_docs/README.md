@@ -3,6 +3,9 @@
 ## Data Package Overview
 [Full Overview of all data sets](./data_package_overview.md)
 
+## Example Analysis
+![](./USOSOnOrbitO2ExampleAnalysis.png)
+
 ## Data Dictionaries
 Data definitions provided by Devin Vyain.
 
