@@ -1,0 +1,11 @@
+Field,Definition
+Date,Indicates date that the report was generated
+USOS O2 (kg),Indicates USOS O2 supply on ISS at the time of the report
+RS O2 (kg),Indicates RS O2 supply on ISS at the time of the report
+US N2 (kg),Indicates USOS N2 supply on ISS at the time of the report
+RS N2 (kg),Indicates RS N2 supply on ISS at the time of the report
+Adjusted O2 (kg),Indicates USOS O2 supply on ISS at the time of the report
+Adjusted N2 (kg),Indicates USOS O2 supply on ISS at the time of the report
+Resupply O2 (kg),Indicates O2 that is resupplied by a visiting cargo vehicle
+Resupply N2 (kg),Indicates N2 that is resupplied by a visiting cargo vehicle
+Resupply Air (kg),Indicates 80/20 N2/O2 mix air that is resupplied by a visiting cargo vehicle

@@ -20,3 +20,6 @@ Barrios Technologies project for Angelo State CS 4306 - Software Engineering
 
 ## Project Tracking
 [Github Projects](https://github.com/4306-team-noname/barrios/projects?query=is%3Aopen) (open tasks)
+
+## Client Documentation
+See markdown files in [client_docs](./client_docs) for the provided project summary and data dictionaries.

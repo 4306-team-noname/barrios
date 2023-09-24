@@ -1,0 +1,4 @@
+Field,Definition
+datedim,Indicates the date of a crew data record.
+nationality_category,Indicates the nationality categorization of a given crew count record
+crew_count,"Indicates the count of a given crew, by nationality, on a given date"

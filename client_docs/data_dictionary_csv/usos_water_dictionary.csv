@@ -1,0 +1,8 @@
+Field,Definition
+Date,Indicates the date that a report was generated
+Corrected Potable (L),Indicates the amount of Potable water on ISS at the time of the report
+Corrected Technical (L),Indicates the amount of non-Potable water on ISS at the time of the report
+Corrected Total (L),Indicates the sum of Potable and non-Potable water at the time of the report
+Resupply Potable (L),Indicates any resupply amount coming from a cargo resupply vehicle
+Resupply Technical (L),Indicates any resupply amount coming from a cargo resupply vehicle
+Corrected Predicted (L),Historically predicted total water value

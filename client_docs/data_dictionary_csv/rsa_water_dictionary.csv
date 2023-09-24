@@ -1,0 +1,5 @@
+Field,Definition
+Report Date,Indicates the date that a report was generated
+Remain. Potable (liters),Indicates available RS Potable water at the time of the report
+Remain. Technical (liters),Indicates available RS Technical water at the time of the report (not for consumption)
+Remain. Rodnik (liters),"Indicates available RS Rodnik water at the time of the report (considered potable, but must in an EDV to be used)"
