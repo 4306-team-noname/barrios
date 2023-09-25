@@ -141,19 +141,14 @@ data item.
 **Assumptions:**
 
 - Data which is associated with a past date is an “actual” - a measured
-  > factual value
+  factual value
 
 - Data which is associated with a future date (in the case of the Flight
-  > Plan data) is a planned value – these are variable and can change as
-  > strategic planning updates the ISS Program’s necessities, but will
-  > remain static in the data set provided herein
+  Plan data) is a planned value – these are variable and can change as strategic planning updates the ISS Program’s necessities, but will remain static in the data set provided herein
 
-- In the IMS data sets, many dimensional values are erroneous. A
-  > corrected volume value is applied, and those values can be seen in
-  > the data set, in fields as defined by the Data Dictionary
+- In the IMS data sets, many dimensional values are erroneous. A corrected volume value is applied, and those values can be seen in the data set, in fields as defined by the Data Dictionary
 
-- The following Flight Plan vehicles are available for consumables
-  > resupply
+- The following Flight Plan vehicles are available for consumables resupply
 
   - NG
 
@@ -172,26 +167,14 @@ effort around deriving insights into these prompts:
 
 Questions:
 
-1.  What is the percent difference between historical consumable usage
-    > rate assumptions and actual calculated usage rates in mission time
-    > frames between resupply?
+1.  What is the percent difference between historical consumable usage rate assumptions and actual calculated usage rates in mission time frames between resupply?
 
-2.  What resupply quantities are necessary, considering planned resupply
-    > vehicle traffic from the ISS Flight Plan, planned On-Orbit Crew
-    > counts, and historical usage rates to sustain minimum supply
-    > thresholds, plus a 10% safety factor, through the next two years?
+2.  What resupply quantities are necessary, considering planned resupply vehicle traffic from the ISS Flight Plan, planned On-Orbit Crew counts, and historical usage rates to sustain minimum supply thresholds, plus a 10% safety factor, through the next two years?
 
-3.  What resupply quantities meet the requirements of question \#2 while
-    > minimizing launch vehicle quantity? (e.g., launching 10,000
-    > granola bars would ensure the minimum thresholds are not violated,
-    > but is not a realistic or optimal strategy for balancing launch
-    > mass requirements with supply requirements)
+3.  What resupply quantities meet the requirements of question \#2 while minimizing launch vehicle quantity? (e.g., launching 10,000 granola bars would ensure the minimum thresholds are not violated, but is not a realistic or optimal strategy for balancing launch mass requirements with supply requirements)
 
 Predictive modeling:
 
-1.  What month in the next two years of the Flight Plan timeline is most
-    > likely to incur a violation of minimum supply thresholds?
+1.  What month in the next two years of the Flight Plan timeline is most likely to incur a violation of minimum supply thresholds?
 
-2.  Which consumables item(s) are most likely to incur a violation of
-    > minimum supply thresholds in the next two years of the future
-    > Flight Plan timeline?
+2.  Which consumables item(s) are most likely to incur a violation of minimum supply thresholds in the next two years of the future Flight Plan timeline?
