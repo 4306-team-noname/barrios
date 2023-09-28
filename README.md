@@ -23,3 +23,12 @@ Barrios Technologies project for Angelo State CS 4306 - Software Engineering
 
 ## Client Documentation
 See markdown files in [client_docs](./client_docs) for the provided project summary and data dictionaries.
+
+## Resources
+
+There may be a few ways to approach this project. Machine Learning offers some approaches and frameworks, but it will require a fair bit of study and experimentation to choose the correct method. It's worth mentioning that FB Prophet, which was Jeff's initial suggestion, was not a favorite among practitioners in the discussion thread.
+
+- [A discussion of different ML time-series frameworks](https://www.reddit.com/r/MachineLearning/comments/114d166/discussion_time_series_methods_comparisons/)
+- [M5 Forecasting Competition](https://www.innovating-automation.blog/m5-forecasting-competition/)
+- [Nixtla mlforecast](https://github.com/Nixtla/mlforecast)
+- [Darts](https://unit8co.github.io/darts/index.html)
