@@ -28,6 +28,7 @@ See markdown files in [client_docs](./client_docs) for the provided project summ
 
 There may be a few ways to approach this project. After looking at the provided data and doing some research, machine learning seems to be a viable solution. Specifically, supervised machine learning that uses regression modeling. See the below introduction by Google.
 - [Google - Intro to Machine Learning](https://developers.google.com/machine-learning/intro-to-ml)
+- [Machine Learning Crash Course](https://developers.google.com/machine-learning/crash-course) - be sure to look at the prerequisites
 
 If we decide to use ML, we should stick to some guidelines to make sure the project stays on track:
 - [Google - Rules of Machine Learning](https://developers.google.com/machine-learning/guides/rules-of-ml#rule_1_dont_be_afraid_to_launch_a_product_without_machine_learning)
