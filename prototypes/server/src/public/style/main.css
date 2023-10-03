@@ -1,0 +1,27 @@
+:root {
+  /*DEFINE CUSTOM PROPERTIES HERE*/
+
+  /*COLORS*/
+
+  /*FONTS*/
+}
+
+/*Set default box sizing*/
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  scroll-behavior: smooth;
+}
+
+body {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  min-height: 100vh;
+}
