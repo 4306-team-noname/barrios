@@ -27,9 +27,14 @@ pip install -r requirements.txt
 
 You can activate the environment in VS Code using the Micromamba extension so you don't get editor warnings for missing modules.
 
-# Start the server
+## Start the server
 The following command will start the server located in `barrios/prototypes/server/src/server.py` on the default port `8000`.
 
 ```bash
 sanic src.server:app --debug --workers=2 -d
 ```
+
+## TODO
+- [ ] Define a flow for uploading data
+  - [ ] Expected data shape
+  - [ ] error states
