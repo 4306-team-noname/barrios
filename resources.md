@@ -1,4 +1,12 @@
 # Resources
+## Data Exploration and Analysis
+[An Extensive Step by Step Guide to Exploratory Data Analysis](https://towardsdatascience.com/an-extensive-guide-to-exploratory-data-analysis-ddd99a03199e)
+
+## Installing Miniconda or Micromamba
+[Installing Miniconda](https://docs.conda.io/projects/miniconda/en/latest/miniconda-install.html)
+
+[Installing Micromamba](https://mamba.readthedocs.io/en/latest/micromamba-installation.html)
+
 ## Machine Learning
 There may be a few ways to approach this project. After looking at the provided data and doing some research, machine learning seems to be a viable solution. Specifically, supervised machine learning that uses regression modeling. See the below introduction by Google.
 - [Google - Intro to Machine Learning](https://developers.google.com/machine-learning/intro-to-ml)
