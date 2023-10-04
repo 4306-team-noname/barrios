@@ -1,0 +1,23 @@
+Title	URL	Assignees	Status	Start Date	Target Date
+Server Prototyping	https://github.com/4306-team-noname/barrios/issues/1	nemo-omen	In Progress	Oct 3, 2023	Oct 8, 2023
+Stack description	https://github.com/4306-team-noname/barrios/issues/9	nemo-omen	In Progress	Oct 3, 2023	Oct 8, 2023
+Data Analysis and Exploration	https://github.com/4306-team-noname/barrios/issues/2		Todo	Oct 3, 2023	Oct 8, 2023
+Optimization Function Prototyping	https://github.com/4306-team-noname/barrios/issues/3		Todo	Oct 3, 2023	Oct 8, 2023
+Predictive Modeling Prototyping	https://github.com/4306-team-noname/barrios/issues/4		Todo	Oct 3, 2023	Oct 8, 2023
+Test Database Setup	https://github.com/4306-team-noname/barrios/issues/5		Todo	Oct 3, 2023	Oct 8, 2023
+Start basic HTML/CSS translation of Figma design	https://github.com/4306-team-noname/barrios/issues/6		Todo	Oct 3, 2023	Oct 8, 2023
+Forecasting/optimization UML Class Diagrams	https://github.com/4306-team-noname/barrios/issues/7		Todo	Oct 3, 2023	Oct 8, 2023
+More detailed use-case diagrams	https://github.com/4306-team-noname/barrios/issues/8	nemo-omen	Todo	Oct 3, 2023	Oct 8, 2023
+Flesh out UI prototype to include detailed pages	https://github.com/4306-team-noname/barrios/issues/10	nemo-omen	Todo	Oct 3, 2023	Oct 8, 2023
+UML class diagrams of server controllers	https://github.com/4306-team-noname/barrios/issues/11	nemo-omen	Todo	Oct 3, 2023	Oct 8, 2023
+UML class diagrams of server services/repositories	https://github.com/4306-team-noname/barrios/issues/12	nemo-omen	Todo	Oct 3, 2023	Oct 8, 2023
+UML System Diagram	https://github.com/4306-team-noname/barrios/issues/13		Todo	Oct 3, 2023	Oct 8, 2023
+Deployment stack diagram	https://github.com/4306-team-noname/barrios/issues/14	nemo-omen	Todo	Oct 4, 2023	Oct 8, 2023
+Prototype and test csv file upload			Todo		
+Determine necessary DB tables and create table queries			Todo		
+Prototype and test csv DB insertion			Todo		
+Prototype signup flow			Todo		
+Prototype login flow			Todo		
+User permissions/access levels?			Todo		
+Upload sequence diagram	https://github.com/4306-team-noname/barrios/issues/16	nemo-omen	Done	Oct 4, 2023	Oct 8, 2023
+Signup sequence diagram	https://github.com/4306-team-noname/barrios/issues/15	nemo-omen	Done	Oct 4, 2023	Oct 8, 2023

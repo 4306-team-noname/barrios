@@ -1,3 +1,6 @@
+# Server Prototyping
+
+## How to run
 Install [micromamba](https://mamba.readthedocs.io/en/latest/micromamba-installation.html)
 
 Make sure you're in the correct folder, eg(`barrios/prototypes/server`)
