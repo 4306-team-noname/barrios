@@ -1,11 +1,29 @@
 # Resources
-## Data Exploration and Analysis
-[An Extensive Step by Step Guide to Exploratory Data Analysis](https://towardsdatascience.com/an-extensive-guide-to-exploratory-data-analysis-ddd99a03199e)
+This is a set of libraries for developing data applications with Python. Please text Jeff or drop a message in the Discord server if you need any help.
 
 ## Installing Miniconda or Micromamba
+If you're exploring the datasets provided by Barrios or playing around with prototypes, you may not want to use the big, heavy DevContainer Jeff provided. In that case, you may want to use a more lightweight solution to setting up local development environments. Miniconda/Micromamba are the tools to use for that.
+
+Miniconda is a smaller version of Anaconda.
 [Installing Miniconda](https://docs.conda.io/projects/miniconda/en/latest/miniconda-install.html)
 
+Micromamba is a parallelized version of Miniconda. It woeks in exactly the same way, but it's supposedly faster(?).
 [Installing Micromamba](https://mamba.readthedocs.io/en/latest/micromamba-installation.html)
+
+If you don't want to mess around with virtualized environments on your own, we suggest you just use the DevContainer.
+
+## Pandas
+Pandas is a data analysis and manipulation library for Python. If you're working with tabular data, knowing how to use this library is important. Luckily, the Pandas maintainers have written an excellent series of tutorials to help get you up to speed.
+
+[Pandas: Getting started tutorials](https://pandas.pydata.org/docs/getting_started/intro_tutorials/index.html)
+
+## Numpy
+Numpy is another Python tool for working with data. There may be times when you need to use Numpy to manipulate multidimensional arrays (Numpy's primary data structure). This is the library to use when you have an array of values that you want to perform mathematical operations on.
+
+[NumPy: the absolute basics for beginners](https://numpy.org/doc/stable/user/absolute_beginners.html)
+
+## Data Exploration and Analysis
+[An Extensive Step by Step Guide to Exploratory Data Analysis](https://towardsdatascience.com/an-extensive-guide-to-exploratory-data-analysis-ddd99a03199e)
 
 ## Machine Learning
 There may be a few ways to approach this project. After looking at the provided data and doing some research, machine learning seems to be a viable solution. Specifically, supervised machine learning that uses regression modeling. See the below introduction by Google.
