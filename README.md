@@ -47,7 +47,21 @@ See the [resources](./resources.md) for a set of tools to use for data explorati
 
 All major development will be completed in this repository. While you are encouraged to explore and code in the DevContainer provided by Jeff, class requirements for project iterations require that each member of the team commit code to the repository. So, you need to know how to use Git and GitHub at a basic level.
 
-To contribute to this repository, you need to first clone it to your local machine. The easiest way to do this is in a terminal.
-
 | :memo: The following commands assume you're working in a Linux environment. On a Windows machine, you should execute them in WSL or with the Git terminal for Windows |
 | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+
+To contribute to this repository, you need to first clone it to your local machine. The easiest way to do this is in a terminal.
+
+Navigate to a directory on your machine where you prefer to store your code. For me, that's `~/dev/projects`, it may be different for you. I'm just going to refer to it as the `projects` from now on.
+
+```bash
+cd ~/dev/projects
+```
+
+Clone the repository.
+
+```bash
+git clone https://github.com/4306-team-noname/barrios.git
+```
+
+<!-- To be continued... -->
