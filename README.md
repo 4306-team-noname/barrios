@@ -34,5 +34,8 @@ TBD
 ## Client Documentation
 See markdown files in [client_docs](./client_docs) for the provided project summary and data dictionaries.
 
+## Data
+[Barrios data on Google Drive](https://drive.google.com/drive/u/0/folders/1QjZAWA7KyjAwYDQU2jbEDuHuvXdkoxZB)
+
 ## Resources
 See the [resources](./resources.md) for a set of tools to use for data exploration, analysis, and manipulation.
