@@ -8,6 +8,16 @@ Barrios Technologies project for Angelo State CS 4306 - Software Engineering
 - [Josue Lozano](https://github.com/jlozano23) - jlozano18@angelo.edu
 - [Jeff Caldwell](https://github.com/nemo-omen) - jcaldwell2@angelo.edu
 
+## Weekly meeting times
+
+### Team Meetings
+
+Wednesday and Saturday, 7:30 p.m.
+
+## Client Meetings
+
+TBD
+
 ## Client Contacts
 - Ginger Kerrick, Chief Strategy Officer - ginger.kerrick@barrios.com
 - Devin Vyain, Data Solutions Lab Supervisor - devin.a.vyain@nasa.gov
@@ -19,9 +29,10 @@ Barrios Technologies project for Angelo State CS 4306 - Software Engineering
 [Project Wiki](https://github.com/4306-team-noname/barrios/wiki)
 
 ## Project Tracking
-[Github Projects](https://github.com/4306-team-noname/barrios/projects?query=is%3Aopen) (open tasks)
+[Github Projects](https://github.com/orgs/4306-team-noname/projects/1)
 
 ## Client Documentation
 See markdown files in [client_docs](./client_docs) for the provided project summary and data dictionaries.
 
-## [Resources](./resources.md)
+## Resources
+See the [resources](./resources.md) for a set of tools to use for data exploration, analysis, and manipulation.
