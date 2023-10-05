@@ -18,6 +18,7 @@ Determine necessary DB tables and create table queries			Todo	Oct 9, 2023	Oct 15
 Prototype and test csv DB insertion			Todo	Oct 9, 2023	Oct 15, 2023
 Prototype signup/login flow			Todo	Oct 9, 2023	Oct 15, 2023
 Prototype login flow			Todo	Oct 9, 2023	Oct 15, 2023
+User permissions/access levels?			Todo		
 Upload sequence diagram	https://github.com/4306-team-noname/barrios/issues/16	nemo-omen	Done	Oct 4, 2023	Oct 8, 2023
 Signup sequence diagram	https://github.com/4306-team-noname/barrios/issues/15	nemo-omen	Done	Oct 4, 2023	Oct 8, 2023
 Google Sheets project timeline	https://github.com/4306-team-noname/barrios/issues/17	nemo-omen	In Progress	Oct 4, 2023	Oct 8, 2023
@@ -26,7 +27,4 @@ Initial version of forecasting method/methods			Todo	Oct 9, 2023	Oct 15, 2023
 Prototype dashboard page			Todo	Oct 9, 2023	Oct 15, 2023
 Initial controllers and services implementation			Todo	Oct 9, 2023	Oct 15, 2023
 Initial repository interface and 1st repo implementation			Todo	Oct 9, 2023	Oct 15, 2023
-Server MVP		nemo-omen	Todo	Oct 16, 2023	Oct 29, 2023
-UI MVP		jeremyjmiles	Todo	Oct 16, 2023	Oct 29, 2023
-Optimization MVP		arcxcc, jlozano23	Todo	Oct 16, 2023	Oct 29, 2023
-Forecasting MVP		jlozano23, jmorgan28-01	Todo	Oct 16, 2023	Oct 29, 2023
+Server MVP			Todo		
