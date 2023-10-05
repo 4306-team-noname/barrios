@@ -64,4 +64,4 @@ Clone the repository.
 git clone https://github.com/4306-team-noname/barrios.git
 ```
 
-<!-- To be continued... -->
+To be continued...
