@@ -1,3 +1,6 @@
+| :exclamation: Please read the [development guidelines](#development-guidelines)! |
+| -------------------------------------------------------------------------------- |
+
 # Barrios - 4306 - Software Engineering
 Barrios Technologies project for Angelo State CS 4306 - Software Engineering
 
@@ -39,3 +42,5 @@ See markdown files in [client_docs](./client_docs) for the provided project summ
 
 ## Resources
 See the [resources](./resources.md) for a set of tools to use for data exploration, analysis, and manipulation.
+
+## Development Guidelines
