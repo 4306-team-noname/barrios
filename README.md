@@ -1,5 +1,5 @@
-| :exclamation: Please read the [development guidelines](#development-guidelines)! |
-| -------------------------------------------------------------------------------- |
+> [!IMPORTANT]
+> Please read the [development guidelines](#development-guidelines)!
 
 # Barrios - 4306 - Software Engineering
 Barrios Technologies project for Angelo State CS 4306 - Software Engineering
@@ -47,8 +47,8 @@ See the [resources](./resources.md) for a set of tools to use for data explorati
 
 All major development will be completed in this repository. While you are encouraged to explore and code in the DevContainer provided by Jeff, class requirements for project iterations require that each member of the team commit code to the repository. So, you need to know how to use Git and GitHub at a basic level.
 
-| :memo: The following commands assume you're working in a Linux environment. On a Windows machine, you should execute them in WSL or with the Git terminal for Windows |
-| --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+> [!NOTE]
+> The following commands assume you're working in a Linux environment. On a Windows machine, you should execute them in WSL or with the Git terminal for Windows
 
 To contribute to this repository, you need to first clone it to your local machine. The easiest way to do this is in a terminal.
 
