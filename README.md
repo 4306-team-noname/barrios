@@ -44,3 +44,10 @@ See markdown files in [client_docs](./client_docs) for the provided project summ
 See the [resources](./resources.md) for a set of tools to use for data exploration, analysis, and manipulation.
 
 ## Development Guidelines
+
+All major development will be completed in this repository. While you are encouraged to explore and code in the DevContainer provided by Jeff, class requirements for project iterations require that each member of the team commit code to the repository. So, you need to know how to use Git and GitHub at a basic level.
+
+To contribute to this repository, you need to first clone it to your local machine. The easiest way to do this is in a terminal.
+
+| :memo: The following commands assume you're working in a Linux environment. On a Windows machine, you should execute them in WSL or with the Git terminal for Windows |
+| --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
