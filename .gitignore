@@ -2,3 +2,30 @@ data/
 iss-data/
 __pycache__
 .micromamba
+bin/
+include/
+lib64/
+lib/
+venv/
+pyvenv.cfg
+
+# python
+*.pyc
+*__pycache__
+.pytest_cache
+venv
+# environment
+.env
+.env.*
+!.env.testing
+# npm
+node_modules
+package-lock.json
+
+.vscode
+**/*.DS_Store
+
+# compiled assets
+storage/compiled
+prototypes/djangoserver/djangoserver/__init__.py
+prototypes/djangoserver/db.sqlite3

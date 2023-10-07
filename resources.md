@@ -42,3 +42,43 @@ A couple of frameworks that were mentioned in the above discussion. We don't nec
 
 - [Nixtla mlforecast](https://github.com/Nixtla/mlforecast)
 - [Darts](https://unit8co.github.io/darts/index.html)
+
+## Project Organization
+Tools andd techniques for keeping a complex team project organized.
+
+### Monorepos (?)
+> [!IMPORTANT]
+> This is just an idea. But it seems like it could be a good way to organize the project.
+
+A monorepo is a Git repository that is split into individual packages. Each package in the monorepo represents an individual sub-project and packages can be interdependent. Each package also defines its own dependencies and can have its own virtual environment. This means one team member can work on `barrios/forecasting` while another works on `barrios/server` with less chance of getting in each other's way.
+
+It also means that code from one project can import code from another project. For example, a `ForecastService` class in `barrios/server` might import the `Forecaster` class from `barrios/forecasting`.
+
+Here's what that might look like for a project like ours:
+
+```bash
+/barrios
+  |- /data                # package 1
+      |- pyproject.toml
+      |- csv/ # the data
+  |- /analysis            # package 2
+      |- requirements.txt
+      |- pyproject.toml
+      |- Analyzer.py
+  |- /forecasting         # package 3
+      |- requirements.txt
+      |- pyproject.toml
+      |- Forecaster.py
+  |- /optimization        # package 4
+      |- requirements.txt
+      |- pyproject.toml
+      |- Optimizer.py
+  |- /server              # package 5
+      |- requirements.txt
+      |- pyproject.toml
+      |- server.py
+      |- /...etc
+  |- /client              # package 6
+      |- package.json
+      |- /src
+```
