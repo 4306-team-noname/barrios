@@ -7,7 +7,7 @@ from AnalysisService import AnalysisService
 # for this prototype, we'll just read the data from
 # a flat csv file
 df = pd.read_csv(
-    '../../data/csv/rsa_consumable_water_summary_20220103-20230828.csv')
+    '../../iss-data/csv/rsa_consumable_water_summary_20220103-20230828.csv')
 
 
 class AnalysisController:

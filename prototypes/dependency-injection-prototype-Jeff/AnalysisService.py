@@ -3,7 +3,7 @@ import pandas as pd
 
 
 class AnalysisService():
-    def __init__(self, forecaster: ForecastingAnalyzer, optimizer: OptimizationAnalyzer, ) -> None:
+    def __init__(self, forecaster: ForecastingAnalyzer, optimizer: OptimizationAnalyzer, repository) -> None:
         self.forecaster = forecaster
         self.optimizer = optimizer
         pass
