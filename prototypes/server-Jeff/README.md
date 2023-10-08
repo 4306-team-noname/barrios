@@ -1,43 +1,37 @@
-# Server Prototyping
+# Server prototype
 
-## How to run
-Install [micromamba](https://mamba.readthedocs.io/en/latest/micromamba-installation.html)
+## Usage
+If you haven't already activated a Python virtual environment, go to the top-level of the `barrios` directory and type:
 
-Make sure you're in the correct folder, eg(`barrios/prototypes/server`)
-
-## Create Micromamba Environment
 ```bash
-micromamba create -f env.yaml
+python -m venv venv
 ```
 
-## Activate Micromamba Environment
+This will create a virtual environment located at `barrios/venv`. To activate the environment type:
+
 ```bash
-micromamba activate barrios-server-prototype
+# Windows/Git bash
+source venv/Scripts/activate
+
+# Linux
+source venv/bin/activate
 ```
 
-## Install additional requirements
-The dependencies in `requirements.txt` are not available in the Conda Forge repository. They can be installed after the `barrios-server-prototype` environment is activated
+You should see `(venv)` included somewhere in your terminal prompt.
+
+Now that you have a virtual environment running, navigate back to the `server-prototype` directory, and install the requirements.
 
 ```bash
+cd prototypes/server-Jeff
+
 pip install -r requirements.txt
 ```
 
-## Environment path
+This should run for a bit while pip downloads and installs the necessary packages. When it's done, navigate to the `src` directory and run the `emmett` command:
 
 ```bash
-~/micromamba/envs/barrios-server-prototype/bin/python
+cd src
+emmed develop
 ```
 
-You can activate the environment in VS Code using the Micromamba extension so you don't get editor warnings for missing modules.
-
-## Start the server
-The following command will start the server located in `barrios/prototypes/server/src/server.py` on the default port `8000`.
-
-```bash
-sanic src.server:app --debug --workers=2 -d
-```
-
-## TODO
-- [ ] Define a flow for uploading data
-  - [ ] Expected data shape
-  - [ ] error states
+The server should be running at `http://localhost:8000`.
