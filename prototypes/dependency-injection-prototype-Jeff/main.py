@@ -3,6 +3,11 @@ from AnalysisService import AnalysisService
 from Analyzers import ForecastingAnalyzer, OptimizationAnalyzer
 
 
+"""
+Note: You probably will want a good Result class for a lot of the operations
+      You're going to be doing. @see: https://aaronluna.dev/blog/error-handling-python-result-class/
+"""
+
 controller = AnalysisController(
     AnalysisService(
         ForecastingAnalyzer(),
