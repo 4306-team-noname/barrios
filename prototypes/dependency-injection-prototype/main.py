@@ -1,14 +1,14 @@
-from AnalysisController import AnalysisController
-from AnalysisService import AnalysisService
-from Analyzers import ForecastingAnalyzer, OptimizationAnalyzer
+# from AnalysisController import AnalysisController
+# from AnalysisService import AnalysisService
+# from Analyzers import ForecastingAnalyzer, OptimizationAnalyzer
 
 
-controller = AnalysisController(
+'''controller = AnalysisController(
     AnalysisService(
         ForecastingAnalyzer(),
         OptimizationAnalyzer(),
     )
-)
+)'''
 
 
 """
@@ -26,11 +26,13 @@ controller = AnalysisController(analysis_service)
 
 """
 
-print('\n\n')
+'''print('\n\n')
 forecast = controller.get_forecast()
 print(forecast)
 
 
 print('\n\n')
 optimization = controller.get_optimization()
-print(optimization)
+print(optimization)'''
+
+print("Hello World")
