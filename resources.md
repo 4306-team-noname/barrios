@@ -1,6 +1,17 @@
 # Resources
 This is a set of libraries for developing data applications with Python. Please text Jeff or drop a message in the Discord server if you need any help.
 
+## Virtual environment
+
+```bash
+python -m venv venv
+```
+
+```bash
+source venv/Scripts/activate # windows
+source venv/bin/activate     # linux
+```
+
 ## Installing Miniconda or Micromamba
 If you're exploring the datasets provided by Barrios or playing around with prototypes, you may not want to use the big, heavy DevContainer Jeff provided. In that case, you may want to use a more lightweight solution to setting up local development environments. Miniconda/Micromamba are the tools to use for that.
 
