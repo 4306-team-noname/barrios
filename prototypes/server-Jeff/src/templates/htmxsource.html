@@ -1,0 +1,11 @@
+{{ extend 'base.html'}}
+
+<h2>Simple HTMX interaction</h2>
+<button hx-post="/count" hx-include="[name='click_count']" hx-trigger="click" hx-target="#count"
+  hx-swap="innerHTML">+</button>
+<button hx-post="/decrement" hx-include="[name='click_count']" hx-trigger="click" hx-target="#count"
+  hx-swap="innerHTML">-</button>
+<div id="count">
+  <input type="hidden" name="click_count" id="click_count" value="0">
+  <h3>0</h3>
+</div>
