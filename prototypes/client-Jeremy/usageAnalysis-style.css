@@ -43,7 +43,7 @@ div#menu a {
    margin: 10px;
 }
 
-div#menu a#dashboard{
+div#menu a#usageAnalysis {
    color: rgb(185, 230, 98);
 }
 
@@ -68,12 +68,13 @@ div#col {
 
 div#row1 {
    width: 100%;
-   height: 30%;
+   height: 40%;
    display: inline-flex;
 }
 
 div#usage {
-   width: 50%;
+   width: 100%;
+   height: 100%;
    background-color: rgb(11, 26, 63);
    border-radius: 20px;
    font-family: inherit;
@@ -100,32 +101,13 @@ p#percentage {
    margin: 0;
 }
 
-div#resupply {
-   width: 50%;
-   background-color: rgb(11, 26, 63);
-   border-radius: 20px;
-   font-family: inherit;
-   padding: 10px;
-   margin: 10px;
-}
-
-table#resupplyTable {
-   width: 100%;
-   text-align: left;
-   font-size: 1vw;
-   font-weight: normal;
-}
-
-table#resupplyTable th[scope="col"] {
-   font-weight: bold;
-   margin-bottom: 10px;
-}
-
 div#row2 {
-   height: 30%;
+   width: 100%;
+   height: 60%;
+   display: inline-flex;
 }
 
-div#graph{
+div#analysis {
    width: 100%;
    height: 100%;
    background-color: rgb(11, 26, 63);
@@ -135,33 +117,19 @@ div#graph{
    margin: 10px;
 }
 
-div#row3 {
-   height: 40%;
-}
-
-div#flightPlanOverview {
-   width: 100%;
-   height: 100%;
-   background-color: rgb(11, 26, 63);
-   border-radius: 20px;
-   font-family: inherit;
-   padding: 10px;
-   margin: 10px;
-}
-
-table#flightPlanTable {
+table#analysisTable {
    width: 100%;
    text-align: left;
    font-size: 1vw;
    font-weight: normal;
 }
 
-table#flightPlanTable th[scope="col"] {
+table#analysisTable th[scope="col"] {
    font-weight: bold;
    color: rgb(185, 230, 98);
    margin-bottom: 10px;
 }
 
-table#flightPlanTable tr:nth-child(even) {
+table#analysisTable tr:nth-child(even) {
    background-color: rgb(10, 20, 50);
 }
