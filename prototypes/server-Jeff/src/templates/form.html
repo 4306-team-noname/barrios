@@ -1,0 +1,12 @@
+{{ extend 'base.html' }}
+
+<h2>Static Form</h2>
+<form action="/static-form" method="post">
+  <label for="name">Name</label>
+  <input type="text" name="name" id="name">
+  <input type="submit" value="Submit">
+</form>
+
+<h2>Non static form??</h2>
+
+{{=form}}
