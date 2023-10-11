@@ -1,4 +1,4 @@
-from AbstractAnalyzer import AbstractAnalyzer
+from .AbstractAnalyzer import AbstractAnalyzer
 import pandas as pd
 
 class ForecastAnalyzer(AbstractAnalyzer):
