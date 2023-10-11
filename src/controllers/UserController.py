@@ -1,4 +1,4 @@
-from ..services.UserService import UserService
+from services import UserService
 
 class UserController():
   def __init__(self, user_service: UserService) -> None:

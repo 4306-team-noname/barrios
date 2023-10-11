@@ -1,4 +1,4 @@
-from ..services.AnalysisService import AnalysisService
+from services import AnalysisService
 
 class AnalysisController():
   def __init__(self, analysis_service: AnalysisService) -> None:

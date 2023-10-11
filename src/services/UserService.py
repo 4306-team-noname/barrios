@@ -1,4 +1,4 @@
-from ..repositories.UserRepository import UserRepository
+from repositories import UserRepository
 
 class UserService():
   def __init__(self, user_repository: UserRepository) -> None:
