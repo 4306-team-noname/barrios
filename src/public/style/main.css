@@ -10,12 +10,16 @@
   --chart-gray: #9E9E9E;
 
   --background: var(--blue);
+  --background-surface: var(--blue-lighter);
   --foreground: var(--white);
   --accent: var(--green);
   --hover: var(--green-darker);
 
   --font-display: 'Montserrat',
     --font-body: 'Roboto', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+  --default-transition: 0.3s ease-in-out;
+  --default-radius: 1rem;
 }
 
 *,
@@ -69,4 +73,15 @@ a:hover {
   display: flex;
   gap: 0.5em;
   align-items: center;
+}
+
+button {
+  color: var(--foreground);
+  border: none;
+}
+
+.surface,
+button {
+  background-color: var(--background-surface);
+  border-radius: var(--default-radius);
 }
