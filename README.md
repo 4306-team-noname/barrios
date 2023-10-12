@@ -57,7 +57,7 @@ See markdown files in [client_docs](./client_docs) for the provided project summ
 [Barrios data on Google Drive](https://drive.google.com/drive/u/0/folders/1QjZAWA7KyjAwYDQU2jbEDuHuvXdkoxZB)
 
 ## Resources
-See the [resources](docs/client_docs/resources.md) for a set of tools to use for data exploration, analysis, and manipulation.
+See the [resources](docs/resources.md) for a set of tools to use for data exploration, analysis, and manipulation.
 
 ## Development Guidelines
 See the [guidelines](docs/guidelines.md) guidance on how to work with Git and GitHub.
