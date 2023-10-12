@@ -5,6 +5,12 @@ from repositories import AnalysisRepository, UserRepository, UserdataRepository
 
 app = App(__name__)
 
+# https://barrios.com/upload
+
 @app.route('/')
 async def home():
   return 'This is the beginning of the implementation'
+
+@app.route('/upload')
+async def upload():
+  pass
