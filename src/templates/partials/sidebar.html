@@ -1,0 +1,38 @@
+<aside class="sidebar">
+  {{ include 'images/barrios_logo.svg' }}
+  <nav aria-label="Main Navigation">
+    <ul>
+      <li>
+        <a href="/" class="icon-link">
+          {{ include 'icons/dashboard.svg' }}
+          Dashboard
+        </a>
+      </li>
+      <li>
+        <a href="/usage" class="icon-link">
+          {{ include 'icons/chart.svg' }}
+          Usage Analysis
+        </a>
+      </li>
+      <li>
+        <a href="/forecast" class="icon-link">
+          {{ include 'icons/list.svg' }}
+          Resupply Predictions
+        </a>
+      </li>
+      <li>
+        <a href="/flightplan" class="icon-link">
+          {{ include 'icons/rocket.svg' }}
+          Detailed Flight Plan
+        </a>
+      </li>
+    </ul>
+  </nav>
+  <form action="" class="stacked">
+    <input type="file" name="data-upload" id="data-upload" />
+    <label for="data-upload">
+      {{ include 'icons/upload.svg' }}
+      Upload Data
+    </label>
+  </form>
+</aside>
