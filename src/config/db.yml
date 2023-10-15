@@ -1,3 +1,7 @@
+# Config for dev db only! This db will be created
+# when pulling and running the images defined in
+# docker-compose.yml. To start everything up, navigate
+# to the /src directory and run `docker-compose up -d`.
 adapter: postgres
 host: 0.0.0.0
 user: barrios
