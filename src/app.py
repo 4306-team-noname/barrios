@@ -1,9 +1,12 @@
 from emmett import App, response, url
+from emmett.orm import Database
 from controllers import AnalysisController, UserController, UserDataController
 from services import AnalysisService, UserService, UserdataService
 from repositories import AnalysisRepository, UserRepository, UserdataRepository
 
 app = App(__name__)
+app.config_from_yaml('db.yml', 'db')
+db = Database(app)
 
 url('static', 'static/')
 
