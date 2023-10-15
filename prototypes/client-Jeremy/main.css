@@ -1,0 +1,203 @@
+:root {
+  --white: #ffffff;
+  --black: #000000;
+  --blue: #091D41;
+  --blue-lighter: #0B2451;
+  --blue-hover: #0f2a5c;
+  --green: #C6E975;
+  --green-darker: #aace58;
+  --chart-magenta: #FF00FF;
+  --chart-yellow: #E3E668;
+  --chart-gray: #9E9E9E;
+  --chart-gray-darker: #888888;
+
+  --background: var(--blue);
+  --background-surface: var(--blue-lighter);
+  --background-surface-hover: var(--blue-hover);
+  --foreground: var(--white);
+  --accent: var(--green);
+  --hover: var(--green-darker);
+
+  --font-display: 'Montserrat';
+  --font-body: 'Roboto', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+  --default-transition: 0.3s ease-in-out;
+  --default-radius: 1rem;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-body);
+}
+
+body {
+  padding: 1rem;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 3rem;
+  min-height: 100vh;
+}
+
+a,
+button {
+  transition: all var(--default-transition);
+}
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--hover);
+}
+
+nav {
+  margin-block: 3rem;
+}
+
+nav ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+/* SVG Icon Styles 
+* These rules are made to be applied to an SVG element with a class of 'icon'.
+* They allow you to add the svg to a parent element, an anchor, for example. Setting
+* the font-size of that parent element will dictate the size of the SVG icon. Additionally
+* the icon's color will match the color of the parent element.
+*
+* All svg icons can be found in the public/icons directory. They have been set up for use
+* as described above.
+*/
+.icon {
+  fill: currentColor;
+  width: 1em;
+  height: 1em;
+  overflow: visible;
+}
+
+/*
+* Link with icon.
+* Structure:
+* <a href="/dashboard">
+*   <svg class="icon".../>
+*   Dashboard
+* </a>
+*/
+.icon-link {
+  display: flex;
+  gap: 1em;
+  align-items: center;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+button {
+  color: var(--foreground);
+  border: none;
+  cursor: pointer;
+}
+
+button:hover {
+  color: var(--hover);
+  background-color: var(--background-surface-hover);
+}
+
+.surface,
+button,
+.stacked {
+  background-color: var(--background-surface);
+  border-radius: var(--default-radius);
+}
+
+/* Upload form styles */
+/* These styles basically manipulate the 
+   file upload form to look like a button
+   with an icon.
+ */
+
+/* This element will be relatively positioned
+    and its children will be absolutely positioned
+    and sized so they take up all of the parent's space.
+    They will then be stacked so the file-chooser button
+    is on top. The file-chooser button will have an opacity
+    of 0 so the styles of elements below it will show through
+    but click events will still emanate from the button.
+ */
+.stacked {
+  position: relative;
+  padding: 1rem;
+  transition: background-color var(--default-transition);
+}
+
+.stacked:hover {
+  background-color: var(--background-surface-hover);
+}
+
+.stacked .icon {
+  width: 1.75rem;
+  height: 1.75rem;
+}
+
+/* Take up the full width and height of the parent element.
+   Note: This element's children make up the content that's displayed
+   to the user (the label element) and the element
+   that responds to a user's interaction (the ::file-selector-button)
+*/
+.stacked input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 100;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+}
+
+/* This label represents everything that's displayed to the user
+   within the actual upload form (other than the form's background-color).
+   If you look at the HTML, you'll see it contains an icon and some label text.
+*/
+.stacked label {
+  font-size: 1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-inline: auto;
+  gap: 1rem;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* This is the interactive element. Its z-index has been set to a high value
+   so it stacks above its siblings. It's opacity is set to 0 so the styles of
+   those sibling elements and their parent element aren't hidden bu the ugly
+   defaults of the actual button.
+   Why do it this way? Because there's no easy way to include an icon inside
+   ::file-selector-button. 
+*/
+.stacked input::file-selector-button {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 150;
+  opacity: 0;
+  cursor: pointer;
+}

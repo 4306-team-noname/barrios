@@ -1,0 +1,52 @@
+<aside class="sidebar" hx-boost="true" hx-target="#main-content" hx-select="#main-content"
+  hx-swap="outerHTML transition:true show:body:top">
+  <a href=" /">
+    {{ include 'assets/images/barrios_logo.svg' }}
+  </a>
+  <nav aria-label="Main Navigation">
+    <ul>
+      <li>
+        <a href="/" class="icon-link">
+          {{ include 'assets/icons/dashboard.svg' }}
+          Dashboard
+        </a>
+      </li>
+      <li>
+        <a href="/usage" class="icon-link">
+          {{ include 'assets/icons/chart.svg' }}
+          Usage Analysis
+        </a>
+      </li>
+      <li>
+        <a href="/forecast" class="icon-link">
+          {{ include 'assets/icons/list.svg' }}
+          Resupply Predictions
+        </a>
+      </li>
+      <li>
+        <a href="/flightplan" class="icon-link">
+          {{ include 'assets/icons/rocket.svg' }}
+          Detailed Flight Plan
+        </a>
+      </li>
+    </ul>
+  </nav>
+  <form id="upload-form" hx-post="/data/upload" hx-swap="outerHTML" hx-target="#main-content" hx-trigger="change"
+    hx-encoding="multipart/form-data" hx-select="#main-content" action="/data/upload" method="post">
+    <div class="stacked">
+      <input type="file" name="file" id="data-upload" />
+      <label for="data-upload">
+        {{ include 'assets/icons/upload.svg' }}
+        Upload Data
+      </label>
+    </div>
+    <!--<button>Upload</button>-->
+  </form>
+  <progress id='progress' value='0' max='100'></progress>
+  <script>
+    htmx.on('#upload-form', 'htmx:xhr:progress', function (evt) {
+      console.log(evt.detail)
+      htmx.find('#progress').setAttribute('value', evt.detail.loaded / evt.detail.total * 100)
+    });
+  </script>
+</aside>

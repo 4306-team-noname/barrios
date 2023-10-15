@@ -1,18 +1,13 @@
-from emmett import App
-from controllers import AnalysisController, UserController, UserDataController
-from services import AnalysisService, UserService, UserdataService
-from repositories import AnalysisRepository, UserRepository, UserdataRepository
+from emmett import App, response, url
+from emmett.orm import Database
+
 
 app = App(__name__)
+app.config.url_default_namespace = "main"
+app.config_from_yaml('db.yml', 'db')
+db = Database(app)
 
-# https://barrios.com/upload
+url('static', 'static/')
 
-
-@app.route('/')
-async def home():
-    return 'This is the beginning of the implementation'
-
-
-@app.route('/upload')
-async def upload():
-    pass
+# import controllers to expose routing functions
+from controllers import data, flightplan, forecast, main, usage
