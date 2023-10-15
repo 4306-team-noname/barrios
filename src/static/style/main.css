@@ -188,7 +188,7 @@ button,
 
 /* This is the interactive element. Its z-index has been set to a high value
    so it stacks above its siblings. It's opacity is set to 0 so the styles of
-   those sibling elements and their parent element aren't hidden bu the ugly
+   those sibling elements and their parent element aren't hidden by the ugly
    defaults of the actual button.
    Why do it this way? Because there's no easy way to include an icon inside
    ::file-selector-button. 
