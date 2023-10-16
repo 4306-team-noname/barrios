@@ -2,6 +2,9 @@ import uuid, csv
 from app import app
 from emmett import request, response
 from emmett.helpers import stream_file
+from models import FlightPlanCrewEntry, FlightPlanEntry, GasEntry, IMSEntry, WaterEntry
+
+models = [FlightPlanCrewEntry, FlightPlanEntry, GasEntry, IMSEntry, WaterEntry]
 
 data = app.module(__name__, 'data', url_prefix='data', template_folder='pages/data')
 
@@ -25,12 +28,14 @@ async def upload():
     # read the file from disk
     # Note: encoding='utf-8-sig' is important here
     #       it removes `\ufeff` from fields
+    fields = []
     with open(temp_file_location, encoding='utf-8-sig', newline='') as csvfile: 
         reader = csv.DictReader(csvfile, delimiter=',')
         data = []
         for row in reader:
             data.append(row)
-        print(data[0].keys())
+        fields = data[0].keys()
+        print(fields)
     # check the field names to determine what type of model
     # the data represents
 
