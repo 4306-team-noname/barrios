@@ -53,3 +53,5 @@ Follow the "GitHub Flow" procedure described below to develop new features for t
 ## GitHub flow
 
 [GitHub Flow](https://docs.github.com/en/get-started/quickstart/github-flow)
+
+![Github Flow](https://github.com/4306-team-noname/barrios/blob/598026f08027dbf52ced8c1cb8168cb317da6f46/assets/Iteration3/GitHub%20Flow.drawio.png)
