@@ -8,6 +8,7 @@ models = [FlightPlanCrewEntry, FlightPlanEntry, GasEntry, IMSEntry, WaterEntry]
 
 data = app.module(__name__, 'data', url_prefix='data', template_folder='pages/data')
 
+
 @data.route('/')
 async def index():
     response.meta.title = 'Data | ISS Consumables'
@@ -21,7 +22,7 @@ async def upload():
     id = str(uuid.uuid4())
     type = file.content_type.split('/',1)[0]
     ext = file.content_type.split('/',1)[1]
-    # return an error if not csv
+    # return an error if not csvg
     # otherwise, upload to a temp folder
     temp_file_location = f"storage/{id}.{ext}"
     await file.save(temp_file_location)
