@@ -61,3 +61,51 @@ See the [resources](docs/resources.md) for a set of tools to use for data explor
 
 ## Development Guidelines
 See the [guidelines](docs/guidelines.md) guidance on how to work with Git and GitHub.
+
+## Running the development application
+
+### Prerequisites
+You need to have `docker` and `docker-compose` installed on your computer for everything to work properly. Both can probably be obtained by installing `Docker Desktop`.
+
+#### Start Docker images
+Start `docker-compose` from the root directory of the application (i.e. `barrios/`).
+
+```bash
+docker-compose up
+```
+This will pull the necessary docker images and set them up so you have a PostgreSQL server and a PGAdmin server running.
+
+#### Set up the database through PGAdmin
+1. __Connect to the database server with PGAdmin__
+   1. 1. In a browser, navigate to `localhost:5050` (or `http://127.0.0.1:50`, if you're feeling verbose). This will open a setup page for PGAdmin. It will ask you to set a master password. Set it to whatever you want.
+   2. In `Quick Links` on the front page, click `Add New Server`.
+   3. On the tab labeled `General`, set the `Name` to `postgres`.
+   4. In the `Connection` tab, set the `Host name/address` to `postgres` the username to `postgres`, and the password to `changeme`. You can toggle `Save password` if you want.
+   5. Click `Save`
+2. __Set up the database user__
+   1. This will add the `postgres` server you loaded from the docker container. In the left sidebar, click `Servers`, then `postgres` to expand the menu.
+   2. Right-click on `Login/Group Roles`, then choose `Create > Login/Group Role...`
+   3. In the `General` tab, set the name to `barrios`.
+   4.  In the `Definition` tab, set the password to `barrios123`
+   5.  In the `Privileges` tab, turn on `Can log in?`
+   6.  Click `Save`
+3.  __Add the database__
+    1.  In the left sidebar, under `postgres`, right-click on `Databases` and select `Create > Database...`
+    2.  In the `General` tab, set the `Database` to `barrios`, and the `Owner` to `barrios`
+    3.  Click `Save`
+
+#### Populate the database tables
+1. Back in the terminal, navigate to the `src` directory in the `barrios` project folder, then run a migration:
+   ```bash
+    cd src
+    emmett migrations up
+   ```
+
+### Start the server
+If there were no problems with the last command, you're good to go. Just start the development server (while still in the `barrios/src` directory) with:
+
+```bash
+emmett develop
+```
+
+Have fun!
