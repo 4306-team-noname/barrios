@@ -6,8 +6,7 @@ class FlightPlanCrewEntry(Model):
     nationality_category = Field.text()
     crew_count = Field.int()
 
-    validations = {
-        'upload': {'presence': True},
+    validation = {
         'datedim': {'presence': True},
         'nationality_category': {'presence': True},
         'crew_count': {'presence': True},
