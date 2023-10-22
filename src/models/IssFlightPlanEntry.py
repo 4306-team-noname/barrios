@@ -2,8 +2,9 @@ from emmett.orm import Model, Field, belongs_to
 
 class IssFlightPlanEntry(Model):
     tablename = 'iss_flight_plan'
+
     belongs_to('upload')
-    datedim = Field.text()
+    datedim = Field.text(unique=True)
     vehicle_name = Field.text()
     port_name = Field.text()
     vehicle_type = Field.text()

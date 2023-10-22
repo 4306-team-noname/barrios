@@ -3,7 +3,7 @@ from emmett.orm import Model, Field, belongs_to
 class UsWeeklyConsumableWaterSummaryEntry(Model):
     tablename = 'us_weekly_consumable_water_summary'
     belongs_to('upload')
-    date = Field.date()
+    date = Field.date(unique=True)
     corrected_potable_l = Field.float()
     corrected_technical_l = Field.float()
     corrected_total_l = Field.float()

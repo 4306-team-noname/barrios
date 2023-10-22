@@ -3,7 +3,7 @@ from emmett.orm import Model, Field, belongs_to
 class TankCapacityDefinitionEntry(Model):
     tablename = 'tank_capacity_definition'
     belongs_to('upload')
-    tank_category = Field.text()
+    tank_category = Field.text(unique=True)
     tank_capacity = Field.float()
     units = Field.text()
 

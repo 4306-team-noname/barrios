@@ -12,17 +12,26 @@ from models.UsRsWeeklyConsumableGasSummaryEntry import UsRsWeeklyConsumableGasSu
 from models.UsWeeklyConsumableWaterSummaryEntry import UsWeeklyConsumableWaterSummaryEntry
 from models.Upload import Upload
 
+import numpy as np
 import importlib
 
 def insert_model(name, fields, values):
-    params_dict = {}
-    for i in fields:
-      key = fields[i]
-      val = values[i]
-      params_dict[key] = val
-
-    ReturnClass = getattr(importlib.import_module(f'models.{name}'), name)
-    ReturnClass.create(params_dict)
+   params_dict = {}
+   print(fields)
+   print(values)
+   for idx, f in np.ndenumerate(fields):
+      # print(f'{idx}: f')
+     key = f
+     val = values[idx]
+     print(f"{f}: {type(val)}: {val}")
+     params_dict[key] = val
+   
+   ReturnClass = getattr(importlib.import_module(f'models.{name}'), name)
+   # print(ReturnClass)
+   try:
+      insert_row = ReturnClass.create(params_dict)
+   except Exception:
+      pass
 
 def define_models(db):
    db.define_models(

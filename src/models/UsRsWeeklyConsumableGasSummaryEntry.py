@@ -3,7 +3,7 @@ from emmett.orm import Model, Field, belongs_to
 class UsRsWeeklyConsumableGasSummaryEntry(Model):
     tablename = 'us_rs_weekly_consumable_gas_summary'
     belongs_to('upload')
-    date = Field.text()
+    date = Field.date(unique=True)
     usos_o2_kg = Field.float()
     rs_o2_kg = Field.float()
     rs_n2_kg = Field.float()
