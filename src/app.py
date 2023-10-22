@@ -2,11 +2,7 @@ from emmett import App, response, url
 from emmett.orm import Database
 from emmett.tools import Auth
 from models.User import User
-from models.Upload import Upload
-from models.FlightPlanEntry import FlightPlanEntry
-from models.FlightPlanCrewEntry import FlightPlanCrewEntry
-from models.GasEntry import GasEntry
-from models.WaterEntry import WaterEntry
+from utils.model_utils import define_models
 
 app = App(__name__)
 app.config.url_default_namespace = "main"
@@ -19,7 +15,7 @@ db = Database(app)
 
 auth = Auth(app, db, user_model=User)
 
-db.define_models(Upload, FlightPlanCrewEntry, FlightPlanEntry, GasEntry, WaterEntry)
+db = define_models(db)
 app.pipeline = [db.pipe]
 
 # Set static directory for serving

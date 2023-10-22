@@ -1,6 +1,7 @@
 from emmett.orm import Model, Field, belongs_to
 
-class WaterEntry(Model):
+class UsWeeklyConsumableWaterSummaryEntry(Model):
+    tablename = 'us_weekly_consumable_water_summary'
     belongs_to('upload')
     date = Field.date()
     corrected_potable_l = Field.float()

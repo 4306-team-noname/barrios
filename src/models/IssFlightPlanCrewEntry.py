@@ -1,8 +1,10 @@
 from emmett.orm import Model, Field, belongs_to
 
-class FlightPlanCrewEntry(Model):
+class IssFlightPlanCrewEntry(Model):
+    tablename = 'iss_flight_plan_crew'
+    
     belongs_to('upload')
-    datedim = Field.date()
+    datedim = Field.text()
     nationality_category = Field.text()
     crew_count = Field.int()
 

@@ -1,8 +1,13 @@
 import uuid, csv
+import numpy as np
+import pandas as pd
+
 from app import app
 from emmett import request, response
 from emmett.helpers import stream_file
-# from models import FlightPlanCrewEntry, FlightPlanEntry, GasEntry, IMSEntry, WaterEntry
+from emmett.helpers import flash
+from utils.data_dictionary import get_dictionary
+from utils.model_utils import insert_model
 
 # models = [FlightPlanCrewEntry, FlightPlanEntry, GasEntry, IMSEntry, WaterEntry]
 
@@ -22,25 +27,37 @@ async def upload():
     id = str(uuid.uuid4())
     type = file.content_type.split('/',1)[0]
     ext = file.content_type.split('/',1)[1]
-    # return an error if not csvg
+
+    if ext != 'csv':
+        return flash('Data must be in CSV format!', 'error')
+
     # otherwise, upload to a temp folder
     temp_file_location = f"storage/{id}.{ext}"
     await file.save(temp_file_location)
-    # read the file from disk
-    # Note: encoding='utf-8-sig' is important here
-    #       it removes `\ufeff` from fields
-    fields = []
-    with open(temp_file_location, encoding='utf-8-sig', newline='') as csvfile: 
-        reader = csv.DictReader(csvfile, delimiter=',')
-        data = []
-        for row in reader:
-            data.append(row)
-        fields = data[0].keys()
-        print(fields)
+
+    # now, read the saved temp file and store its columns as a list
+    file_df = pd.read_csv(temp_file_location)
+    columns = np.asarray(file_df.columns.to_numpy())
+    
+    # get the stored data dictionary
+    data_dictionary = get_dictionary()
+    model_name = None
+
+    for key in data_dictionary.keys():
     # check the field names to determine what type of model
     # the data represents
-
+        dictionary_entry = data_dictionary[key]
+        entry_columns = dictionary_entry['columns']
+        dictionary_columns_arr = np.asarray(entry_columns)
+        matches = np.array_equal(columns, dictionary_columns_arr)
+        if matches == True:
+            model_name = dictionary_entry['model_name']
+    
+    if model_name is None:
+        return flash("Error: CSV file doesn't match any known user data types", "error")
     # instantiate and persist the appropriate models.
+        
+
 
     # return an HTML table (possibly paginated)
 

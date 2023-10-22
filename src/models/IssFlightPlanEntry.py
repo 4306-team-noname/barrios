@@ -1,7 +1,9 @@
 from emmett.orm import Model, Field, belongs_to
-class FlightPlanEntry(Model):
+
+class IssFlightPlanEntry(Model):
+    tablename = 'iss_flight_plan'
     belongs_to('upload')
-    datedim = Field.date()
+    datedim = Field.text()
     vehicle_name = Field.text()
     port_name = Field.text()
     vehicle_type = Field.text()
@@ -9,7 +11,7 @@ class FlightPlanEntry(Model):
     eva_type = Field.text()
     eva_accuracy = Field.text()
     event = Field.text()
-
+    
     validation = {
         'datedim': {'presence': True}
     }
