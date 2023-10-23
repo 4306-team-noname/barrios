@@ -4,7 +4,7 @@ class StoredItemsOnlyInventoryMgmtSystemConsumablesEntry(Model):
     tablename = 'stored_items_only_inventory_mgmt_system_consumables'
     belongs_to('upload')
 
-    datedim = Field.text()
+    datedim = Field.date()
     id = Field.int()
     id_parent = Field.int()
     id_path = Field.text()
@@ -64,14 +64,14 @@ class StoredItemsOnlyInventoryMgmtSystemConsumablesEntry(Model):
         'english_name': {'presence': True},
         'barcode': {'presence': True},
         'quantity': {'presence': True},
-        'width': {'presence': True},
-        'height': {'presence': True},
-        'length': {'presence': True},
-        'diameter': {'presence': True},
-        'calculated_volume': {'presence': True},
-        'stwg_ovrrd_vol': {'presence': True},
-        'children_volume': {'presence': True},
-        'stwg_ovrrd_chldrn_vol': {'presence': True},
+        'width': {'allow': None},
+        'height': {'allow': None},
+        'length': {'allow': None},
+        'diameter': {'allow': None},
+        'calculated_volume': {'allow': None},
+        'stwg_ovrrd_vol': {'allow': None},
+        'children_volume': {'allow': None},
+        'stwg_ovrrd_chldrn_vol': {'allow': None},
         'ovrrd_notes': {'presence': True},
         'volume_notes': {'presence': True},
         'type': {'presence': True},

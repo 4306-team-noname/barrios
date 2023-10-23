@@ -1,8 +1,8 @@
-"""Edit unique fields
+"""Change date fields to dates
 
-Migration ID: 2490953ae9ef
+Migration ID: 88b7f18642e5
 Revises: 
-Creation Date: 2023-10-22 08:58:36.682857
+Creation Date: 2023-10-22 17:01:49.072798
 
 """
 
@@ -10,7 +10,7 @@ from emmett.orm import migrations
 
 
 class Migration(migrations.Migration):
-    revision = '2490953ae9ef'
+    revision = '88b7f18642e5'
     revises = None
 
     def up(self):
@@ -71,6 +71,7 @@ class Migration(migrations.Migration):
             migrations.Column('file_name', 'text'),
             migrations.Column('upload_date', 'datetime'),
             primary_keys=['id'])
+        self.create_index('uploads_widx__file_name_unique', 'uploads', ['file_name'], expressions=[], unique=True)
         self.create_table(
             'ims_consumables_category_lookup',
             migrations.Column('category_name', 'text'),
@@ -82,7 +83,7 @@ class Migration(migrations.Migration):
             primary_keys=['categoryID'])
         self.create_table(
             'inventory_management_system_consumables',
-            migrations.Column('datedim', 'text'),
+            migrations.Column('datedim', 'date'),
             migrations.Column('id', 'integer'),
             migrations.Column('id_parent', 'integer'),
             migrations.Column('id_path', 'text'),
@@ -128,7 +129,7 @@ class Migration(migrations.Migration):
         self.create_table(
             'iss_flight_plan',
             migrations.Column('id', 'id'),
-            migrations.Column('datedim', 'text'),
+            migrations.Column('datedim', 'date'),
             migrations.Column('vehicle_name', 'text'),
             migrations.Column('port_name', 'text'),
             migrations.Column('vehicle_type', 'text'),
@@ -142,7 +143,7 @@ class Migration(migrations.Migration):
         self.create_table(
             'iss_flight_plan_crew',
             migrations.Column('id', 'id'),
-            migrations.Column('datedim', 'text'),
+            migrations.Column('datedim', 'date'),
             migrations.Column('nationality_category', 'text'),
             migrations.Column('crew_count', 'integer'),
             migrations.Column('upload', 'reference uploads', ondelete='CASCADE'),
@@ -172,7 +173,7 @@ class Migration(migrations.Migration):
         self.create_table(
             'rsa_consumable_water_summary',
             migrations.Column('id', 'id'),
-            migrations.Column('report_date', 'text'),
+            migrations.Column('report_date', 'date'),
             migrations.Column('remain_potable_liters', 'float'),
             migrations.Column('remain_technical_liters', 'float'),
             migrations.Column('remain_rodnik_liters', 'float'),
@@ -181,7 +182,7 @@ class Migration(migrations.Migration):
         self.create_index('rsa_consumable_water_summary_widx__report_date_unique', 'rsa_consumable_water_summary', ['report_date'], expressions=[], unique=True)
         self.create_table(
             'stored_items_only_inventory_mgmt_system_consumables',
-            migrations.Column('datedim', 'text'),
+            migrations.Column('datedim', 'date'),
             migrations.Column('id', 'integer'),
             migrations.Column('id_parent', 'integer'),
             migrations.Column('id_path', 'text'),
@@ -294,6 +295,7 @@ class Migration(migrations.Migration):
         self.drop_table('iss_flight_plan')
         self.drop_table('inventory_management_system_consumables')
         self.drop_table('ims_consumables_category_lookup')
+        self.drop_index('uploads_widx__file_name_unique', 'uploads')
         self.drop_table('uploads')
         self.drop_table('auth_events')
         self.drop_table('auth_permissions')

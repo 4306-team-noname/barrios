@@ -16,4 +16,5 @@ class RatesDefinitionEntry(Model):
         'rate': {'presence': True},
         'units': {'presence': True},
         'type': {'presence': True},
+        'efficiency': {'allow': None}
     }

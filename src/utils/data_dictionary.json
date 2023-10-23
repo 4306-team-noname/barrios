@@ -31,7 +31,7 @@
         ]
     },
     "iss_flight_plan_crew_nationality_lookup": {
-        "model_name": "IssFlightPlanCrewNationalityEntry",
+        "model_name": "IssFlightPlanCrewNationalityLookupEntry",
         "columns": [
             "nationality",
             "is_usos_crew",

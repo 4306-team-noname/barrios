@@ -1,0 +1,7 @@
+<div class="flash">
+  {{ for flash in current.response.alerts(category_filter=['error']): }}
+  <div class="error">
+    {{ =flash }}
+  </div>
+  {{ pass }}
+</div>

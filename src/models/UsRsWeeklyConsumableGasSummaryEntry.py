@@ -8,10 +8,10 @@ class UsRsWeeklyConsumableGasSummaryEntry(Model):
     rs_o2_kg = Field.float()
     rs_n2_kg = Field.float()
     rs_n2_kg = Field.float()
-    Adjusted_o2_kg = Field.float()
-    Adjusted_n2_kg = Field.float()
-    Resupply_o2_kg = Field.float()
-    Resupply_n2_kg = Field.float()
+    adjusted_o2_kg = Field.float()
+    adjusted_n2_kg = Field.float()
+    resupply_o2_kg = Field.float()
+    resupply_n2_kg = Field.float()
     resupply_air_kg = Field.float()
 
 
@@ -22,6 +22,9 @@ class UsRsWeeklyConsumableGasSummaryEntry(Model):
         'rs_o2_kg': {'presence': True},
         'rs_n2_kg': {'presence': True},
         'rs_n2_kg': {'presence': True},
-        'Adjusted_o2_kg': {'presence': True},
-        'Adjusted_n2_kg': {'presence': True},
+        'adjusted_o2_kg': {'presence': True},
+        'adjusted_n2_kg': {'presence': True},
+        'resupply_o2_kg': {'allow': None},
+        'resupply_n2_kg': {'allow': None},
+        'resupply_air_kg': {'allow': None},
     }

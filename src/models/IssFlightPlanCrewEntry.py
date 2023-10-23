@@ -4,7 +4,7 @@ class IssFlightPlanCrewEntry(Model):
     tablename = 'iss_flight_plan_crew'
     
     belongs_to('upload')
-    datedim = Field.text(unique=True)
+    datedim = Field.date()
     nationality_category = Field.text()
     crew_count = Field.int()
 

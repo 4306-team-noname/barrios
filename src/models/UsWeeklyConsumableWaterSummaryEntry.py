@@ -17,4 +17,7 @@ class UsWeeklyConsumableWaterSummaryEntry(Model):
         'corrected_technical_l': {'presence': True},
         'corrected_total_l': {'presence': True},
         'corrected_predicted_l': {'presence': True},
+        'resupply_potable_l': {'allow': None},
+        'resupply_technical_l': {'allow': None},
+        'corrected_predicted_l': {'allow': None},
     }
