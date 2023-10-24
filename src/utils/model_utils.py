@@ -1,15 +1,15 @@
-from models.ImsConsumablesCategoryLookupEntry import ImsConsumablesCategoryLookupEntry
-from models.InventoryMgmtSystemConsumablesEntry import InventoryMgmtSystemConsumablesEntry
-from models.IssFlightPlanEntry import IssFlightPlanEntry
-from models.IssFlightPlanCrewEntry import IssFlightPlanCrewEntry
-from models.IssFlightPlanCrewNationalityLookupEntry import IssFlightPlanCrewNationalityLookupEntry
-from models.RatesDefinitionEntry import RatesDefinitionEntry
-from models.RsaConsumableWaterSummaryEntry import RsaConsumableWaterSummaryEntry
-from models.StoredItemsOnlyInventoryMgmtSystemConsumablesEntry import StoredItemsOnlyInventoryMgmtSystemConsumablesEntry
-from models.TankCapacityDefinitionEntry import TankCapacityDefinitionEntry
-from models.ThresholdsLimitsDefinitionEntry import ThresholdsLimitsDefinitionEntry
-from models.UsRsWeeklyConsumableGasSummaryEntry import UsRsWeeklyConsumableGasSummaryEntry
-from models.UsWeeklyConsumableWaterSummaryEntry import UsWeeklyConsumableWaterSummaryEntry
+from models.ImsConsumablesCategoryLookup import ImsConsumablesCategoryLookup
+from models.InventoryMgmtSystemConsumables import InventoryMgmtSystemConsumables
+from models.IssFlightPlan import IssFlightPlan
+from models.IssFlightPlanCrew import IssFlightPlanCrew
+from models.IssFlightPlanCrewNationalityLookup import IssFlightPlanCrewNationalityLookup
+from models.RatesDefinition import RatesDefinition
+from models.RsaConsumableWaterSummary import RsaConsumableWaterSummary
+from models.StoredItemsOnlyInventoryMgmtSystemConsumables import StoredItemsOnlyInventoryMgmtSystemConsumables
+from models.TankCapacityDefinition import TankCapacityDefinition
+from models.ThresholdsLimitsDefinition import ThresholdsLimitsDefinition
+from models.UsRsWeeklyConsumableGasSummary import UsRsWeeklyConsumableGasSummary
+from models.UsWeeklyConsumableWaterSummary import UsWeeklyConsumableWaterSummary
 from models.Upload import Upload
 
 from cases import to_snake
@@ -42,18 +42,18 @@ def insert_model(name, fields, values):
 
 def define_models(db):
    db.define_models(
-      Upload,
-      ImsConsumablesCategoryLookupEntry,
-      InventoryMgmtSystemConsumablesEntry,
-      IssFlightPlanEntry,
-      IssFlightPlanCrewEntry,
-      IssFlightPlanCrewNationalityLookupEntry,
-      RatesDefinitionEntry,
-      RsaConsumableWaterSummaryEntry,
-      StoredItemsOnlyInventoryMgmtSystemConsumablesEntry,
-      TankCapacityDefinitionEntry,
-      ThresholdsLimitsDefinitionEntry,
-      UsRsWeeklyConsumableGasSummaryEntry,
-      UsWeeklyConsumableWaterSummaryEntry,
+        Upload,
+        ImsConsumablesCategoryLookup,
+        InventoryMgmtSystemConsumables,
+        IssFlightPlan,
+        IssFlightPlanCrew,
+        IssFlightPlanCrewNationalityLookup,
+        RatesDefinition,
+        RsaConsumableWaterSummary,
+        StoredItemsOnlyInventoryMgmtSystemConsumables,
+        TankCapacityDefinition,
+        ThresholdsLimitsDefinition,
+        UsRsWeeklyConsumableGasSummary,
+        UsWeeklyConsumableWaterSummary,
    )
    return db

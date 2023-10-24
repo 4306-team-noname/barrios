@@ -1,8 +1,7 @@
-from emmett.orm import Model, Field, belongs_to
+from emmett.orm import Model, Field
 
-class StoredItemsOnlyInventoryMgmtSystemConsumablesEntry(Model):
-    tablename = 'stored_items_only_inventory_mgmt_system_consumables'
-    belongs_to('upload')
+class InventoryMgmtSystemConsumables(Model):
+    tablename = 'inventory_management_system_consumables'
 
     datedim = Field.date()
     id = Field.int()

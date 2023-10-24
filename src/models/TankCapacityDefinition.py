@@ -1,8 +1,7 @@
-from emmett.orm import Model, Field, belongs_to
-
-class TankCapacityDefinitionEntry(Model):
+from emmett.orm import Model, Field
+class TankCapacityDefinition(Model):
     tablename = 'tank_capacity_definition'
-    belongs_to('upload')
+    
     tank_category = Field.text(unique=True)
     tank_capacity = Field.float()
     units = Field.text()

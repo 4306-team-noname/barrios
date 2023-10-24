@@ -1,9 +1,9 @@
-from emmett.orm import Model, Field, belongs_to
-from emmett import session, now
-
+from emmett.orm import Model, Field
+from emmett import now
 class Upload(Model):
     # belongs_to('user')
     file_name = Field.text(unique=True)
+    file_path = Field.text()
     upload_date = Field.datetime()
 
     default_values = {
@@ -12,5 +12,6 @@ class Upload(Model):
 
     validation = {
         'file_name': {'presence': True},
+        'file_path': {'presence': True},
         'upload_date': {'presence': True}
     }

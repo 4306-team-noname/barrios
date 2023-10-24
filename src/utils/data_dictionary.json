@@ -1,6 +1,6 @@
 {
     "ims_consumables_category_lookup": {
-        "model_name": "ImsConsumablesCategoryLookupEntry",
+        "model_name": "ImsConsumablesCategoryLookup",
         "columns": [
             "category_name",
             "categoryID",
@@ -10,7 +10,7 @@
         ]
     },
     "iss_flight_plan": {
-        "model_name": "IssFlightPlanEntry",
+        "model_name": "IssFlightPlan",
         "columns": [
             "datedim",
             "vehicle_name",
@@ -23,7 +23,7 @@
         ]
     },
     "iss_flight_plan_crew": {
-        "model_name": "IssFlightPlanCrewEntry",
+        "model_name": "IssFlightPlanCrew",
         "columns": [
             "datedim",
             "nationality_category",
@@ -31,7 +31,7 @@
         ]
     },
     "iss_flight_plan_crew_nationality_lookup": {
-        "model_name": "IssFlightPlanCrewNationalityLookupEntry",
+        "model_name": "IssFlightPlanCrewNationalityLookup",
         "columns": [
             "nationality",
             "is_usos_crew",
@@ -39,7 +39,7 @@
         ]
     },
     "rates_definition": {
-        "model_name": "RatesDefinitionEntry",
+        "model_name": "RatesDefinition",
         "columns": [
             "rate_category",
             "affected_consumable",
@@ -50,7 +50,7 @@
         ]
     },
     "rsa_consumable_water_summary": {
-        "model_name": "RsaConsumableWaterSummaryEntry",
+        "model_name": "RsaConsumableWaterSummary",
         "columns": [
             "Report Date",
             "Remain. Potable (liters)",
@@ -59,7 +59,7 @@
         ]
     },
     "tank_capacity_definition": {
-        "model_name": "TankCapacityDefinitionEntry",
+        "model_name": "TankCapacityDefinition",
         "columns": [
             "tank_category",
             "tank_capacity",
@@ -67,7 +67,7 @@
         ]
     },
     "thresholds_limits_definition": {
-        "model_name": "ThresholdsLimitsDefinitionEntry",
+        "model_name": "ThresholdsLimitsDefinition",
         "columns": [
             "threshold_category",
             "threshold_value",
@@ -76,7 +76,7 @@
         ]
     },
     "us_rs_weekly_consumable_gas_summary": {
-        "model_name": "UsRsWeeklyConsumableGasSummaryEntry",
+        "model_name": "UsRsWeeklyConsumableGasSummary",
         "columns": [
             "Date",
             "USOS O2 (kg)",
@@ -91,7 +91,7 @@
         ]
     },
     "us_weekly_consumable_water_summary": {
-        "model_name": "UsWeeklyConsumableWaterSummaryEntry",
+        "model_name": "UsWeeklyConsumableWaterSummary",
         "columns": [
             "Date",
             "Corrected Potable (L)",
@@ -105,7 +105,7 @@
         ]
     },
     "stored_items_only_inventory_mgmt_system_consumables": {
-        "model_name": "StoredItemsOnlyInventoryMgmtSystemConsumablesEntry",
+        "model_name": "StoredItemsOnlyInventoryMgmtSystemConsumables",
         "columns": [
             "datedim",
             "id",
@@ -151,7 +151,7 @@
         ]
     },
     "inventory_mgmt_system_consumables": {
-        "model_name": "InventoryMgmtSystemConsumablesEntry",
+        "model_name": "InventoryMgmtSystemConsumables",
         "columns": [
             "datedim",
             "id",

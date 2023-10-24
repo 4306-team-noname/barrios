@@ -1,12 +1,10 @@
-from emmett.orm import Model
-from emmett.orm import Field
-from emmett.orm import belongs_to
+from emmett.orm import Model, Field
 
-class ImsConsumablesCategoryLookupEntry(Model):
+class ImsConsumablesCategoryLookup(Model):
     tablename = 'ims_consumables_category_lookup'
     primary_keys = ['category_id']
     
-    belongs_to('upload')
+    
     category_name = Field.text(notnull=True)
     category_id = Field.int(notnull=True)
     module_name = Field.text(notnull=True)

@@ -1,8 +1,7 @@
-from emmett.orm import Model, Field, belongs_to
-
-class UsWeeklyConsumableWaterSummaryEntry(Model):
+from emmett.orm import Model, Field
+class UsWeeklyConsumableWaterSummary(Model):
     tablename = 'us_weekly_consumable_water_summary'
-    belongs_to('upload')
+    
     date = Field.date(unique=True)
     corrected_potable_l = Field.float()
     corrected_technical_l = Field.float()

@@ -1,14 +1,13 @@
-from emmett.orm import Model, Field, belongs_to
-
-class RatesDefinitionEntry(Model):
+from emmett.orm import Model, Field
+class RatesDefinition(Model):
     tablename = 'rates_definition'
-    belongs_to('upload')
+    
     rate_category = Field.text(unique=True)
     affected_consumable = Field.text()
     rate = Field.float()
     units = Field.text()
     type = Field.text()
-    efficiency = Field.int()
+    efficiency = Field.float()
 
     validation = {
         'rate_category': {'presence': True, 'unique': True},

@@ -1,8 +1,8 @@
-from emmett.orm import Model, Field, belongs_to
+from emmett.orm import Model, Field
 
-class UsRsWeeklyConsumableGasSummaryEntry(Model):
+class UsRsWeeklyConsumableGasSummary(Model):
     tablename = 'us_rs_weekly_consumable_gas_summary'
-    belongs_to('upload')
+
     date = Field.date(unique=True)
     usos_o2_kg = Field.float()
     rs_o2_kg = Field.float()

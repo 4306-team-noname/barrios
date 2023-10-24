@@ -1,8 +1,8 @@
-"""Change date fields to dates
+"""Start over with new relations
 
-Migration ID: 88b7f18642e5
+Migration ID: 12d953c56431
 Revises: 
-Creation Date: 2023-10-22 17:01:49.072798
+Creation Date: 2023-10-23 11:40:11.282472
 
 """
 
@@ -10,7 +10,7 @@ from emmett.orm import migrations
 
 
 class Migration(migrations.Migration):
-    revision = '88b7f18642e5'
+    revision = '12d953c56431'
     revises = None
 
     def up(self):
@@ -74,13 +74,13 @@ class Migration(migrations.Migration):
         self.create_index('uploads_widx__file_name_unique', 'uploads', ['file_name'], expressions=[], unique=True)
         self.create_table(
             'ims_consumables_category_lookup',
-            migrations.Column('category_name', 'text'),
-            migrations.Column('categoryID', 'integer'),
-            migrations.Column('module_name', 'text'),
-            migrations.Column('moduleID', 'integer'),
-            migrations.Column('unique_cat_mod_ID', 'text'),
+            migrations.Column('category_name', 'text', notnull=True),
+            migrations.Column('category_id', 'integer', notnull=True),
+            migrations.Column('module_name', 'text', notnull=True),
+            migrations.Column('module_id', 'integer', notnull=True),
+            migrations.Column('unique_cat_mod_id', 'text', notnull=True),
             migrations.Column('upload', 'reference uploads', ondelete='CASCADE'),
-            primary_keys=['categoryID'])
+            primary_keys=['category_id'])
         self.create_table(
             'inventory_management_system_consumables',
             migrations.Column('datedim', 'date'),
@@ -148,7 +148,6 @@ class Migration(migrations.Migration):
             migrations.Column('crew_count', 'integer'),
             migrations.Column('upload', 'reference uploads', ondelete='CASCADE'),
             primary_keys=['id'])
-        self.create_index('iss_flight_plan_crew_widx__datedim_unique', 'iss_flight_plan_crew', ['datedim'], expressions=[], unique=True)
         self.create_table(
             'iss_flight_plan_crew_nationality_lookup',
             migrations.Column('id', 'id'),
@@ -251,10 +250,10 @@ class Migration(migrations.Migration):
             migrations.Column('usos_o2_kg', 'float'),
             migrations.Column('rs_o2_kg', 'float'),
             migrations.Column('rs_n2_kg', 'float'),
-            migrations.Column('Adjusted_o2_kg', 'float'),
-            migrations.Column('Adjusted_n2_kg', 'float'),
-            migrations.Column('Resupply_o2_kg', 'float'),
-            migrations.Column('Resupply_n2_kg', 'float'),
+            migrations.Column('adjusted_o2_kg', 'float'),
+            migrations.Column('adjusted_n2_kg', 'float'),
+            migrations.Column('resupply_o2_kg', 'float'),
+            migrations.Column('resupply_n2_kg', 'float'),
             migrations.Column('resupply_air_kg', 'float'),
             migrations.Column('upload', 'reference uploads', ondelete='CASCADE'),
             primary_keys=['id'])
@@ -289,7 +288,6 @@ class Migration(migrations.Migration):
         self.drop_table('rates_definition')
         self.drop_index('iss_flight_plan_crew_nationality_lookup_widx__nationality_unique', 'iss_flight_plan_crew_nationality_lookup')
         self.drop_table('iss_flight_plan_crew_nationality_lookup')
-        self.drop_index('iss_flight_plan_crew_widx__datedim_unique', 'iss_flight_plan_crew')
         self.drop_table('iss_flight_plan_crew')
         self.drop_index('iss_flight_plan_widx__datedim_unique', 'iss_flight_plan')
         self.drop_table('iss_flight_plan')

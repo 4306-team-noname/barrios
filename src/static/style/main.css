@@ -46,6 +46,20 @@ body {
   min-height: 100vh;
 }
 
+h1,
+h2,
+h3,
+h4,
+h5 {
+  line-height: 1;
+  padding: 0;
+  margin: 0;
+}
+
+h1 {
+  font-size: 1.75rem;
+}
+
 a,
 button {
   transition: all var(--default-transition);
@@ -71,6 +85,10 @@ nav ul {
   display: flex;
   flex-direction: column;
   gap: 3rem;
+}
+
+#main-content {
+  min-height: 100%;
 }
 
 /* SVG Icon Styles 
@@ -236,6 +254,48 @@ progress::-moz-progress-bar {
   border-radius: 1em;
 }
 
+
+.flash-container {
+  position: absolute;
+  top: 2rem;
+  left: 50%;
+  transform: translate(-50%, -200%);
+  width: min(350px, 90%);
+  padding: 1rem;
+  border-radius: var(--default-radius);
+  background-color: var(--background-surface);
+  height: 3rem;
+}
+
+.surface {
+  background-color: var(--background-surface);
+  padding: 1rem;
+}
+
+table {
+  width: 100%;
+  background-color: var(--background-surface);
+  border: none;
+}
+
+tbody tr:nth-child(odd) {
+  background-color: var(--background);
+}
+
+
+th {
+  padding: 0.5rem;
+  text-align: left;
+  color: var(--accent);
+  text-transform: uppercase;
+  border: none;
+}
+
+td {
+  padding: 0.5rem;
+  text-transform: uppercase;
+  border: none;
+}
 
 /* ANIMATIONS */
 @keyframes fade-in {
