@@ -17,6 +17,7 @@ import numpy as np
 import importlib
 import datetime
 
+
 def insert_model(name, fields, values):
     params_dict = {}
 
@@ -29,19 +30,24 @@ def insert_model(name, fields, values):
             val = values[idx]
         print(f"{key}: {type(val)}: {val}")
         params_dict[key] = val
-   
+
     ReturnClass = getattr(importlib.import_module(f'models.{name}'), name)
     # print(ReturnClass)
     insert_row = ReturnClass.create(params_dict)
 
-    if insert_row['id'] == None:
-      error_key = list(insert_row['errors'])[0]
-      return {'ok': False, 'error': insert_row['errors'][error_key], 'error_field': error_key}
+    if insert_row['id'] is None:
+        error_key = list(insert_row['errors'])[0]
+        return {
+                'ok': False,
+                'error': insert_row['errors'][error_key],
+                'error_field': error_key
+                }
 
     return {'ok': True, 'value': insert_row['id']}
 
+
 def define_models(db):
-   db.define_models(
+    db.define_models(
         Upload,
         ImsConsumablesCategoryLookup,
         InventoryMgmtSystemConsumables,
@@ -55,5 +61,6 @@ def define_models(db):
         ThresholdsLimitsDefinition,
         UsRsWeeklyConsumableGasSummary,
         UsWeeklyConsumableWaterSummary,
-   )
-   return db
+    )
+    return db
+

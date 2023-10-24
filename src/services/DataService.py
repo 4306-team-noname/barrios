@@ -8,14 +8,16 @@ from utils.model_utils import insert_model
 from utils.Result import Result
 from utils.data_dictionary import get_dictionary
 
+
 class DataService():
     db: Database
     dictionary: Dict
+
     def __init__(self, db) -> None:
         self.db = db
         self.dictionary = get_dictionary()
         pass
-    
+
     def save_file_data(self, file_location):
         file_df = pd.read_csv(file_location)
         columns = np.asarray(file_df.columns.to_numpy())
@@ -25,23 +27,27 @@ class DataService():
         model_name = None
 
         for key in self.dictionary.keys():
-        # check the field names to determine what type of model
-        # the data represents
+            # check the field names to determine what type of model
+            # the data represents
             dictionary_entry = self.dictionary[key]
             entry_columns = dictionary_entry['columns']
             dictionary_columns_arr = np.asarray(entry_columns)
             matches = np.array_equal(columns, dictionary_columns_arr)
 
-            if matches == True:
+            if matches is True:
                 model_name = dictionary_entry['model_name']
 
-        if model_name == None:
-            return {'ok': False, 'value': None, 'error': "The uploaded file doesn't match any known user data types"}
+        if model_name is None:
+            return {
+                    'ok': False,
+                    'value': None,
+                    'error': "The file doesn't match any known user data types"
+                    }
 
         # iterate over dataframe and use values in each row to
         # instantiate and persist the appropriate models.
         file_df = file_df.reset_index()
-        file_df = file_df.replace({np.nan:None})
+        file_df = file_df.replace({np.nan: None})
 
         # add 'upload' as a column value
         # columns = np.append(columns, 'upload')
@@ -57,7 +63,7 @@ class DataService():
             model_result = insert_model(model_name, columns, np_row_arr)
             # print(f'model_result: {model_result}')
 
-            if model_result['ok'] == False:
+            if model_result['ok'] is False:
                 error = model_result['error']
                 key = model_result['error_field']
                 return {'ok': False, 'value': None, 'error': f"{key}: {error}"}
@@ -73,10 +79,11 @@ class DataService():
 
         return {
             'ok': True,
-            'value':{
+            'value': {
                 'table_cols': table_cols,
                 'dataframe': file_df,
                 'table_list': file_list
                 },
             'error': None
             }
+

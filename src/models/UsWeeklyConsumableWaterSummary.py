@@ -1,7 +1,9 @@
 from emmett.orm import Model, Field
+
+
 class UsWeeklyConsumableWaterSummary(Model):
     tablename = 'us_weekly_consumable_water_summary'
-    
+
     date = Field.date(unique=True)
     corrected_potable_l = Field.float()
     corrected_technical_l = Field.float()
@@ -15,8 +17,8 @@ class UsWeeklyConsumableWaterSummary(Model):
         'corrected_potable_l': {'presence': True},
         'corrected_technical_l': {'presence': True},
         'corrected_total_l': {'presence': True},
-        'corrected_predicted_l': {'presence': True},
+        'corrected_predicted_l': {'allow': None},
         'resupply_potable_l': {'allow': None},
         'resupply_technical_l': {'allow': None},
-        'corrected_predicted_l': {'allow': None},
     }
+

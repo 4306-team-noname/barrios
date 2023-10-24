@@ -1,5 +1,4 @@
 import json
-import os
 
 
 def get_dictionary():
@@ -10,3 +9,4 @@ def get_dictionary():
             print('Data dictionary file not found')
 
         return data_dictionary
+

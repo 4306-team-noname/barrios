@@ -1,4 +1,6 @@
 from emmett.orm import Model, Field
+
+
 class StoredItemsOnlyInventoryMgmtSystemConsumables(Model):
     tablename = 'stored_items_only_inventory_mgmt_system_consumables'
 
@@ -44,7 +46,6 @@ class StoredItemsOnlyInventoryMgmtSystemConsumables(Model):
     categoryID = Field.text()
     category_name = Field.text()
 
-
     validation = {
         'datedim': {'presence': True},
         'id': {'presence': True},
@@ -82,3 +83,4 @@ class StoredItemsOnlyInventoryMgmtSystemConsumables(Model):
         'categoryID': {'presence': True},
         'category_name': {'presence': True}
     }
+

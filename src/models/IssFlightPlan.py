@@ -1,4 +1,6 @@
 from emmett.orm import Model, Field
+
+
 class IssFlightPlan(Model):
     tablename = 'iss_flight_plan'
 
@@ -10,7 +12,8 @@ class IssFlightPlan(Model):
     eva_type = Field.text()
     eva_accuracy = Field.text()
     event = Field.text()
-    
+
     validation = {
         'datedim': {'presence': True}
     }
+

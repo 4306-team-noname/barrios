@@ -1,4 +1,6 @@
 from emmett.orm import Model, Field
+
+
 class ThresholdsLimitsDefinition(Model):
     tablename = 'thresholds_limits_definition'
 
@@ -11,4 +13,5 @@ class ThresholdsLimitsDefinition(Model):
         'threshold_category': {'presence': True},
         'threshold_value': {'presence': True},
         'units': {'presence': True}
-    }
+        }
+

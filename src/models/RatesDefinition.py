@@ -1,7 +1,9 @@
 from emmett.orm import Model, Field
+
+
 class RatesDefinition(Model):
     tablename = 'rates_definition'
-    
+
     rate_category = Field.text(unique=True)
     affected_consumable = Field.text()
     rate = Field.float()
@@ -17,3 +19,4 @@ class RatesDefinition(Model):
         'type': {'presence': True},
         'efficiency': {'allow': None}
     }
+

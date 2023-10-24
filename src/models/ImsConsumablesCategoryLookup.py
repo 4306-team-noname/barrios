@@ -1,10 +1,10 @@
 from emmett.orm import Model, Field
 
+
 class ImsConsumablesCategoryLookup(Model):
     tablename = 'ims_consumables_category_lookup'
     primary_keys = ['category_id']
-    
-    
+
     category_name = Field.text(notnull=True)
     category_id = Field.int(notnull=True)
     module_name = Field.text(notnull=True)
@@ -18,3 +18,4 @@ class ImsConsumablesCategoryLookup(Model):
         'module_id': {'presence': True},
         'unique_cat_mod_id': {'presence': True},
     }
+

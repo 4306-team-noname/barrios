@@ -1,9 +1,8 @@
-from emmett import App, response, url
+from emmett import App, url
 from emmett.orm import Database
 from emmett.tools import Auth
 from models.User import User
 from utils.model_utils import define_models
-from utils.data_dictionary import get_dictionary
 
 app = App(__name__)
 app.config.url_default_namespace = "main"

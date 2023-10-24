@@ -1,4 +1,6 @@
 from emmett.orm import Model, Field
+
+
 class RsaConsumableWaterSummary(Model):
     tablename = 'rsa_consumable_water_summary'
 
@@ -13,3 +15,4 @@ class RsaConsumableWaterSummary(Model):
         'remain_technical_liters': {'presence': True},
         'remain_rodnik_liters': {'presence': True},
     }
+
