@@ -19,6 +19,14 @@ class DataService():
         pass
 
     def save_file_data(self, file_location):
+        """Persist CSV file data to the database
+
+        Parameters
+        ----------
+        file_location : str
+            The path to the CSV file whose data should
+            be persisted to the database
+        """
         file_df = pd.read_csv(file_location)
         columns = np.asarray(file_df.columns.to_numpy())
 

@@ -17,7 +17,8 @@
 <body>
   {{ include 'components/flash.html' }}
   {{ include 'components/sidebar.html' }}
-  <main>
+  <main hx-boost="true" hx-target="#main-content" hx-select="#main-content"
+  hx-swap="outerHTML transition:true show:body:top">
     {{ include }}
   </main>
 </body>
