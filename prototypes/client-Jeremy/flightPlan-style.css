@@ -1,0 +1,162 @@
+@charset "UTF-8";
+
+html {
+   box-sizing: border-box;
+}
+
+*, *:before, *:after {
+   box-sizing: inherit;
+}
+
+:root {
+   --white: #ffffff;
+   --black: #000000;
+   --blue: #091D41;
+   --blue-lighter: #0B2451;
+   --blue-hover: #0f2a5c;
+   --green: #C6E975;
+   --green-darker: #aace58;
+   --chart-magenta: #FF00FF;
+   --chart-yellow: #E3E668;
+   --chart-gray: #9E9E9E;
+   --chart-gray-darker: #888888;
+ 
+   --background: var(--blue);
+   --background-surface: var(--blue-lighter);
+   --background-surface-hover: var(--blue-hover);
+   --foreground: var(--white);
+   --accent: var(--green);
+   --hover: var(--green-darker);
+ 
+   --font-display: 'Montserrat';
+   --font-body: 'Roboto', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+ 
+   --default-transition: 0.3s ease-in-out;
+   --default-radius: 1rem;
+ }
+
+body {
+   background-color: var(--background);
+   font-family: sans-serif;
+   color: rgb(255, 255, 255);
+   text-transform: uppercase;
+   margin: 20px;
+   display: flex;
+   flex-direction: row;
+}
+
+#menu {
+   width: 20%;
+   height: 60%;
+   display: inline-grid;
+}
+
+div#menu a {
+   background-color: var(--background);
+   border: none;
+   color: inherit;
+   text-transform: inherit;
+   font-size: 1vw;
+   text-decoration: none;
+   text-align: left;
+   padding: 20px;
+   margin: 10px;
+   border-radius: 20px;
+}
+
+/* SVG Icon Styles 
+* These rules are made to be applied to an SVG element with a class of 'icon'.
+* They allow you to add the svg to a parent element, an anchor, for example. Setting
+* the font-size of that parent element will dictate the size of the SVG icon. Additionally
+* the icon's color will match the color of the parent element.
+*
+* All svg icons can be found in the public/icons directory. They have been set up for use
+* as described above.
+*/
+.icon {
+  fill: currentColor;
+  width: 1em;
+  height: 1em;
+  overflow: visible;
+}
+
+/*
+* Link with icon.
+* Structure:
+* <a href="/dashboard">
+*   <svg class="icon".../>
+*   Dashboard
+* </a>
+*/
+.icon-link {
+  display: flex;
+  gap: 1em;
+  align-items: center;
+  text-transform: uppercase;
+}
+
+div#menu a#flightPlan{
+   color: var(--accent);
+}
+
+div#menu a#upload{
+   background-color: var(--background-surface);
+   flex-direction: column;
+   padding: 30px;
+}
+
+div#menu a:hover {
+   background-color: var(--background-surface-hover);
+   color: var(--hover);
+}
+
+div#menu a#logo:hover{
+   background-color: var(--background);
+}
+
+div#col {
+   width: 80%;
+   height: 90vh;
+}
+
+.row{
+   margin: 10px;
+}
+
+div#row1 {
+   width: 100%;
+   height: 100%;
+   display: flex;
+}
+
+div#flightPlan {
+   width: 100%;
+   height: 100%;
+   background-color: var(--background-surface);
+   border-radius: 20px;
+   font-family: inherit;
+   padding: 10px;
+   margin: 10px;
+}
+
+h1 {
+   margin: 5px;
+   font-size: 1.8vw;
+}
+
+table#flightPlanTable {
+   width: 100%;
+   text-align: left;
+   font-size: 1vw;
+   font-weight: normal;
+}
+
+table#flightPlanTable th[scope="col"] {
+   font-weight: bold;
+   color: var(--accent);
+   margin-bottom: 10px;
+}
+
+table#flightPlanTable tr:nth-child(even) {
+   background-color: var(--background);
+}
