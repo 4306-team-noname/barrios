@@ -48,7 +48,8 @@ body {
 #menu {
    width: 20%;
    height: 60%;
-   display: inline-grid;
+   display: flex;
+   flex-direction: column;
 }
 
 div#menu a {
@@ -95,7 +96,7 @@ div#menu a {
   text-transform: uppercase;
 }
 
-div#menu a#usageAnalysis {
+div#menu a#upload{
    color: var(--accent);
 }
 
@@ -125,11 +126,11 @@ div#col {
 
 div#row1 {
    width: 100%;
-   height: 40%;
-   display: inline-flex;
+   height: 90%;
+   display: flex;
 }
 
-div#usage {
+div#uploadHistory {
    width: 100%;
    height: 100%;
    background-color: var(--background-surface);
@@ -137,6 +138,23 @@ div#usage {
    font-family: inherit;
    padding: 10px;
    margin: 10px;
+}
+
+table#uploadHistoryTable {
+   width: 100%;
+   text-align: left;
+   font-size: 1vw;
+   font-weight: normal;
+}
+
+table#uploadHistoryTable th[scope="col"] {
+   font-weight: bold;
+   color: var(--accent);
+   margin-bottom: 10px;
+}
+
+table#uploadHistoryTable tr:nth-child(even) {
+   background-color: var(--background);
 }
 
 h1 {
@@ -144,27 +162,11 @@ h1 {
    font-size: 1.8vw;
 }
 
-h2 {
-   color: var(--accent);
-   font-size: 1vw;
-   font-weight: normal;
-   margin: 5px;
-}
-
-p#percentage {
-   text-transform: inherit;
-   font-size: 8vw;
-   text-align: center;
-   margin: 0;
-}
-
 div#row2 {
-   width: 100%;
-   height: 60%;
-   display: inline-flex;
+   height: 10%;
 }
 
-div#analysis {
+/* div#upload {
    width: 100%;
    height: 100%;
    background-color: var(--background-surface);
@@ -172,21 +174,29 @@ div#analysis {
    font-family: inherit;
    padding: 10px;
    margin: 10px;
-}
+   align-content: center;
+} */
 
-table#analysisTable {
-   width: 100%;
-   text-align: left;
+div#upload label {
+   background-color: var(--background-surface);
+   border: none;
+   color: inherit;
+   text-transform: inherit;
    font-size: 1vw;
-   font-weight: normal;
+   text-decoration: none;
+   text-align: left;
+   padding: 20px;
+   margin: 10px;
+   border-radius: 20px;
 }
 
-table#analysisTable th[scope="col"] {
-   font-weight: bold;
-   color: rgb(185, 230, 98);
-   margin-bottom: 10px;
+div#upload label:hover {
+   background-color: var(--background-surface-hover);
+   color: var(--hover);
+   cursor: pointer;
 }
 
-table#analysisTable tr:nth-child(even) {
-   background-color: var(--background);
+div#upload input {
+   display: none;
 }
+
