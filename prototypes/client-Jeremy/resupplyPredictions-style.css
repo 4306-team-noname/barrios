@@ -63,19 +63,54 @@ div#menu a {
    margin: 10px;
 }
 
+/* SVG Icon Styles 
+* These rules are made to be applied to an SVG element with a class of 'icon'.
+* They allow you to add the svg to a parent element, an anchor, for example. Setting
+* the font-size of that parent element will dictate the size of the SVG icon. Additionally
+* the icon's color will match the color of the parent element.
+*
+* All svg icons can be found in the public/icons directory. They have been set up for use
+* as described above.
+*/
+.icon {
+  fill: currentColor;
+  width: 1em;
+  height: 1em;
+  overflow: visible;
+}
+
+/*
+* Link with icon.
+* Structure:
+* <a href="/dashboard">
+*   <svg class="icon".../>
+*   Dashboard
+* </a>
+*/
+.icon-link {
+  display: flex;
+  gap: 1em;
+  align-items: center;
+  text-transform: uppercase;
+}
+
 div#menu a#resupplyPredictions{
    color: var(--accent);
 }
 
 div#menu a#upload{
    background-color: var(--background-surface);
-   text-align: center;
+   flex-direction: column;
    padding: 30px;
 }
 
 div#menu a:hover {
    background-color: var(--background-surface-hover);
    color: var(--hover);
+}
+
+div#menu a#logo:hover{
+   background-color: var(--background);
 }
 
 div#col {
