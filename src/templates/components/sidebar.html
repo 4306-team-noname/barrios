@@ -29,6 +29,12 @@
           Detailed Flight Plan
         </a>
       </li>
+      <li>
+        <a href="/data" class="icon-link">
+          {{ include 'assets/icons/data.svg' }}
+          Data
+        </a>
+      </li>
     </ul>
   </nav>
   <form id="upload-form" hx-post="/data/upload" hx-swap="outerHTML" hx-target="#main-content" hx-trigger="change"

@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="static/style/main.css">
+  <link rel="stylesheet" href="/static/style/main.css">
   <script src="https://unpkg.com/htmx.org@1.9.6"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -15,10 +15,20 @@
 </head>
 
 <body>
+  {{ include 'components/flash.html' }}
+  {{ if current.session.auth: }}
   {{ include 'components/sidebar.html' }}
-  <main>
+  <main hx-boost="true" hx-target="#main-content" hx-select="#main-content"
+    hx-swap="outerHTML transition:true show:body:top">
     {{ include }}
   </main>
+  {{ else: }}
+  <main hx-boost="true" hx-target="#main-content" hx-select="#main-content"
+    hx-swap="outerHTML transition:true show:body:top" class="full-page">
+    {{ include }}
+  </main>
+
+  {{ pass }}
 </body>
 
 </html>
