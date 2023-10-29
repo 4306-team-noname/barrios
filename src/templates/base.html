@@ -16,11 +16,19 @@
 
 <body>
   {{ include 'components/flash.html' }}
+  {{ if current.session.auth: }}
   {{ include 'components/sidebar.html' }}
   <main hx-boost="true" hx-target="#main-content" hx-select="#main-content"
-  hx-swap="outerHTML transition:true show:body:top">
+    hx-swap="outerHTML transition:true show:body:top">
     {{ include }}
   </main>
+  {{ else: }}
+  <main hx-boost="true" hx-target="#main-content" hx-select="#main-content"
+    hx-swap="outerHTML transition:true show:body:top" class="full-page">
+    {{ include }}
+  </main>
+
+  {{ pass }}
 </body>
 
 </html>

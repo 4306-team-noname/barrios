@@ -1,9 +1,13 @@
-from emmett.orm import Model, Field
+from emmett.orm import Model, Field, has_many
 
 
 class ImsConsumablesCategoryLookup(Model):
-    tablename = 'ims_consumables_category_lookup'
-    primary_keys = ['category_id']
+    tablename = "ims_consumables_category_lookup"
+    primary_keys = ["category_name"]
+    has_many(
+        "InventoryMgmtSystemConsumables",
+        "StoredItemsOnlyInventoryMgmtSystemConsumables",
+    )
 
     category_name = Field.text(notnull=True)
     category_id = Field.int(notnull=True)
@@ -12,10 +16,9 @@ class ImsConsumablesCategoryLookup(Model):
     unique_cat_mod_id = Field.text(notnull=True)
 
     validation = {
-        'category_name': {'presence': True},
-        'category_id': {'presence': True},
-        'module_name': {'presence': True},
-        'module_id': {'presence': True},
-        'unique_cat_mod_id': {'presence': True},
+        "category_name": {"presence": True},
+        "category_id": {"presence": True},
+        "module_name": {"presence": True},
+        "module_id": {"presence": True},
+        "unique_cat_mod_id": {"presence": True},
     }
-

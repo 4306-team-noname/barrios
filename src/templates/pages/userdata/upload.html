@@ -1,0 +1,16 @@
+{{ extend 'base.html' }}
+<!-- 
+  Template variables (returned from src/controllers/data.upload):
+  name: file name
+  file_df: Pandas dataframe of the file data
+  table_list: nested array of the file data
+  table_cols: Table header names
+-->
+<section id="main-content" class="surface">
+  <h1>File Uploaded</h1>
+  <h2>{{=name}}</h2>
+
+  {{ if len(table_list[:1]) > 0: }}
+  {{ include 'components/data-table.html' }}
+  {{ pass }}
+</section>

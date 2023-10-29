@@ -10,6 +10,10 @@ from utils.data_dictionary import get_dictionary
 
 
 class DataService():
+    """
+    Rules:
+        A minimum of two tests per method.
+    """
     db: Database
     dictionary: Dict
 
@@ -18,7 +22,7 @@ class DataService():
         self.dictionary = get_dictionary()
         pass
 
-    def save_file_data(self, file_location):
+    def save_file_data(self, file_location) -> Result:
         """Persist CSV file data to the database
 
         Parameters
@@ -47,10 +51,10 @@ class DataService():
 
         if model_name is None:
             return {
-                    'ok': False,
-                    'value': None,
-                    'error': "The file doesn't match any known user data types"
-                    }
+                'ok': False,
+                'value': None,
+                'error': "The file doesn't match any known user data types"
+            }
 
         # iterate over dataframe and use values in each row to
         # instantiate and persist the appropriate models.
@@ -91,7 +95,6 @@ class DataService():
                 'table_cols': table_cols,
                 'dataframe': file_df,
                 'table_list': file_list
-                },
+            },
             'error': None
-            }
-
+        }

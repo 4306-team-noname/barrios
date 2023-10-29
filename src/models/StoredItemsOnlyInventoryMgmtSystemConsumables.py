@@ -1,8 +1,9 @@
-from emmett.orm import Model, Field
+from emmett.orm import Model, Field, belongs_to, refers_to
 
 
 class StoredItemsOnlyInventoryMgmtSystemConsumables(Model):
-    tablename = 'stored_items_only_inventory_mgmt_system_consumables'
+    tablename = "stored_items_only_inventory_mgmt_system_consumables"
+    belongs_to("ims_consumables_category_lookup")
 
     datedim = Field.date()
     id = Field.int()
@@ -47,40 +48,39 @@ class StoredItemsOnlyInventoryMgmtSystemConsumables(Model):
     category_name = Field.text()
 
     validation = {
-        'datedim': {'presence': True},
-        'id': {'presence': True},
-        'id_parent': {'presence': True},
-        'id_path': {'presence': True},
-        'tree_depth': {'presence': True},
-        'tree': {'presence': True},
-        'part_number': {'presence': True},
-        'serial_number': {'presence': True},
-        'location_name': {'presence': True},
-        'original_ip_owner': {'presence': True},
-        'current_ip_owner': {'presence': True},
-        'operational_nomenclature': {'presence': True},
-        'russian_name': {'presence': True},
-        'english_name': {'presence': True},
-        'barcode': {'presence': True},
-        'quantity': {'presence': True},
-        'width': {'allow': None},
-        'height': {'allow': None},
-        'length': {'allow': None},
-        'diameter': {'allow': None},
-        'calculated_volume': {'allow': None},
-        'stwg_ovrrd_vol': {'allow': None},
-        'children_volume': {'allow': None},
-        'stwg_ovrrd_chldrn_vol': {'allow': None},
-        'ovrrd_notes': {'presence': True},
-        'volume_notes': {'presence': True},
-        'type': {'presence': True},
-        'state': {'presence': True},
-        'status': {'presence': True},
-        'is_container': {'presence': True},
-        'is_moveable': {'presence': True},
-        'action_date': {'presence': True},
-        'move_date': {'presence': True},
-        'categoryID': {'presence': True},
-        'category_name': {'presence': True}
+        "datedim": {"presence": True},
+        "id": {"presence": True},
+        "id_parent": {"presence": True},
+        "id_path": {"presence": True},
+        "tree_depth": {"presence": True},
+        "tree": {"presence": True},
+        "part_number": {"presence": True},
+        "serial_number": {"presence": True},
+        "location_name": {"presence": True},
+        "original_ip_owner": {"presence": True},
+        "current_ip_owner": {"presence": True},
+        "operational_nomenclature": {"presence": True},
+        "russian_name": {"presence": True},
+        "english_name": {"presence": True},
+        "barcode": {"presence": True},
+        "quantity": {"presence": True},
+        "width": {"allow": None},
+        "height": {"allow": None},
+        "length": {"allow": None},
+        "diameter": {"allow": None},
+        "calculated_volume": {"allow": None},
+        "stwg_ovrrd_vol": {"allow": None},
+        "children_volume": {"allow": None},
+        "stwg_ovrrd_chldrn_vol": {"allow": None},
+        "ovrrd_notes": {"presence": True},
+        "volume_notes": {"presence": True},
+        "type": {"presence": True},
+        "state": {"presence": True},
+        "status": {"presence": True},
+        "is_container": {"presence": True},
+        "is_moveable": {"presence": True},
+        "action_date": {"presence": True},
+        "move_date": {"presence": True},
+        # "categoryID": {"presence": True},
+        "category_name": {"presence": True},
     }
-
