@@ -3,5 +3,4 @@ from emmett.orm import has_many
 
 
 class User(AuthUser):
-    has_many('uploads')
-
+    has_many("uploads")
