@@ -2,8 +2,7 @@ from app import app
 from emmett import response
 
 
-@app.route('/')
+@app.route("/")
 async def index():
-    response.meta.title = 'Dashboard | ISS Consumables'
+    response.meta.title = "ISS Consumables Analytics"
     return {}
-

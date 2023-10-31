@@ -8,13 +8,10 @@ class Upload(Model):
     file_path = Field.text()
     upload_date = Field.datetime()
 
-    default_values = {
-        'upload_date': now
-    }
+    default_values = {"upload_date": now}
 
     validation = {
-        'file_name': {'presence': True},
-        'file_path': {'presence': True},
-        'upload_date': {'presence': True}
+        "file_name": {"presence": True},
+        "file_path": {"presence": True},
+        "upload_date": {"presence": True},
     }
-
