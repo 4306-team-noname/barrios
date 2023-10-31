@@ -15,20 +15,11 @@
 </head>
 
 <body>
-  {{ include 'components/flash.html' }}
-  {{ if current.session.auth: }}
-  {{ include 'components/sidebar.html' }}
-  <main hx-boost="true" hx-target="#main-content" hx-select="#main-content"
-    hx-swap="outerHTML transition:true show:body:top">
+  {{ block content }}
+  <main>
     {{ include }}
   </main>
-  {{ else: }}
-  <main hx-boost="true" hx-target="#main-content" hx-select="#main-content"
-    hx-swap="outerHTML transition:true show:body:top" class="full-page">
-    {{ include }}
-  </main>
-
-  {{ pass }}
+  {{ end }}
 </body>
 
 </html>

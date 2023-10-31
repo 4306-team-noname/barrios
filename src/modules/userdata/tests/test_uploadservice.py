@@ -1,7 +1,7 @@
 from typing import List
+from emmett.testing.helpers import BytesIO
 import pytest
-from services.UploadService import UploadService
-from models.Upload import Upload
+from modules.userdata.UploadService import UploadService
 from emmett.orm import Database
 
 
@@ -23,6 +23,7 @@ def test_upload_service_has_accepted_files_list(upload_service):
     assert isinstance(upload_service.accepted_filetypes, List)
 
 
-async def saves_file(upload_service, shifted_csv):
-    print(await shifted_csv.files)
-    assert False
+def test_saves_clean_csv_file(logged_client, clean_csv):
+    # data = {"filename": "clean_csv.csv", "name": "", "headers": [], BytesIO(str.encode(clean_csv))}
+    res = logged_client.post("/userdata/upload", data={"files": [clean_csv]})
+    assert res.status == 200

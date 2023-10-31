@@ -1,4 +1,3 @@
-from emmett import App
 from importlib import import_module
 from typing import Optional, Sequence
 

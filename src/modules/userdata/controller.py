@@ -1,16 +1,18 @@
-from app import app, db
+from app import app, db, auth
 from typing import Final
-from emmett import request, response, session
+from emmett import request, response, url
 from emmett.helpers import flash
-
-from services.UploadService import UploadService
-from services.DataService import DataService
+from emmett.pipeline import RequirePipe
+from modules.userdata.UploadService import UploadService
+from modules.userdata.DataService import DataService
 from utils.Result import Result
 
 # Define data as an app module so routes can be nested within
 data = app.module(
     __name__, "userdata", url_prefix="userdata", template_folder="pages/userdata"
 )
+
+data.pipeline = [RequirePipe(auth.is_logged, url("auth/login"))]
 
 storage_path: Final = "storage"  # TODO: set as environment variable?
 upload_service = UploadService(db, storage_path, ["csv"])
