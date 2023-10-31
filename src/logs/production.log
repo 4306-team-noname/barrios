@@ -1192,3 +1192,801 @@ Traceback (most recent call last):
     ext = file.content_type.split("/", 1)[1]
           ^^^^^^^^^^^^^^^^^
 AttributeError: 'NoneType' object has no attribute 'content_type'
+[2023-10-31 13:21:42,911] WARNING in ext: No mailer seems to be configured. The auth features requiring mailer won't work.
+[2023-10-31 13:21:43,226] ERROR in client: Application exception:
+Traceback (most recent call last):
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/testing/client.py", line 69, in dynamic_handler
+    http = await self.router.dispatch(request, response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/routing/router.py", line 249, in dispatch
+    return await match.dispatch(reqargs, response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/routing/dispatchers.py", line 72, in dispatch
+    rv = self.response_builder(await self.f(**reqargs), response)
+                               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/pipeline.py", line 328, in flow
+    output = await pipe_method(f, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/pipeline.py", line 234, in pipe
+    return await next_pipe(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/pipeline.py", line 328, in flow
+    output = await pipe_method(f, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/tools/auth/apis.py", line 287, in pipe
+    return await next_pipe(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/pipeline.py", line 369, in flow
+    return await pipe_method(f, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/pipeline.py", line 274, in pipe_request
+    return await next_pipe(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/src/modules/userdata/controller.py", line 70, in upload
+    upload_result: Result = await upload_service.create_upload(file)
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/src/modules/userdata/UploadService.py", line 99, in create_upload
+    file_save_result = await self.save_file(file)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/src/modules/userdata/UploadService.py", line 66, in save_file
+    ext = file.content_type.split("/", 1)[1]
+          ^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'content_type'
+[2023-10-31 13:24:46,430] WARNING in ext: No mailer seems to be configured. The auth features requiring mailer won't work.
+[2023-10-31 13:24:46,802] ERROR in client: Application exception:
+Traceback (most recent call last):
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/testing/client.py", line 69, in dynamic_handler
+    http = await self.router.dispatch(request, response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/routing/router.py", line 249, in dispatch
+    return await match.dispatch(reqargs, response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/routing/dispatchers.py", line 72, in dispatch
+    rv = self.response_builder(await self.f(**reqargs), response)
+                               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/pipeline.py", line 328, in flow
+    output = await pipe_method(f, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/pipeline.py", line 234, in pipe
+    return await next_pipe(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/pipeline.py", line 328, in flow
+    output = await pipe_method(f, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/tools/auth/apis.py", line 287, in pipe
+    return await next_pipe(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/pipeline.py", line 369, in flow
+    return await pipe_method(f, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/pipeline.py", line 274, in pipe_request
+    return await next_pipe(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/src/modules/userdata/controller.py", line 68, in upload
+    upload_result: Result = await upload_service.create_upload(file)
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/src/modules/userdata/UploadService.py", line 99, in create_upload
+    file_save_result = await self.save_file(file)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/src/modules/userdata/UploadService.py", line 66, in save_file
+    ext = file.content_type.split("/", 1)[1]
+          ^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'content_type'
+[2023-10-31 13:25:18,518] WARNING in ext: No mailer seems to be configured. The auth features requiring mailer won't work.
+[2023-10-31 13:25:18,974] ERROR in client: Application exception:
+Traceback (most recent call last):
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/testing/client.py", line 69, in dynamic_handler
+    http = await self.router.dispatch(request, response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/routing/router.py", line 249, in dispatch
+    return await match.dispatch(reqargs, response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/routing/dispatchers.py", line 72, in dispatch
+    rv = self.response_builder(await self.f(**reqargs), response)
+                               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/pipeline.py", line 328, in flow
+    output = await pipe_method(f, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/pipeline.py", line 234, in pipe
+    return await next_pipe(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/pipeline.py", line 328, in flow
+    output = await pipe_method(f, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/tools/auth/apis.py", line 287, in pipe
+    return await next_pipe(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/pipeline.py", line 369, in flow
+    return await pipe_method(f, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/pipeline.py", line 274, in pipe_request
+    return await next_pipe(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/src/modules/userdata/controller.py", line 68, in upload
+    upload_result: Result = await upload_service.create_upload(file)
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/src/modules/userdata/UploadService.py", line 99, in create_upload
+    file_save_result = await self.save_file(file)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/src/modules/userdata/UploadService.py", line 66, in save_file
+    ext = file.content_type.split("/", 1)[1]
+          ^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'content_type'
+[2023-10-31 13:30:48,222] WARNING in ext: No mailer seems to be configured. The auth features requiring mailer won't work.
+[2023-10-31 13:30:48,884] WARNING in ext: No mailer seems to be configured. The auth features requiring mailer won't work.
+[2023-10-31 13:30:49,212] ERROR in client: Application exception:
+Traceback (most recent call last):
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/testing/client.py", line 69, in dynamic_handler
+    http = await self.router.dispatch(request, response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/routing/router.py", line 249, in dispatch
+    return await match.dispatch(reqargs, response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/routing/dispatchers.py", line 72, in dispatch
+    rv = self.response_builder(await self.f(**reqargs), response)
+                               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/pipeline.py", line 328, in flow
+    output = await pipe_method(f, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/pipeline.py", line 234, in pipe
+    return await next_pipe(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/pipeline.py", line 328, in flow
+    output = await pipe_method(f, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/tools/auth/apis.py", line 287, in pipe
+    return await next_pipe(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/pipeline.py", line 369, in flow
+    return await pipe_method(f, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/pipeline.py", line 274, in pipe_request
+    return await next_pipe(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/src/modules/userdata/controller.py", line 68, in upload
+    upload_result: Result = await upload_service.create_upload(file)
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/src/modules/userdata/UploadService.py", line 99, in create_upload
+    file_save_result = await self.save_file(file)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/src/modules/userdata/UploadService.py", line 66, in save_file
+    ext = file.content_type.split("/", 1)[1]
+          ^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'content_type'
+[2023-10-31 13:39:16,823] WARNING in ext: No mailer seems to be configured. The auth features requiring mailer won't work.
+[2023-10-31 13:39:17,161] ERROR in client: Application exception:
+Traceback (most recent call last):
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/testing/client.py", line 69, in dynamic_handler
+    http = await self.router.dispatch(request, response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/routing/router.py", line 249, in dispatch
+    return await match.dispatch(reqargs, response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/routing/dispatchers.py", line 72, in dispatch
+    rv = self.response_builder(await self.f(**reqargs), response)
+                               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/pipeline.py", line 328, in flow
+    output = await pipe_method(f, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/pipeline.py", line 234, in pipe
+    return await next_pipe(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/pipeline.py", line 328, in flow
+    output = await pipe_method(f, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/tools/auth/apis.py", line 287, in pipe
+    return await next_pipe(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/pipeline.py", line 369, in flow
+    return await pipe_method(f, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/pipeline.py", line 274, in pipe_request
+    return await next_pipe(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/src/modules/userdata/controller.py", line 68, in upload
+    upload_result: Result = await upload_service.create_upload(file)
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/src/modules/userdata/UploadService.py", line 99, in create_upload
+    file_save_result = await self.save_file(file)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/src/modules/userdata/UploadService.py", line 66, in save_file
+    ext = file.content_type.split("/", 1)[1]
+          ^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'content_type'
+[2023-10-31 13:39:46,953] WARNING in ext: No mailer seems to be configured. The auth features requiring mailer won't work.
+[2023-10-31 13:39:47,303] ERROR in client: Application exception:
+Traceback (most recent call last):
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/testing/client.py", line 69, in dynamic_handler
+    http = await self.router.dispatch(request, response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/routing/router.py", line 249, in dispatch
+    return await match.dispatch(reqargs, response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/routing/dispatchers.py", line 72, in dispatch
+    rv = self.response_builder(await self.f(**reqargs), response)
+                               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/pipeline.py", line 328, in flow
+    output = await pipe_method(f, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/pipeline.py", line 234, in pipe
+    return await next_pipe(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/pipeline.py", line 328, in flow
+    output = await pipe_method(f, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/tools/auth/apis.py", line 287, in pipe
+    return await next_pipe(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/pipeline.py", line 369, in flow
+    return await pipe_method(f, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/pipeline.py", line 274, in pipe_request
+    return await next_pipe(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/src/modules/userdata/controller.py", line 68, in upload
+    upload_result: Result = await upload_service.create_upload(file)
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/src/modules/userdata/UploadService.py", line 99, in create_upload
+    file_save_result = await self.save_file(file)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/src/modules/userdata/UploadService.py", line 66, in save_file
+    ext = file.content_type.split("/", 1)[1]
+          ^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'content_type'
+[2023-10-31 13:40:58,072] WARNING in ext: No mailer seems to be configured. The auth features requiring mailer won't work.
+[2023-10-31 13:40:58,427] ERROR in client: Application exception:
+Traceback (most recent call last):
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/testing/client.py", line 69, in dynamic_handler
+    http = await self.router.dispatch(request, response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/routing/router.py", line 249, in dispatch
+    return await match.dispatch(reqargs, response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/routing/dispatchers.py", line 72, in dispatch
+    rv = self.response_builder(await self.f(**reqargs), response)
+                               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/pipeline.py", line 328, in flow
+    output = await pipe_method(f, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/pipeline.py", line 234, in pipe
+    return await next_pipe(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/pipeline.py", line 328, in flow
+    output = await pipe_method(f, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/tools/auth/apis.py", line 287, in pipe
+    return await next_pipe(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/pipeline.py", line 369, in flow
+    return await pipe_method(f, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/pipeline.py", line 274, in pipe_request
+    return await next_pipe(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/src/modules/userdata/controller.py", line 68, in upload
+    upload_result: Result = await upload_service.create_upload(file)
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/src/modules/userdata/UploadService.py", line 99, in create_upload
+    file_save_result = await self.save_file(file)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/src/modules/userdata/UploadService.py", line 66, in save_file
+    ext = file.content_type.split("/", 1)[1]
+          ^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'content_type'
+[2023-10-31 13:41:28,289] WARNING in ext: No mailer seems to be configured. The auth features requiring mailer won't work.
+[2023-10-31 13:41:28,983] WARNING in ext: No mailer seems to be configured. The auth features requiring mailer won't work.
+[2023-10-31 13:41:29,313] ERROR in client: Application exception:
+Traceback (most recent call last):
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/testing/client.py", line 69, in dynamic_handler
+    http = await self.router.dispatch(request, response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/routing/router.py", line 249, in dispatch
+    return await match.dispatch(reqargs, response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/routing/dispatchers.py", line 72, in dispatch
+    rv = self.response_builder(await self.f(**reqargs), response)
+                               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/pipeline.py", line 328, in flow
+    output = await pipe_method(f, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/pipeline.py", line 234, in pipe
+    return await next_pipe(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/pipeline.py", line 328, in flow
+    output = await pipe_method(f, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/tools/auth/apis.py", line 287, in pipe
+    return await next_pipe(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/pipeline.py", line 369, in flow
+    return await pipe_method(f, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/pipeline.py", line 274, in pipe_request
+    return await next_pipe(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/src/modules/userdata/controller.py", line 68, in upload
+    upload_result: Result = await upload_service.create_upload(file)
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/src/modules/userdata/UploadService.py", line 99, in create_upload
+    file_save_result = await self.save_file(file)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/src/modules/userdata/UploadService.py", line 66, in save_file
+    ext = file.content_type.split("/", 1)[1]
+          ^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'content_type'
+[2023-10-31 13:42:38,472] WARNING in ext: No mailer seems to be configured. The auth features requiring mailer won't work.
+[2023-10-31 13:42:38,761] ERROR in client: Application exception:
+Traceback (most recent call last):
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/testing/client.py", line 69, in dynamic_handler
+    http = await self.router.dispatch(request, response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/routing/router.py", line 249, in dispatch
+    return await match.dispatch(reqargs, response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/routing/dispatchers.py", line 72, in dispatch
+    rv = self.response_builder(await self.f(**reqargs), response)
+                               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/pipeline.py", line 328, in flow
+    output = await pipe_method(f, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/pipeline.py", line 234, in pipe
+    return await next_pipe(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/pipeline.py", line 328, in flow
+    output = await pipe_method(f, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/tools/auth/apis.py", line 287, in pipe
+    return await next_pipe(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/pipeline.py", line 369, in flow
+    return await pipe_method(f, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/pipeline.py", line 274, in pipe_request
+    return await next_pipe(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/src/modules/userdata/controller.py", line 68, in upload
+    upload_result: Result = await upload_service.create_upload(file)
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/src/modules/userdata/UploadService.py", line 99, in create_upload
+    file_save_result = await self.save_file(file)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/src/modules/userdata/UploadService.py", line 66, in save_file
+    ext = file.content_type.split("/", 1)[1]
+          ^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'content_type'
+[2023-10-31 13:43:06,547] WARNING in ext: No mailer seems to be configured. The auth features requiring mailer won't work.
+[2023-10-31 13:43:06,874] ERROR in client: Application exception:
+Traceback (most recent call last):
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/testing/client.py", line 69, in dynamic_handler
+    http = await self.router.dispatch(request, response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/routing/router.py", line 249, in dispatch
+    return await match.dispatch(reqargs, response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/routing/dispatchers.py", line 72, in dispatch
+    rv = self.response_builder(await self.f(**reqargs), response)
+                               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/pipeline.py", line 328, in flow
+    output = await pipe_method(f, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/pipeline.py", line 234, in pipe
+    return await next_pipe(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/pipeline.py", line 328, in flow
+    output = await pipe_method(f, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/tools/auth/apis.py", line 287, in pipe
+    return await next_pipe(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/pipeline.py", line 369, in flow
+    return await pipe_method(f, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/pipeline.py", line 274, in pipe_request
+    return await next_pipe(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/src/modules/userdata/controller.py", line 68, in upload
+    upload_result: Result = await upload_service.create_upload(file)
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/src/modules/userdata/UploadService.py", line 99, in create_upload
+    file_save_result = await self.save_file(file)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/src/modules/userdata/UploadService.py", line 66, in save_file
+    ext = file.content_type.split("/", 1)[1]
+          ^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'content_type'
+[2023-10-31 13:43:28,550] WARNING in ext: No mailer seems to be configured. The auth features requiring mailer won't work.
+[2023-10-31 13:43:28,857] ERROR in client: Application exception:
+Traceback (most recent call last):
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/testing/client.py", line 69, in dynamic_handler
+    http = await self.router.dispatch(request, response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/routing/router.py", line 249, in dispatch
+    return await match.dispatch(reqargs, response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/routing/dispatchers.py", line 72, in dispatch
+    rv = self.response_builder(await self.f(**reqargs), response)
+                               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/pipeline.py", line 328, in flow
+    output = await pipe_method(f, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/pipeline.py", line 234, in pipe
+    return await next_pipe(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/pipeline.py", line 328, in flow
+    output = await pipe_method(f, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/tools/auth/apis.py", line 287, in pipe
+    return await next_pipe(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/pipeline.py", line 369, in flow
+    return await pipe_method(f, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/pipeline.py", line 274, in pipe_request
+    return await next_pipe(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/src/modules/userdata/controller.py", line 68, in upload
+    upload_result: Result = await upload_service.create_upload(file)
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/src/modules/userdata/UploadService.py", line 99, in create_upload
+    file_save_result = await self.save_file(file)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/src/modules/userdata/UploadService.py", line 66, in save_file
+    ext = file.content_type.split("/", 1)[1]
+          ^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'content_type'
+[2023-10-31 13:46:53,186] WARNING in ext: No mailer seems to be configured. The auth features requiring mailer won't work.
+[2023-10-31 13:46:53,494] ERROR in client: Application exception:
+Traceback (most recent call last):
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/testing/client.py", line 69, in dynamic_handler
+    http = await self.router.dispatch(request, response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/routing/router.py", line 249, in dispatch
+    return await match.dispatch(reqargs, response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/routing/dispatchers.py", line 72, in dispatch
+    rv = self.response_builder(await self.f(**reqargs), response)
+                               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/pipeline.py", line 328, in flow
+    output = await pipe_method(f, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/pipeline.py", line 234, in pipe
+    return await next_pipe(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/pipeline.py", line 328, in flow
+    output = await pipe_method(f, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/tools/auth/apis.py", line 287, in pipe
+    return await next_pipe(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/pipeline.py", line 369, in flow
+    return await pipe_method(f, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/pipeline.py", line 274, in pipe_request
+    return await next_pipe(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/src/modules/userdata/controller.py", line 68, in upload
+    upload_result: Result = await upload_service.create_upload(file)
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/src/modules/userdata/UploadService.py", line 99, in create_upload
+    file_save_result = await self.save_file(file)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/src/modules/userdata/UploadService.py", line 66, in save_file
+    ext = file.content_type.split("/", 1)[1]
+          ^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'content_type'
+[2023-10-31 13:47:11,201] WARNING in ext: No mailer seems to be configured. The auth features requiring mailer won't work.
+[2023-10-31 13:47:11,843] WARNING in ext: No mailer seems to be configured. The auth features requiring mailer won't work.
+[2023-10-31 13:47:12,131] ERROR in client: Application exception:
+Traceback (most recent call last):
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/testing/client.py", line 69, in dynamic_handler
+    http = await self.router.dispatch(request, response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/routing/router.py", line 249, in dispatch
+    return await match.dispatch(reqargs, response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/routing/dispatchers.py", line 72, in dispatch
+    rv = self.response_builder(await self.f(**reqargs), response)
+                               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/pipeline.py", line 328, in flow
+    output = await pipe_method(f, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/pipeline.py", line 234, in pipe
+    return await next_pipe(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/pipeline.py", line 328, in flow
+    output = await pipe_method(f, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/tools/auth/apis.py", line 287, in pipe
+    return await next_pipe(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/pipeline.py", line 369, in flow
+    return await pipe_method(f, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/pipeline.py", line 274, in pipe_request
+    return await next_pipe(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/src/modules/userdata/controller.py", line 68, in upload
+    upload_result: Result = await upload_service.create_upload(file)
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/src/modules/userdata/UploadService.py", line 99, in create_upload
+    file_save_result = await self.save_file(file)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/src/modules/userdata/UploadService.py", line 66, in save_file
+    ext = file.content_type.split("/", 1)[1]
+          ^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'content_type'
+[2023-10-31 13:47:30,885] WARNING in ext: No mailer seems to be configured. The auth features requiring mailer won't work.
+[2023-10-31 13:47:31,520] WARNING in ext: No mailer seems to be configured. The auth features requiring mailer won't work.
+[2023-10-31 13:47:31,862] ERROR in client: Application exception:
+Traceback (most recent call last):
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/testing/client.py", line 69, in dynamic_handler
+    http = await self.router.dispatch(request, response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/routing/router.py", line 249, in dispatch
+    return await match.dispatch(reqargs, response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/routing/dispatchers.py", line 72, in dispatch
+    rv = self.response_builder(await self.f(**reqargs), response)
+                               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/pipeline.py", line 328, in flow
+    output = await pipe_method(f, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/pipeline.py", line 234, in pipe
+    return await next_pipe(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/pipeline.py", line 328, in flow
+    output = await pipe_method(f, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/tools/auth/apis.py", line 287, in pipe
+    return await next_pipe(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/pipeline.py", line 369, in flow
+    return await pipe_method(f, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/pipeline.py", line 274, in pipe_request
+    return await next_pipe(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/src/modules/userdata/controller.py", line 68, in upload
+    upload_result: Result = await upload_service.create_upload(file)
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/src/modules/userdata/UploadService.py", line 99, in create_upload
+    file_save_result = await self.save_file(file)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/src/modules/userdata/UploadService.py", line 66, in save_file
+    ext = file.content_type.split("/", 1)[1]
+          ^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'content_type'
+[2023-10-31 13:47:57,012] WARNING in ext: No mailer seems to be configured. The auth features requiring mailer won't work.
+[2023-10-31 13:47:57,329] ERROR in client: Application exception:
+Traceback (most recent call last):
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/testing/client.py", line 69, in dynamic_handler
+    http = await self.router.dispatch(request, response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/routing/router.py", line 249, in dispatch
+    return await match.dispatch(reqargs, response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/routing/dispatchers.py", line 72, in dispatch
+    rv = self.response_builder(await self.f(**reqargs), response)
+                               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/pipeline.py", line 328, in flow
+    output = await pipe_method(f, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/pipeline.py", line 234, in pipe
+    return await next_pipe(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/pipeline.py", line 328, in flow
+    output = await pipe_method(f, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/tools/auth/apis.py", line 287, in pipe
+    return await next_pipe(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/pipeline.py", line 369, in flow
+    return await pipe_method(f, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/pipeline.py", line 274, in pipe_request
+    return await next_pipe(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/src/modules/userdata/controller.py", line 68, in upload
+    upload_result: Result = await upload_service.create_upload(file)
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/src/modules/userdata/UploadService.py", line 99, in create_upload
+    file_save_result = await self.save_file(file)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/src/modules/userdata/UploadService.py", line 66, in save_file
+    ext = file.content_type.split("/", 1)[1]
+          ^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'content_type'
+[2023-10-31 13:48:38,073] WARNING in ext: No mailer seems to be configured. The auth features requiring mailer won't work.
+[2023-10-31 13:49:09,120] WARNING in ext: No mailer seems to be configured. The auth features requiring mailer won't work.
+[2023-10-31 13:51:05,472] WARNING in ext: No mailer seems to be configured. The auth features requiring mailer won't work.
+[2023-10-31 13:51:05,819] ERROR in client: Application exception:
+Traceback (most recent call last):
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/testing/client.py", line 69, in dynamic_handler
+    http = await self.router.dispatch(request, response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/routing/router.py", line 249, in dispatch
+    return await match.dispatch(reqargs, response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/routing/dispatchers.py", line 72, in dispatch
+    rv = self.response_builder(await self.f(**reqargs), response)
+                               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/pipeline.py", line 328, in flow
+    output = await pipe_method(f, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/pipeline.py", line 234, in pipe
+    return await next_pipe(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/pipeline.py", line 328, in flow
+    output = await pipe_method(f, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/tools/auth/apis.py", line 287, in pipe
+    return await next_pipe(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/pipeline.py", line 369, in flow
+    return await pipe_method(f, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/pipeline.py", line 274, in pipe_request
+    return await next_pipe(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/src/modules/userdata/controller.py", line 68, in upload
+    upload_result: Result = await upload_service.create_upload(file)
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/src/modules/userdata/UploadService.py", line 99, in create_upload
+    file_save_result = await self.save_file(file)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/src/modules/userdata/UploadService.py", line 83, in save_file
+    await file.save(file_location)
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/wrappers/helpers.py", line 101, in save
+    destination = open(destination, 'wb')
+                  ^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'storage/tests/test_files/clean.csv'
+[2023-10-31 13:52:17,619] WARNING in ext: No mailer seems to be configured. The auth features requiring mailer won't work.
+[2023-10-31 13:52:17,929] ERROR in client: Application exception:
+Traceback (most recent call last):
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/testing/client.py", line 69, in dynamic_handler
+    http = await self.router.dispatch(request, response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/routing/router.py", line 249, in dispatch
+    return await match.dispatch(reqargs, response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/routing/dispatchers.py", line 72, in dispatch
+    rv = self.response_builder(await self.f(**reqargs), response)
+                               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/pipeline.py", line 328, in flow
+    output = await pipe_method(f, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/pipeline.py", line 234, in pipe
+    return await next_pipe(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/pipeline.py", line 328, in flow
+    output = await pipe_method(f, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/tools/auth/apis.py", line 287, in pipe
+    return await next_pipe(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/pipeline.py", line 369, in flow
+    return await pipe_method(f, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/pipeline.py", line 274, in pipe_request
+    return await next_pipe(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/src/modules/userdata/controller.py", line 68, in upload
+    upload_result: Result = await upload_service.create_upload(file)
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/src/modules/userdata/UploadService.py", line 99, in create_upload
+    file_save_result = await self.save_file(file)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/src/modules/userdata/UploadService.py", line 83, in save_file
+    await file.save(file_location)
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/wrappers/helpers.py", line 101, in save
+    destination = open(destination, 'wb')
+                  ^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'storage/tests/test_files/clean.csv'
+[2023-10-31 13:53:54,925] WARNING in ext: No mailer seems to be configured. The auth features requiring mailer won't work.
+[2023-10-31 13:58:42,772] WARNING in ext: No mailer seems to be configured. The auth features requiring mailer won't work.
+[2023-10-31 13:59:04,926] WARNING in ext: No mailer seems to be configured. The auth features requiring mailer won't work.
+[2023-10-31 13:59:21,933] WARNING in ext: No mailer seems to be configured. The auth features requiring mailer won't work.
+[2023-10-31 13:59:22,389] ERROR in client: Application exception:
+Traceback (most recent call last):
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/testing/client.py", line 69, in dynamic_handler
+    http = await self.router.dispatch(request, response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/routing/router.py", line 249, in dispatch
+    return await match.dispatch(reqargs, response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/routing/dispatchers.py", line 72, in dispatch
+    rv = self.response_builder(await self.f(**reqargs), response)
+                               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/pipeline.py", line 328, in flow
+    output = await pipe_method(f, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/pipeline.py", line 234, in pipe
+    return await next_pipe(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/pipeline.py", line 328, in flow
+    output = await pipe_method(f, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/tools/auth/apis.py", line 287, in pipe
+    return await next_pipe(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/pipeline.py", line 369, in flow
+    return await pipe_method(f, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/pipeline.py", line 274, in pipe_request
+    return await next_pipe(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/src/modules/userdata/controller.py", line 68, in upload
+    upload_result: Result = await upload_service.create_upload(file)
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/src/modules/userdata/UploadService.py", line 99, in create_upload
+    file_save_result = await self.save_file(file)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/src/modules/userdata/UploadService.py", line 83, in save_file
+    await file.save(file_location)
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/wrappers/helpers.py", line 101, in save
+    destination = open(destination, 'wb')
+                  ^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'storage/tests/test_files/clean.csv'
+[2023-10-31 14:02:03,536] WARNING in ext: No mailer seems to be configured. The auth features requiring mailer won't work.
+[2023-10-31 14:02:03,963] ERROR in client: Application exception:
+Traceback (most recent call last):
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/testing/client.py", line 69, in dynamic_handler
+    http = await self.router.dispatch(request, response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/routing/router.py", line 249, in dispatch
+    return await match.dispatch(reqargs, response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/routing/dispatchers.py", line 72, in dispatch
+    rv = self.response_builder(await self.f(**reqargs), response)
+                               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/pipeline.py", line 328, in flow
+    output = await pipe_method(f, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/pipeline.py", line 234, in pipe
+    return await next_pipe(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/pipeline.py", line 328, in flow
+    output = await pipe_method(f, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/tools/auth/apis.py", line 287, in pipe
+    return await next_pipe(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/pipeline.py", line 369, in flow
+    return await pipe_method(f, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/pipeline.py", line 274, in pipe_request
+    return await next_pipe(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/src/modules/userdata/controller.py", line 78, in upload
+    file_result = data_service.save_file_data(file_location)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/src/modules/userdata/DataService.py", line 75, in save_file_data
+    model_result = insert_model(model_name, columns, np_row_arr)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/src/utils/model_utils.py", line 40, in insert_model
+    insert_row = ReturnClass.create(params_dict)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/orm/models.py", line 957, in create
+    return cls.table.validate_and_insert(skip_callbacks=skip_callbacks, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/orm/objects.py", line 164, in validate_and_insert
+    response.id = self.insert(skip_callbacks=skip_callbacks, **new_fields)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/orm/objects.py", line 143, in insert
+    ret = self._db._adapter.insert(self, row.op_values())
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/orm/adapters.py", line 62, in wrapped
+    return f(adapter, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/orm/adapters.py", line 149, in insert
+    rid = typed_row_reference(id, table)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trainingmontage/dev/projects/barrios/.venv/lib/python3.11/site-packages/emmett/orm/helpers.py", line 555, in typed_row_reference
+    return {
+           ^
+KeyError: 'text'
+[2023-10-31 16:41:59,685] WARNING in ext: No mailer seems to be configured. The auth features requiring mailer won't work.
+[2023-10-31 16:42:39,004] WARNING in ext: No mailer seems to be configured. The auth features requiring mailer won't work.
+[2023-10-31 17:15:09,428] WARNING in ext: No mailer seems to be configured. The auth features requiring mailer won't work.
+[2023-10-31 17:15:46,497] WARNING in ext: No mailer seems to be configured. The auth features requiring mailer won't work.
+[2023-10-31 17:16:05,742] WARNING in ext: No mailer seems to be configured. The auth features requiring mailer won't work.

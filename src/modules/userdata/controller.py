@@ -57,11 +57,9 @@ async def file(id: int):
 async def upload():
     """
     This route handles uploading a new file and persisting
-    its data to a database
-    TODO: Consider moving the upload & persistence logic
-    into services (UploadService, UserDataService)
-    response.meta.title = 'Upload | ISS Consumables'
+    its data to a database.
     """
+    response.meta.title = "Upload | ISS Consumables"
 
     files = await request.files
     print(f"files: {files}")
@@ -72,7 +70,7 @@ async def upload():
     if upload_result:
         if upload_result["ok"] is False:
             return flash("There was a problem uploading the file", "error")
-        print(upload_result["value"])
+        # print(upload_result["value"])
         file_location = upload_result["value"]["file_location"]
     else:
         return flash("There was a problem uploading the file", "error")

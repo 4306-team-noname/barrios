@@ -23,7 +23,23 @@ def test_upload_service_has_accepted_files_list(upload_service):
     assert isinstance(upload_service.accepted_filetypes, List)
 
 
-def test_saves_clean_csv_file(logged_client, clean_csv):
-    # data = {"filename": "clean_csv.csv", "name": "", "headers": [], BytesIO(str.encode(clean_csv))}
-    res = logged_client.post("/userdata/upload", data={"files": [clean_csv]})
+def test_saves_clean_csv_file(logged_client, test_file_path):
+    with open(f"{test_file_path}/clean.csv", "rb") as clean_csv:
+        data = {
+            "filename": "clean_csv.csv",
+            "name": "clean_csv",
+            "file": clean_csv,
+        }
+        res = logged_client.post("/userdata/upload", data=data)
     assert res.status == 200
+
+
+def test_rejects_text_file(logged_client, test_file_path):
+    with open(f"{test_file_path}/test_text_file.txt", "rb") as text_file:
+        data = {
+            "filename": "test_text_file.txt",
+            "name": "test_text_file",
+            "file": text_file,
+        }
+        res = logged_client.post("/userdata/upload", data=data)
+    assert res.status == 415
