@@ -1,0 +1,11 @@
+<form id="upload-form" hx-post="/data/upload" hx-swap="outerHTML" hx-target="#main-content" hx-trigger="change"
+  hx-encoding="multipart/form-data" hx-select="#main-content" action="/data/upload" method="post">
+  <div class="stacked">
+    <input type="file" name="file" id="data-upload" />
+    <label for="data-upload">
+      {{ include 'assets/icons/upload.svg' }}
+      Upload Data
+    </label>
+  </div>
+  <!--<button>Upload</button>-->
+</form>
