@@ -63,13 +63,13 @@ class UploadService:
         return {"ok": True, "value": upload_result, "error": None}
 
     async def save_file(self, file) -> Result:
-        ext = file.content_type.split("/", 1)[1]
+        ext = file.filename.split(".", 1)[-1]
         file_location = f"{self.storage_dir}/{file.filename}"
 
         if not self.is_valid_filetype(ext):
             return {
                 "ok": False,
-                "error": f"{ext} is not a valid file type",
+                "error": f"{file.content_type} is not a valid file type",
                 "value": None,
             }
 

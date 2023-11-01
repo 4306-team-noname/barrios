@@ -15,11 +15,17 @@
 </head>
 
 <body>
+  {{ include 'components/flash.html' }}
   {{ block content }}
   <main>
     {{ include }}
   </main>
   {{ end }}
+  <script>
+    htmx.on('requestError', (event) => {
+      console.log(event)
+    })
+  </script>
 </body>
 
 </html>

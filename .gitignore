@@ -1,6 +1,6 @@
 data/
 iss-data/
-storage/
+storage/*
 __pycache__
 .micromamba
 bin/

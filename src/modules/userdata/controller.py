@@ -69,8 +69,16 @@ async def upload():
 
     if upload_result:
         if upload_result["ok"] is False:
-            return flash("There was a problem uploading the file", "error")
-        # print(upload_result["value"])
+            print(f"upload_result: {upload_result}")
+            if upload_result["error"] is not None:
+                # if we receive an error from the service,
+                # we should just pass that on to the client
+                flash(upload_result["error"], "error")
+                return flash(upload_result["error"], "error")
+            else:
+                # otherwise, our state is still not 'ok' and we
+                # should let the client know we couldn't fulfill the request
+                return flash("There was a problem uploading the file", "error")
         file_location = upload_result["value"]["file_location"]
     else:
         return flash("There was a problem uploading the file", "error")
