@@ -1,19 +1,8 @@
 {{ extend 'dashboard_layout.html' }}
 
-{{ if len(uploads) > 0: }}
-<section id="main-content" class="surface">
-  <h1>Data</h1>
-  <ul class="card-grid">
-    {{ for upload in uploads: }}
-    <li class="card"><a href="/userdata/{{=upload.id}}">{{=upload.file_name}}</a></li>
-    {{ pass }}
-  </ul>
-</section>
-
-{{ else: }}
 <section id="main-content" class="surface center-col">
   <div class="center-col gap-2">
     <h1>Upload some data to get started</h1>
     {{ include 'components/uploadform.html' }}
   </div>
-  {{ pass }}
+</section>

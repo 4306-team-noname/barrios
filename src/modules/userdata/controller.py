@@ -1,6 +1,7 @@
 from app import app, db, auth
 from typing import Final
-from emmett import request, response, url
+from emmett import current, redirect, url
+from emmett import request, response, session, url
 from emmett.helpers import flash
 from emmett.pipeline import RequirePipe
 from modules.userdata.UploadService import UploadService
@@ -72,9 +73,14 @@ async def upload():
             print(f"upload_result: {upload_result}")
             if upload_result["error"] is not None:
                 # if we receive an error from the service,
-                # we should just pass that on to the client
+                # we should pass that on to the client
+                # so, set a flash message
                 flash(upload_result["error"], "error")
-                return flash(upload_result["error"], "error")
+
+                # and tell emmett which template to send
+                # in this case, we're sending the userdata page
+                response.content_type = "text/html"
+                return app.render_template("pages/userdata/index.html")
             else:
                 # otherwise, our state is still not 'ok' and we
                 # should let the client know we couldn't fulfill the request
@@ -86,11 +92,11 @@ async def upload():
     file_result = data_service.save_file_data(file_location)
 
     if file_result:
-        if file_result["ok"] is not True:
+        if file_result["error"] is not None:
             error = file_result["error"]
             print(f"File result error: {error}")
             return flash(error, "error")
-        else:
+        elif file_result["value"] is not None:
             val = file_result["value"]
             table_cols = val["table_cols"]
             dataframe = val["dataframe"]
