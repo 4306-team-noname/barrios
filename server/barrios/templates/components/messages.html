@@ -1,0 +1,9 @@
+<div data-toast-container id="messages" class="flash-container">
+  {% if messages %}
+  {% for messages in message %}
+  <div class="flash hidden {{ message.tags }}">
+    {{ message }}
+  </div>
+  {% endfor %}
+  {% endif %}
+</div>

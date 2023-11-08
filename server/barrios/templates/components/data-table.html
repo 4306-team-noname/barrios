@@ -1,0 +1,18 @@
+<table class="file-table">
+  <thead>
+    <tr>
+      {% for field in table_cols %}
+      <th>{{ field }}</th>
+      {% endfor %}
+    </tr>
+  </thead>
+  <tbody>
+    {% for row in table_list %}
+    <tr>
+      {% for val in row[1:] %}
+      <td>{{ val }}</td>
+      {% endfor %}
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
