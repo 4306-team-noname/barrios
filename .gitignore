@@ -1,6 +1,10 @@
+# Client CSV directories
 data/
 iss-data/
-storage/*
+
+
+
+# python
 __pycache__
 .micromamba
 bin/
@@ -9,22 +13,23 @@ lib64/
 lib/
 venv/
 pyvenv.cfg
-
-# python
 *.pyc
 *__pycache__
 .pytest_cache
 venv
 .venv
 .ipynb_checkpoints
+
 # environment
 .env
 .env.*
 !.env.testing
+
 # npm
 node_modules
 package-lock.json
 
+# misc
 .vscode
 **/*.DS_Store
 
