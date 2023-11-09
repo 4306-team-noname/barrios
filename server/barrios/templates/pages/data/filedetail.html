@@ -1,0 +1,14 @@
+{% extends 'dashboard_layout.html' %}
+
+{% block title %}{{ upload.name }}{% endblock %}
+
+{% block main %}
+<section id="main-content">
+  <h1>File: {{ upload.name }}</h1>
+  {% if tabledata %}
+    {% autoescape off %}
+      {{ tabledata }}
+    {% endautoescape %}
+  {% endif %}
+</section>
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends 'dashboard_layout.html' %}
+
+{% block title %}Files{% endblock %}
+
+
+{% block main %}
+<section id="main-content">
+  <h1>File Uploaded</h1>
+  <h2>{{name}}</h2>
+
+  {% if len(table_list[:1]) > 0 %}
+  {% include 'components/data-table.html' %}
+  {% endif %}
+</section>
+{% endblock %}

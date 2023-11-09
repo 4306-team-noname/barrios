@@ -1,0 +1,12 @@
+{% extends 'dashboard_layout.html' %}
+
+{% block title %}Data{% endblock %}
+
+{% block main %}
+<section id="main-content" class="center-col">
+  <div class="center-col gap-2">
+    <h1>Upload some data to get started</h1>
+    {% include 'components/uploadform.html' %}
+  </div>
+</section>
+{% endblock %}
