@@ -1,0 +1,483 @@
+:root {
+  --white: #ffffff;
+  --black: #000000;
+  --blue: #091D41;
+  --blue-lighter: #0B2451;
+  --blue-hover: #0f2a5c;
+  --blue-highlight: #5d7bb0;
+  --green: #C6E975;
+  --green-darker: #aace58;
+  --chart-magenta: #FF00FF;
+  --chart-yellow: #E3E668;
+  --chart-gray: #9E9E9E;
+  --chart-gray-darker: #888888;
+  --brand-gray: #d9d9d9;
+
+  --background: var(--blue);
+  --background-surface: var(--blue-lighter);
+  --background-surface-hover: var(--blue-hover);
+  --foreground: var(--white);
+  --accent: var(--green);
+  --hover: var(--green-darker);
+
+  --font-display: 'Montserrat';
+  --font-body: 'Roboto', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+  --default-transition: 0.3s ease-in-out;
+  --medium-transition: 0.6s ease-in-out;
+  --default-radius: 1rem;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-body);
+}
+
+body {
+  padding: 1rem;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-areas:
+    "sidebar main";
+  gap: 3rem;
+  height: 100vh;
+  overflow: hidden;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  line-height: 1;
+  padding: 0;
+  margin: 0;
+}
+
+h1 {
+  font-size: 1.75rem;
+}
+
+a,
+button {
+  transition: all var(--default-transition);
+}
+
+a {
+  color: var(--foreground);
+  text-decoration: none;
+}
+
+a:hover, a.current {
+  color: var(--accent);
+}
+
+#main-content {
+  /* height: 100%; */
+  /* overflow: auto; */
+}
+
+main {
+  grid-area: main;
+  overflow: auto;
+  height: 100%;
+  /* overflow: hidden; */
+}
+
+#main-logo>svg {
+  width: min(300px, 80vw);
+  height: auto;
+}
+
+.sidebar {
+  grid-area: sidebar;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+nav ul {
+  list-style-type: none;
+  margin: 0;
+  margin-block: 3rem;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+.full-page {
+  grid-column: span 2;
+}
+
+.center-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  gap: 2rem;
+
+  & p {
+    line-height: 1;
+    margin: 0;
+  }
+}
+
+.center-col > .form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  width: min(400px, 90%);
+
+  & form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  & form label {
+    text-transform: uppercase;
+    letter-spacing: 0.125em;
+    font-weight: bold;
+  }
+  
+  & form>div {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 1em;
+    & input {
+      width: 100%;
+      padding: 0.75em;
+      border-radius: 0.5em;
+      border: none;
+      background-color: var(--brand-gray);
+    }
+  }
+}
+
+.logo-wrapper {
+  width: min(400px, 90%);
+  & svg {
+    min-width: 100%;
+    height: auto;
+  }
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.gap-1 {
+  gap: 1rem;
+}
+
+.gap-2 {
+  gap: 2rem;
+}
+
+.gap-3 {
+  gap: 3rem;
+}
+
+.gap-4 {
+  gap: 4rem;
+}
+
+.txt-large {
+  font-size: 1.5rem;
+}
+
+.txt-bold {
+  font-weight: 800;
+}
+
+/* SVG Icon Styles 
+* These rules are made to be applied to an SVG element with a class of 'icon'.
+* They allow you to add the svg to a parent element, an anchor, for example. Setting
+* the font-size of that parent element will dictate the size of the SVG icon. Additionally
+* the icon's color will match the color of the parent element.
+*
+* All svg icons can be found in the public/icons directory. They have been set up for use
+* as described above.
+*/
+.icon {
+  fill: currentColor;
+  width: 1em;
+  height: 1em;
+  overflow: visible;
+}
+
+/*
+* Link with icon.
+* Structure:
+* <a href="/dashboard">
+*   <svg class="icon".../>
+*   Dashboard
+* </a>
+*/
+.icon-link {
+  display: flex;
+  gap: 1em;
+  align-items: center;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+button {
+  border: none;
+  cursor: pointer;
+  padding: 0.5em;
+  border-radius: 0.25em;
+  background-color: var(--brand-gray);
+  color: var(--background);
+  font-weight: bold;
+}
+
+button:hover {
+  color: var(--black);
+  background-color: var(--foreground);
+}
+
+.surface,
+.stacked {
+  background-color: var(--background-surface);
+  border-radius: var(--default-radius);
+}
+
+/* Upload form styles */
+/* These styles basically manipulate the 
+   file upload form to look like a button
+   with an icon.
+ */
+
+/* This element will be relatively positioned
+    and its children will be absolutely positioned
+    and sized so they take up all of the parent's space.
+    They will then be stacked so the file-chooser button
+    is on top. The file-chooser button will have an opacity
+    of 0 so the styles of elements below it will show through
+    but click events will still emanate from the button.
+ */
+.stacked {
+  position: relative;
+  padding: 1rem;
+  transition: background-color var(--default-transition);
+}
+
+.stacked:hover {
+  background-color: var(--background-surface-hover);
+}
+
+.stacked .icon {
+  width: 1.75rem;
+  height: 1.75rem;
+}
+
+/* Take up the full width and height of the parent element.
+   Note: This element's children make up the content that's displayed
+   to the user (the label element) and the element
+   that responds to a user's interaction (the ::file-selector-button)
+*/
+.stacked input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 100;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+}
+
+/* This label represents everything that's displayed to the user
+   within the actual upload form (other than the form's background-color).
+   If you look at the HTML, you'll see it contains an icon and some label text.
+*/
+.stacked label {
+  font-size: 1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-inline: auto;
+  gap: 1rem;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* This is the interactive element. Its z-index has been set to a high value
+   so it stacks above its siblings. It's opacity is set to 0 so the styles of
+   those sibling elements and their parent element aren't hidden by the ugly
+   defaults of the actual button.
+   Why do it this way? Because there's no easy way to include an icon inside
+   ::file-selector-button. 
+*/
+.stacked input::file-selector-button {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 150;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.stacked button {
+  z-index: 150;
+  background-color: tomato;
+}
+
+/* Progress bar: appears under upload form when upload initiated*/
+
+progress {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border: none;
+  min-width: 100%;
+  background-color: var(--background);
+  outline-color: transparent;
+  border-radius: 1em;
+  height: 0.25rem;
+}
+
+progress::-webkit-progress-bar {
+  background-color: transparent;
+  border-radius: 1em;
+}
+
+progress::-webkit-progress-value {
+  background-color: var(--background-surface-hover);
+  border-radius: 1em;
+}
+
+progress::-moz-progress-bar {
+  background-color: var(--background-surface-hover);
+  border-radius: 1em;
+}
+
+
+.flash-container {
+  position: absolute;
+  top: 0;
+  /* height: 6rem; */
+  right: 0;
+  /* width: min(350px, 90%); */
+  padding: 3rem;
+
+  & .flash {
+    border-radius: var(--default-radius);
+    background-color: var(--background-surface);
+    border: 1px solid var(--blue-highlight);
+    transition: opacity var(--medium-transition);
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 1.5rem;
+    /* border: 1px solid var(--white); */
+    box-shadow: 5px 5px 20px rgb(0, 0, 0, 0.2);
+    text-transform: uppercase;
+    letter-spacing: 0.125em;
+    font-weight: bold;
+  }
+
+  & .hidden {
+    opacity: 0;
+  }
+
+  & .error {
+    color: var(--chart-yellow);
+  }
+}
+
+
+.surface {
+  background-color: var(--background-surface);
+  padding: 1rem;
+}
+
+table {
+  width: 100%;
+  background-color: var(--background-surface);
+  border: none;
+}
+
+tbody tr:nth-child(odd) {
+  background-color: var(--background);
+}
+
+
+th {
+  padding: 0.5rem;
+  text-align: left;
+  color: var(--accent);
+  text-transform: uppercase;
+  border: none;
+}
+
+td {
+  padding: 0.5rem;
+  text-transform: uppercase;
+  border: none;
+}
+
+/* ANIMATIONS */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes fade-out {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes slide-from-right {
+  from {
+    transform: translateX(90px);
+  }
+}
+
+@keyframes slide-to-left {
+  to {
+    transform: translateX(-90px);
+  }
+}
+
+::view-transition-old(slide-it) {
+  animation: 180ms cubic-bezier(0.4, 0, 1, 1) both fade-out,
+    600ms cubic-bezier(0.4, 0, 0.2, 1) both slide-to-left;
+}
+
+::view-transition-new(slide-it) {
+  animation: 420ms cubic-bezier(0, 0, 0.2, 1) 90ms both fade-in,
+    600ms cubic-bezier(0.4, 0, 0.2, 1) both slide-from-right;
+}
+
+#main-content {
+  view-transition-name: slide-it;
+}
+
+@media (prefers-reduced-motion) {
+  #main-content {
+    view-transition-name: none;
+  }
+}

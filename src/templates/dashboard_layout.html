@@ -1,0 +1,9 @@
+{{ extend 'base.html' }}
+
+{{ block content }}
+{{ include 'components/sidebar.html' }}
+<main hx-boost="true" hx-target="#main-content" hx-select="#main-content"
+  hx-swap="outerHTML transition:true show:body:top">
+  {{ include }}
+</main>
+{{ end }}

@@ -6,7 +6,7 @@ from emmett.sessions import SessionManager
 from models.User import User
 from utils.model_utils import define_models
 from utils.setup_app_commands import setup_app_commands
-
+from localpipes.htmxpipe import HTMXMessagePipe
 
 app = App(__name__)
 app.config.url_default_namespace = "main"
@@ -27,6 +27,7 @@ db = Database(app)
 auth = Auth(app, db, user_model=User)
 db = define_models(db)
 app.pipeline = [
+    HTMXMessagePipe(),
     SessionManager.cookies("TeamNonameBarrios", encryption_mode="modern"),
     db.pipe,
     auth.pipe,

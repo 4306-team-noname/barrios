@@ -1,5 +1,5 @@
-<form id="upload-form" hx-post="/data/upload" hx-swap="outerHTML" hx-target="#main-content" hx-trigger="change"
-  hx-encoding="multipart/form-data" hx-select="#main-content" action="/data/upload" method="post">
+<form id="upload-form" hx-post="/userdata/upload" hx-trigger="change" hx-encoding="multipart/form-data"
+  action="/userdata/upload" method="post" hx-target="#main-content" hx-select="#main-content">
   <div class="stacked">
     <input type="file" name="file" id="data-upload" />
     <label for="data-upload">
@@ -7,5 +7,4 @@
       Upload Data
     </label>
   </div>
-  <!--<button>Upload</button>-->
 </form>

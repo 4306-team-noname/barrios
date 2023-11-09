@@ -1,17 +1,15 @@
 import pytest
 import os
-from app import app, db as _db, User, auth
-from emmett.orm.migrations.utils import generate_runtime_migration
-from emmett.testing.helpers import filesdict
-
+from app import app, db as _db
+import uuid
 
 os.environ["TEST"] = "1"
-test_file_path = "test_files"
+# test_file_path = "test_files"
 
 
 @pytest.fixture
 def test_file_path():
-    return "test_files"
+    return "tests/test_files"
 
 
 @pytest.fixture
@@ -19,16 +17,29 @@ def client():
     return app.test_client()
 
 
+@pytest.fixture
+def logged_client():
+    c = app.test_client()
+    with c.get("/auth/login").context as ctx:
+        c.post(
+            "/auth/login",
+            data={
+                "email": "analyst@test.test",
+                "password": "SuperSecret123!",
+                "_csrf_token": list(ctx.session._csrf)[-1],
+            },
+            follow_redirects=True,
+        )
+    return c
+
+
 @pytest.fixture(scope="module", autouse=True)
 def prepare_db():
     with _db.connection():
-        migration = generate_runtime_migration(_db)
-        migration.up()
+        _db.commit()
     yield _db
     with _db.connection():
-        User.all().delete()
-        auth.delete_group("admin")
-        migration.down()
+        _db.rollback()
 
 
 @pytest.fixture
@@ -37,26 +48,55 @@ def db(prepare_db):
     return prepared_db
 
 
-@pytest.fixture(scope="session")
+@pytest.fixture
 def clean_csv(test_file_path):
-    test_file = os.path.join(test_file_path, "clean.csv")
-    with open(test_file, "r+") as file:
-        return file
+    with open(f"{test_file_path}/clean.csv", "rb") as f:
+        return f
+        # file_content = f.read()
+        # return create_multipart(file_content, "clean_csv", "clean_csv.csv", "text/csv")
 
 
-@pytest.fixture(scope="session")
+@pytest.fixture
 def no_header_csv(test_file_path):
-    test_file = os.path.join(test_file_path, "no_header.csv")
-    with open(test_file, "r+") as file:
-        return file
+    with open(f"{test_file_path}/no_header.csv", "rb") as f:
+        return f
+        # file_content = f.read()
+        # return create_multipart(
+        #     file_content, "no_header_csv", "no_header_csv.csv", "text/csv"
+        # )
 
 
-@pytest.fixture(scope="session")
-def shifted_data_csv(test_file_path):
-    test_file = os.path.join(test_file_path, "shifted_data.csv")
-    with open(test_file, "rb") as fh:
-        buffer = BytesIO(fh.read())
-        fs = FileStorage
+@pytest.fixture
+def shifted_csv(test_file_path):
+    with open(f"{test_file_path}/shifted.csv", "rb") as f:
+        return f
+        # file_content = f.read()
+        # return create_multipart(
+        #     file_content, "shifted_csv", "shifted_csv.csv", "text/csv"
+        # )
+
+
+@pytest.fixture
+def test_text_file(test_file_path):
+    with open(f"{test_file_path}/test_text_file.txt", "rb") as f:
+        return f
+        # file_content = f.read()
+        # return create_multipart(
+        #     file_content, "test_text_file", "test_text_file.txt", "text/plain"
+        # )
+
+
+# def create_multipart(file_content, name, file_name, file_type):
+#     boundary = str(uuid.uuid4())
+#     payload = (
+#         f"--{boundary}\r\n"
+#         f'Content-Disposition: form-data; name="{name}"; filename="{file_name}"\r\n'
+#         f"Content-Type: {file_type}\r\n"
+#         "\r\n"
+#         f"{file_content.decode('utf-8')}\r\n"
+#         f"--{boundary}--\r\n"
+#     )
+#     return payload
 
 
 """

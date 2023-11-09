@@ -8,9 +8,9 @@ def setup_app_commands(app: App, db: Database, auth):
     def setup_admin():
         with db.connection():
             user = User.create(
-                email="jcaldwell2@angelo.edu",
-                first_name="Jeff",
-                last_name="Caldwell",
+                email="admin@test.test",
+                first_name="Arnold",
+                last_name="Administrator",
                 password="SuperSecret123!",
             )
 

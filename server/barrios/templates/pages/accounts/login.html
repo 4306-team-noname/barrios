@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+<main class="full-page">
+    <div class="center-col">
+      <div class="logo-wrapper">
+        {% include 'assets/images/barrios_logo.svg' %}
+      </div>
+    <div class="form-container">
+      <form method="POST" id="login" hx-boost="true">
+      {% csrf_token %}
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input type="text" name="username" id="username" autocomplete="username" autofocus="" required="" maxlength="150">
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" name="password" id="password" autocomplete="current-password" required="">
+      </div>
+      <button type="submit">Log In</button>
+      </form>
+    </div>
+    </div>
+</main>
+{% endblock %}

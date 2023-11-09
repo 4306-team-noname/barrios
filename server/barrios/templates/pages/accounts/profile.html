@@ -1,0 +1,9 @@
+{% extends 'dashboard_layout.html' %}
+
+{% block main %}
+<section id="main-content">
+  <h1>Profile</h1>
+  {{ request.user.username }}
+</section>
+
+{% endblock %}

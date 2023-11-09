@@ -1,7 +1,15 @@
 {{ extend 'base.html' }}
 
-<section id="main-content">
-  <div class="welcome surface">
-    <h1>Barrios</h1>
+<section id="main-content" class="center-col">
+  <div class="gap-2 center-col">
+    <div id="main-logo">
+      {{ include 'assets/images/barrios_logo.svg' }}
+    </div>
+    <!-- <h1>ISS Analytics</h1> -->
+    <div class="center-col gap-1">
+      <a href="/auth/login" class="txt-large txt-bold">Login</a>
+      <p>Or</p>
+      <a href="/auth/signup" class="txt-large txt-bold">Sign Up</a>
+    </div>
   </div>
 </section>
