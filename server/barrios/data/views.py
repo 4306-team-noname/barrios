@@ -35,6 +35,6 @@ def upload_post(request):
             "pages/data/filedetail.html",
             {
                 "upload": request.FILES["file"],
-                "tabledata": df.to_html(index=False, na_rep=""),
+                "tabledata": df.to_html(index=False, na_rep="", max_rows=100),
             },
         )

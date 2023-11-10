@@ -52,6 +52,34 @@ body {
   overflow: hidden;
 }
 
+/* SCROLLBAR STYLES */
+
+body {
+  scrollbar-width: thin;
+  scrollbar-color: var(--blue-highlight) var(--background-surface);
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--blue-highlight);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: var(--background-surface);
+  border: none;
+}
+
+::-webkit-scrollbar-button {
+  background-color: var(--background-surface);
+  border-radius: 5px;
+}
+
+
 h1,
 h2,
 h3,
@@ -78,11 +106,6 @@ a {
 
 a:hover, a.current {
   color: var(--accent);
-}
-
-#main-content {
-  /* height: 100%; */
-  /* overflow: auto; */
 }
 
 main {
@@ -112,6 +135,12 @@ nav ul {
   display: flex;
   flex-direction: column;
   gap: 3rem;
+}
+
+#main-content {
+  & > h1 {
+    margin-bottom: 2rem;
+  }
 }
 
 .full-page {
