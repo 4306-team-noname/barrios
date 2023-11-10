@@ -1,5 +1,7 @@
+convert-case>=1.2.3
+coverage>=7.3.2
 django>=4.2.7
-psycopg2-binary-2.9.9
+psycopg2-binary>=2.9.9
 pandas>=2.1.1
 pycases>=0.1.1
 pytest>=7.4.2

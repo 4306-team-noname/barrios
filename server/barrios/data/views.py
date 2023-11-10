@@ -18,6 +18,11 @@ def index(request):
 
 @require_POST
 def upload_post(request):
+    """
+    Notes:
+        - use <ClassName>._meta.db_table to get table name?
+        - may still need a lookup dict to match cols to models
+    """
     form = UploadFileForm(request.POST, request.FILES)
     if form.is_valid():
         file = request.FILES["file"]
