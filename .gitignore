@@ -19,6 +19,14 @@ venv
 .venv
 .ipynb_checkpoints
 
+# Test coverage
+htmlcov/
+.coverage
+.coverage.*
+coverage.xml
+*.cover
+
+
 # environment
 .env
 .env.*
