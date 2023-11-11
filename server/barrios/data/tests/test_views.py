@@ -45,7 +45,7 @@ class TestDataViews(TestCase):
         response = self.client.post("/data/upload/", {"file": csv})
         self.assertEqual(response.status_code, 200)
 
-    # TODO: Add a validator to the Upload model. While
+    # TODO: Find the right place to validate the uploaded file. While
     # the FileExtensionValidator can be used, we need to find
     # a way to ensure the file contents are what we expect as well
     # either way, the view is not the place to check that this validation
