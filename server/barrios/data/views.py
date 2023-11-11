@@ -5,6 +5,8 @@ from django.shortcuts import redirect, render
 from django.views.decorators.http import require_POST
 from .models.Upload import Upload
 from .forms import UploadFileForm
+from django.core.exceptions import PermissionDenied, ValidationError
+from django.core.validators import FileExtensionValidator
 
 
 def index(request):
@@ -20,19 +22,19 @@ def index(request):
         return redirect("/accounts/login")
 
 
-@require_POST
 def upload_post(request):
     """
     Notes:
         - use <ClassName>._meta.db_table to get table name?
         - may still need a lookup dict to match cols to models
     """
+    if request.method != "POST":
+        return redirect("/data/")
+
     if not request.user.is_authenticated:
-        return HttpResponse(
-            content="You must be logged in to upload",
-            content_type="text/plain",
-            status_code=403,
-        )
+        # TODO: Implement a middleware to display a custom
+        # template for this error
+        raise PermissionDenied()
 
     form = UploadFileForm(request.POST, request.FILES)
     if form.is_valid():
