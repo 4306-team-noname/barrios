@@ -1,4 +1,4 @@
-from django.db.models import CharField, IntegerField, ManyToOneRel, Model
+from django.db.models import CharField, IntegerField, Model
 
 
 class Category(Model):

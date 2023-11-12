@@ -34,7 +34,6 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     "accounts.apps.AccountsConfig",  # Don't delete. Custom user model lives here
     "dashboard.apps.DashboardConfig",
-    "flightplan.apps.FlightplanConfig",
     "forecast.apps.ForecastConfig",
     "home.apps.HomeConfig",
     "supply.apps.SupplyConfig",

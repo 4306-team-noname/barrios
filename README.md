@@ -68,6 +68,7 @@ See the [guidelines](docs/guidelines.md) guidance on how to work with Git and Gi
 You need to have `docker` and `docker-compose` installed on your computer for everything to work properly. Both can probably be obtained by installing `Docker Desktop`.
 
 #### Start Docker images
+
 Start `docker-compose` from the root directory of the application (i.e. `barrios/`).
 
 ```bash
@@ -95,17 +96,28 @@ This will pull the necessary docker images and set them up so you have a Postgre
     3.  Click `Save`
 
 #### Populate the database tables
-1. Back in the terminal, navigate to the `src` directory in the `barrios` project folder, then run a migration:
+1. Now it's time to create the database tables. Django provides a mechanism for doing that based on models that have been created in the project. Back in the terminal, navigate to `server/barrios` in the top-level project folder and run two commands:
    ```bash
-    cd src
-    emmett migrations up
+    cd server/barrios
+    python manage.py makemigrations
+    python manage.py migrate
    ```
 
+### Create an admin user
+
+Now that the database has been created, you need to have an admin user to test different parts of the application. Django provides a command for that. Run the following and follow the prompts to create an admin user:
+```bash
+python manage.py createsuperuser
+```
+
 ### Start the server
-If there were no problems with the last command, you're good to go. Just start the development server (while still in the `barrios/src` directory) with:
+
+Now that the setup is all out of the way, it's time to start the server:
 
 ```bash
-emmett develop
+python manage.py runserver
 ```
+
+That will start the server on port `8000`. Open a browser and navigate to `localhost:8000`. You should be presented with a screen that has nothing but the Barrios logo and a link to the login page. Follow the link and use the admin username/password you just created to login.
 
 Have fun!

@@ -45,23 +45,6 @@ class TestDataViews(TestCase):
         response = self.client.post("/data/upload/", {"file": csv})
         self.assertEqual(response.status_code, 200)
 
-    # TODO: Find the right place to validate the uploaded file. While
-    # the FileExtensionValidator can be used, we need to find
-    # a way to ensure the file contents are what we expect as well
-    # either way, the view is not the place to check that this validation
-    # works properly.
-    #
-    # def test_upload_non_csv_file_fails(self):
-    #     """
-    #     Check that uploading non-csv files fails
-    #     """
-    #     self.client.force_login(self.user)
-    #     not_csv = SimpleUploadedFile(
-    #         "test.txt", b"This is text", content_type="text/plain"
-    #     )
-    #     response = self.client.post("/data/upload/", {"file": not_csv})
-    #     self.assertEqual(response.status_code, 422)
-
     def test_get_request_to_upload_redirects_to_data(self):
         """
         Check that an attempt to GET /data/upload/ redirects to /data/
