@@ -67,6 +67,17 @@ See the [guidelines](docs/guidelines.md) guidance on how to work with Git and Gi
 ### Prerequisites
 You need to have `docker` and `docker-compose` installed on your computer for everything to work properly. Both can probably be obtained by installing `Docker Desktop`.
 
+## Create a virtual environment and install dependencies
+
+Run these three commands from the top-level `barrios` directory:
+
+```bash
+python -m venv .venv
+source .venv/Scripts/activate #  Windows
+source .venv/bin/activate #  Mac/Linux
+pip install -r requirements.txt
+```
+
 #### Start Docker images
 
 Start `docker-compose` from the root directory of the application (i.e. `barrios/`).
