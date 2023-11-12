@@ -19,7 +19,7 @@ Wednesday and Saturday, 7:30 p.m.
 
 ## Client Meetings
 
-TBD
+Every Thursday at 4:00 p.m. on Zoom as coordinated by Mason Kindle.
 
 ## Client Contacts
 - Ginger Kerrick, Chief Strategy Officer - ginger.kerrick@barrios.com
