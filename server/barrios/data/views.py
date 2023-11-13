@@ -1,10 +1,13 @@
 import io
+
 from django.http import HttpResponse
 import pandas as pd
 from django.shortcuts import redirect, render
-from django.views.decorators.http import require_POST
+
+# from django.views.decorators.http import require_POST
 from .models.Upload import Upload
 from .forms import UploadFileForm
+
 from django.core.exceptions import PermissionDenied, ValidationError
 from django.core.validators import FileExtensionValidator
 
