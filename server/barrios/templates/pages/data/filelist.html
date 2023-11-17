@@ -4,12 +4,26 @@
 
 
 {% block main %}
-<section id="main-content">
-  <h1>File Uploaded</h1>
-  <h2>{{name}}</h2>
-
-  {% if len(table_list[:1]) > 0 %}
-  {% include 'components/data-table.html' %}
+<section id="main-content" class="flex-v gap-2">
+  <div class="flex-h flex-end">
+    {% include 'components/uploadform.html' %}
+  </div>
+  {% if uploads %}
+  <div class="file-list">
+    {% for upload in uploads %}
+        <a href="/data/{{ upload.id }}" class="list-item">
+          <span class="flex-h gap-1">
+            <span class="txt-xlarge flex-h">
+              {% include 'assets/icons/table.svg' %}
+            </span>
+            {{ upload.name }}
+          </span>
+          <span class="flex-h">
+            {{ upload.upload_date }}
+          </span>
+        </a>
+    {% endfor %}
+  </div>
   {% endif %}
 </section>
 {% endblock %}

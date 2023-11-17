@@ -8,4 +8,4 @@ class IssFlightPlanCrewNationalityLookup(Model):
     is_rsa_crew = BooleanField()
 
     class Meta:
-        db_table = "iss_flight_plan_crew_nationality_lookups"
+        db_table = "iss_flight_plan_crew_nationality_lookup"

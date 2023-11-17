@@ -51,8 +51,8 @@ class InventoryMgmtSystemConsumables(Model):
     action_date = DateTimeField()
     move_date = DateTimeField()
     fill_status = CharField(blank=True, null=True)
-    categoryID = ForeignKey("Category", to_field="category_id", on_delete=RESTRICT)
+    category_id = ForeignKey("Category", to_field="category_id", on_delete=RESTRICT)
     category_name = CharField()
 
     class Meta:
-        db_table = "inventory_mgmt_system_consumables"
+        db_table = "inventory_mgmt_system_consumable"

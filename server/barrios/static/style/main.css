@@ -143,6 +143,21 @@ nav ul {
   }
 }
 
+.file-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  /* flex-wrap: wrap; */
+}
+
+a.list-item:hover {
+  background-color: var(--background-surface-hover);
+  color: var(--foreground);
+  /* & span { */
+  /*   color: var(--foreground); */
+  /* } */
+}
+
 .full-page {
   grid-column: span 2;
 }
@@ -229,8 +244,28 @@ nav ul {
   font-size: 1.5rem;
 }
 
+.txt-xlarge {
+  font-size: 2rem;
+}
+
 .txt-bold {
   font-weight: 800;
+}
+
+.flex-h {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  /* min-width: 100%; */
+}
+
+.flex-v {
+  display: flex;
+  flex-direction: column;
+}
+
+.flex-end {
+  justify-content: flex-end;
 }
 
 /* SVG Icon Styles 
@@ -284,6 +319,20 @@ button:hover {
 .stacked {
   background-color: var(--background-surface);
   border-radius: var(--default-radius);
+}
+
+.card {
+  background-color: var(--background);
+  border-radius: var(--default-radius);
+  padding: 1em;
+}
+
+.list-item {
+  background-color: var(--background);
+  padding: 1em;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 /* Upload form styles */

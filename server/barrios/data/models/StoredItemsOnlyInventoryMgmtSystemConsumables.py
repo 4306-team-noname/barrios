@@ -51,7 +51,7 @@ class StoredItemsOnlyInventoryMgmtSystemConsumables(Model):
     action_date = DateTimeField()
     move_date = DateTimeField()
     fill_status = CharField(blank=True, null=True)
-    categoryID = ForeignKey("Category", to_field="category_id", on_delete=CASCADE)
+    category_id = ForeignKey("Category", to_field="category_id", on_delete=CASCADE)
     category_name = CharField()
 
     class Meta:

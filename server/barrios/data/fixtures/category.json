@@ -1,0 +1,58 @@
+[
+  {
+    "model": "data.category",
+    "fields": {
+      "category_id": 1,
+      "category_name": "EDV",
+      "rate_category": "Urine Receptacle"
+    }
+  },
+  {
+    "model": "data.category",
+    "fields": {
+      "category_id": 2,
+      "category_name": "Pretreat Tanks",
+      "rate_category": "Pretreat Tank"
+    }
+  },
+  {
+    "model": "data.category",
+    "fields": {
+      "category_id": 3,
+      "category_name": "KTO",
+      "rate_category": "KTO"
+    }
+  },
+  {
+    "model": "data.category",
+    "fields": {
+      "category_id": 4,
+      "category_name": "ACY Inserts",
+      "rate_category": "ACY Inserts"
+    }
+  },
+  {
+    "model": "data.category",
+    "fields": {
+      "category_id": 5,
+      "category_name": "Filter Inserts",
+      "rate_category": "Filter Inserts"
+    }
+  },
+  {
+    "model": "data.category",
+    "fields": {
+      "category_id": 6,
+      "category_name": "Food-US",
+      "rate_category": "US Food BOBs"
+    }
+  },
+  {
+    "model": "data.category",
+    "fields": {
+      "category_id": 7,
+      "category_name": "Food-RS",
+      "rate_category": "RS Food"
+    }
+  }
+]

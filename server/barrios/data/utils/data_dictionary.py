@@ -88,8 +88,6 @@ data_dictionary = {
             "Resupply Potable (L)",
             "Resupply Technical (L)",
             "Corrected Predicted (L)",
-            "Unnamed: 7",
-            "Unnamed: 8",
         ],
     },
     "stored_items_only_inventory_mgmt_system_consumables": {
