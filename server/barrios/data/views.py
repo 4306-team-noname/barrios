@@ -58,7 +58,7 @@ def upload_post(request):
     form = UploadForm(request.POST, request.FILES)
 
     if form.is_valid():
-        # 1. Validate the file
+        # TODO: Validate the file
         # figure out how to do custom file validation here
         # Django docs recommend doing more than just checking
         # the file type and extension because those can be spoofed.
@@ -75,6 +75,9 @@ def upload_post(request):
             raise ValidationError(f"{file} is not valid")
 
         # 2. Save file to disk & file path to db
+        # TODO: Implement file saving and record insertion
+        # as part of a transaction so everything can be rolled
+        # back on failure
         form.save()
 
         # 3. Instantiate/persist models to db
@@ -95,13 +98,6 @@ def upload_post(request):
         if model_name is None:
             raise ValidationError("Your file did not match any known data types")
 
-        # print(f"model: {model_name}")
-
-        # print(df.to_dict(orient="records"))
-        # for index, row in df.iterrows():
-        # for idx, row in df.iterrows():
-        # model_result = insert_model(model_name, columns, np_row_arr)
-        # model_result = insert_model(model_name, df.to_dict(orient="records"))
         data_service.insert_df(model_name, table_name, df)
 
         return render(
