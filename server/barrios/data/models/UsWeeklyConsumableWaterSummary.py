@@ -3,7 +3,7 @@ from django.db.models import DateField, FloatField, Model
 
 
 class UsWeeklyConsumableWaterSummary(Model):
-    date = DateField(primary_key=True)
+    date = DateField()
     corrected_potable_l = FloatField()
     corrected_technical_l = FloatField()
     corrected_total_l = FloatField()

@@ -1,6 +1,11 @@
+import shutil
+from typing import Any
 from django.core.files.uploadedfile import SimpleUploadedFile
-from django.test import TestCase
+from django.http import HttpResponse
+from django.test import TestCase, override_settings
 from django.contrib.auth import get_user_model
+
+TEST_DIR = "test_data"
 
 
 class TestDataViews(TestCase):
@@ -11,9 +16,12 @@ class TestDataViews(TestCase):
         )
         self.user.save()
 
+    def tearDown(self):
+        shutil.rmtree(TEST_DIR, ignore_errors=True)
+
     def test_user_not_authenticated_base_route(self):
         """Check that a non-authenticated user is redirected from /data/"""
-        response = self.client.get("/data/")
+        response: HttpResponse | Any = self.client.get("/data/")
         self.assertEqual(response.status_code, 302)
 
     def test_user_authenticated_base_route(self):
@@ -21,7 +29,7 @@ class TestDataViews(TestCase):
         Check that an authenticated user receives status 200 from /data/
         """
         self.client.force_login(self.user)
-        response = self.client.get("/data/")
+        response: HttpResponse | Any = self.client.get("/data/")
         self.assertEqual(response.status_code, 200)
 
     def test_file_upload_rejects_unauthed_user(self):
@@ -31,9 +39,10 @@ class TestDataViews(TestCase):
         csv = SimpleUploadedFile(
             "test.csv", b"one,two,three,four", content_type="text/csv"
         )
-        response = self.client.post("/data/upload/", {"file": csv})
+        response: HttpResponse | Any = self.client.post("/data/upload/", {"file": csv})
         self.assertEqual(response.status_code, 403)
 
+    @override_settings(MEDIA_ROOT=(TEST_DIR + "/media"))
     def test_file_upload_works_for_authed_user(self):
         """
         Check that file upload works for an authorized user
@@ -42,7 +51,7 @@ class TestDataViews(TestCase):
         csv = SimpleUploadedFile(
             "test.csv", b"one,two,three,four", content_type="text/csv"
         )
-        response = self.client.post("/data/upload/", {"file": csv})
+        response: HttpResponse | Any = self.client.post("/data/upload/", {"file": csv})
         self.assertEqual(response.status_code, 200)
 
     def test_get_request_to_upload_redirects_to_data(self):
@@ -50,7 +59,7 @@ class TestDataViews(TestCase):
         Check that an attempt to GET /data/upload/ redirects to /data/
         """
         self.client.force_login(self.user)
-        response = self.client.get("/data/upload/")
+        response: HttpResponse | Any = self.client.get("/data/upload/")
         self.assertRedirects(
             response,
             "/data/",

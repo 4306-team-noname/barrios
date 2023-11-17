@@ -8,4 +8,4 @@ class TankCapacityDefinition(Model):
     units = CharField(max_length=200)
 
     class Meta:
-        db_table = "tank_capacity_definitions"
+        db_table = "tank_capacity_definition"
