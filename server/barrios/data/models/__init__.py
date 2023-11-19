@@ -7,9 +7,6 @@ from .IssFlightPlanCrewNationalityLookup import IssFlightPlanCrewNationalityLook
 from .IssFlightPlanCrew import IssFlightPlanCrew
 from .RatesDefinition import RatesDefinition
 from .RsaConsumableWaterSummary import RsaConsumableWaterSummary
-from .StoredItemsOnlyInventoryMgmtSystemConsumables import (
-    StoredItemsOnlyInventoryMgmtSystemConsumables,
-)
 from .TankCapacityDefinition import TankCapacityDefinition
 from .ThresholdsLimitsDefinition import ThresholdsLimitsDefinition
 

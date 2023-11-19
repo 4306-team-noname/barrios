@@ -1,5 +1,6 @@
 # from .UserDataEntry import UserDataEntry
 from django.db.models import CharField, DateField, IntegerField, Model
+from .FlightPlanManager import FlightPlanManager
 
 
 class IssFlightPlanCrew(Model):
@@ -10,6 +11,8 @@ class IssFlightPlanCrew(Model):
     # NOTE: spread country column into multiple
     # columns with the same datedim. Will make it easier
     # to query how many people will be on station.
+
+    objects = FlightPlanManager()
 
     class Meta:
         db_table = "iss_flight_plan_crew"

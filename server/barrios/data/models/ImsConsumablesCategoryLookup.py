@@ -2,6 +2,7 @@ from django.db.models import (
     RESTRICT,
     IntegerField,
     CharField,
+    Manager,
     Model,
     OneToOneField,
 )
@@ -9,9 +10,7 @@ from django.db.models import (
 
 class ImsConsumablesCategoryLookup(Model):
     category_name = CharField()
-    category_id = OneToOneField(
-        "Category", on_delete=RESTRICT, to_field="category_id", primary_key=True
-    )
+    category = OneToOneField("Category", on_delete=RESTRICT, to_field="category_id")
     module_name = CharField(max_length=200)
     module_id = IntegerField()
     unique_cat_mod_id = CharField(max_length=200, unique=True)
@@ -20,7 +19,7 @@ class ImsConsumablesCategoryLookup(Model):
         db_table = "ims_consumables_category_lookup"
 
     def __str__(self):
-        return f"""{{
+        return f"""\t{{
             category_id: {self.category},
             category_name: {self.category_name},
             module_id: {self.module_id},

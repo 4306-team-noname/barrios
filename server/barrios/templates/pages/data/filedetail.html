@@ -4,11 +4,9 @@
 
 {% block main %}
 <section id="main-content">
-  <h1>Preview: {{ upload.name }}</h1>
-  {% if tabledata %}
-    {% autoescape off %}
-      {{ tabledata }}
-    {% endautoescape %}
+  <h1>Preview: {{ filename }}</h1>
+  {% if column_names and fields %}
+    {% include 'components/data-table.html' %} 
   {% endif %}
 </section>
 {% endblock %}

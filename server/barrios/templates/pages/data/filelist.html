@@ -5,9 +5,6 @@
 
 {% block main %}
 <section id="main-content" class="flex-v gap-2">
-  <div class="flex-h flex-end">
-    {% include 'components/uploadform.html' %}
-  </div>
   {% if uploads %}
   <div class="file-list">
     {% for upload in uploads %}

@@ -8,3 +8,6 @@ class Category(Model):
 
     class Meta:
         db_table = "categories"
+
+    def __str__(self):
+        return str(self.category_id)

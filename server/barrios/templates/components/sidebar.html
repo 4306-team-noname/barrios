@@ -44,7 +44,9 @@
       </li>
     </ul>
   </nav>
-  <!-- {% include 'components/uploadform.html' %} -->
+  {% if upload_count > 0 %}
+  {% include 'components/uploadform.html' %}
+  {% endif %}
   <nav aria-label="User Menu">
     <ul>
       <li>
