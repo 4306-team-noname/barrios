@@ -1,52 +1,71 @@
-from barrios import settings
-from sqlalchemy import create_engine
-import pandas as pd
+from csv import DictReader
 from cases import to_snake
+from common.result import Result
+from django.forms.models import model_to_dict
+
+
+from .models import (
+    Category,
+    ImsConsumablesCategoryLookup,
+    InventoryMgmtSystemConsumables,
+    IssFlightPlan,
+    IssFlightPlanCrew,
+    IssFlightPlanCrewNationalityLookup,
+    RatesDefinition,
+    RsaConsumableWaterSummary,
+    TankCapacityDefinition,
+    ThresholdsLimitsDefinition,
+    UsRsWeeklyConsumableGasSummary,
+    UsWeeklyConsumableWaterSummary,
+)
 
 
 class DataService:
-    def __init__(self):
-        # setup the database connection
-        self.conn_default = create_engine(settings.DB_URI_DEFAULT).connect()
-        self.date_fields = {
-            "IssFlightPlan": "datedim",
-            "IssFlightPlanCrew": "datedim",
-            "RsaConsumableWaterSummary": "report_date",
-            "UsRsWeeklyConsumableGasSummary": "date",
-            "UsWeeklyConsumableWaterSummary": "date",
-        }
+    def keys_to_snake(self, model_dict):
+        new_dict = {}
+        for key in model_dict.keys():
+            if "Unnamed" not in key:
+                new_dict[to_snake(key)] = model_dict[key]
+        return new_dict
 
-        self.datetime_fields = {
-            "InventoryMgmtSystemConsumables": "datedim",
-            "StoredItemsOnlyInventoryMgmtSystemConsumables": "datedim",
-        }
+    def read_and_insert_csv(self, model_name: str, csv_path: str) -> Result:
+        insert_results = []
+        with open(csv_path, "r", newline="", encoding="utf-8-sig") as file:
+            reader = DictReader(file)
+            for row in reader:
+                converted = self.keys_to_snake(row)
+                result = None
 
-    def convert_date_cols(self, model_name: str, df: pd.DataFrame) -> pd.DataFrame:
-        if model_name in self.date_fields:
-            df[self.date_fields[model_name]] = pd.to_datetime(
-                df[self.date_fields[model_name]], format="%m/%d/%Y"
-            )
-        elif model_name in self.datetime_fields:
-            df[self.datetime_fields[model_name]] = pd.to_datetime(
-                df[self.datetime_fields[model_name]]
-            )
-        return df
-
-    def cols_to_snake(self, df: pd.DataFrame) -> pd.DataFrame:
-        df.columns = [to_snake(col) for col in df.columns]
-        return df
-
-    def insert_df(self, model_name: str, table_name: str, df: pd.DataFrame):
-        df = self.cols_to_snake(df)
-        if model_name in self.date_fields.keys() or model_name in self.datetime_fields:
-            df = self.convert_date_cols(model_name, df)
-        print(df.head())
-        rows_affected = df.to_sql(
-            table_name,
-            self.conn_default,
-            index=False,
-            if_exists="replace",
-            chunksize=25000,
-            method=None,
-        )
-        print(f"rows: {rows_affected}")
+                if model_name == "ImsConsumablesCategoryLookup":
+                    result = ImsConsumablesCategoryLookup.objects.create(**converted)
+                    print(result)
+                elif model_name == "InventoryMgmtSystemConsumables":
+                    result = InventoryMgmtSystemConsumables.objects.create(**converted)
+                elif model_name == "IssFlightPlan":
+                    result = IssFlightPlan.objects.create(**converted)
+                    print(result)
+                elif model_name == "IssFlightPlanCrew":
+                    result = IssFlightPlanCrew.objects.create(**converted)
+                elif model_name == "IssFlightPlanCrewNationalityLookup":
+                    result = IssFlightPlanCrewNationalityLookup.objects.create(
+                        **converted
+                    )
+                elif model_name == "RatesDefinition":
+                    result = RatesDefinition.objects.create(**converted)
+                elif model_name == "RsaConsumableWaterSummary":
+                    result = RsaConsumableWaterSummary.objects.create(**converted)
+                elif model_name == "TankCapacityDefinition":
+                    result = TankCapacityDefinition.objects.create(**converted)
+                elif model_name == "ThresholdsLimitsDefinition":
+                    result = ThresholdsLimitsDefinition.objects.create(**converted)
+                elif model_name == "UsRsWeeklyConsumableGasSummary":
+                    result = UsRsWeeklyConsumableGasSummary.objects.create(**converted)
+                elif model_name == "UsWeeklyConsumableWaterSummary":
+                    result = UsWeeklyConsumableWaterSummary.objects.create(**converted)
+                if result is not None:
+                    insert_results.append(result)
+            if len(insert_results) > 0:
+                serialized = [model_to_dict(result) for result in insert_results]
+                return {"ok": True, "value": serialized}
+            else:
+                return {"ok": False, "error": "Unable to save records"}

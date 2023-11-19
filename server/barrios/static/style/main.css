@@ -268,6 +268,11 @@ a.list-item:hover {
   justify-content: flex-end;
 }
 
+.flex-center {
+  justify-content: center;
+  align-items: center;
+}
+
 /* SVG Icon Styles 
 * These rules are made to be applied to an SVG element with a class of 'icon'.
 * They allow you to add the svg to a parent element, an anchor, for example. Setting
@@ -448,6 +453,16 @@ progress::-moz-progress-bar {
   border-radius: 1em;
 }
 
+.htmx-indicator{
+    opacity:0;
+    transition: opacity 500ms ease-in;
+}
+.htmx-request .htmx-indicator{
+    opacity:1
+}
+.htmx-request.htmx-indicator{
+    opacity:1
+}
 
 .flash-container {
   position: absolute;

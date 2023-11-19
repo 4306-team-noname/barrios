@@ -1,5 +1,6 @@
 #~/bin/sh
 
+python manage.py flush
 # run these two queries in pgadmin
 # before running this script
 # DROP SCHEMA public CASCADE;

@@ -44,3 +44,6 @@ package-lock.json
 storage/compiled
 prototypes/djangoserver/djangoserver/__init__.py
 prototypes/djangoserver/db.sqlite3
+
+# project specific
+server/barrios/media/uploads

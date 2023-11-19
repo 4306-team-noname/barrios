@@ -14,7 +14,7 @@ class ThresholdsLimitsDefinition(Model):
     units = CharField(max_length=200)
     # might be best to set this as a foreign key to a separate
     # 'categories' table that we populate ourselves
-    category_id = ForeignKey(
+    category = ForeignKey(
         "Category", to_field="category_id", on_delete=CASCADE, null=True, blank=True
     )
 

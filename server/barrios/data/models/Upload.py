@@ -1,3 +1,4 @@
+from django.core.validators import FileExtensionValidator
 from django.db.models import (
     DateTimeField,
     FileField,
@@ -12,8 +13,11 @@ class UploadManager(Manager):
 
 
 class Upload(Model):
-    file = FileField(upload_to="uploads/")
+    file = FileField(upload_to="uploads/", validators=[FileExtensionValidator(["csv"])])
     upload_date = DateTimeField(auto_now_add=True)
 
     class Meta:
         db_table = "uploads"
+
+    def __str__(self):
+        return f"({self.pk}, {self.file}, {self.upload_date})"

@@ -1,15 +1,15 @@
 <table class="file-table">
   <thead>
     <tr>
-      {% for field in table_cols %}
-      <th>{{ field }}</th>
+      {% for colname in column_names %}
+      <th>{{ colname }}</th>
       {% endfor %}
     </tr>
   </thead>
   <tbody>
-    {% for row in table_list %}
+    {% for row in fields %}
     <tr>
-      {% for val in row[1:] %}
+      {% for val in row %}
       <td>{{ val }}</td>
       {% endfor %}
     </tr>
