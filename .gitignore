@@ -47,4 +47,6 @@ prototypes/djangoserver/db.sqlite3
 
 # project specific
 server/barrios/media/uploads
+server/barrios/,edia/initial_data
 uploads
+initial_data
