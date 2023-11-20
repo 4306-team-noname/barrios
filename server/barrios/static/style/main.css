@@ -333,6 +333,11 @@ button:hover {
   background-color: var(--foreground);
 }
 
+.data-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
+}
+
 .surface,
 .stacked {
   background-color: var(--background-surface);
@@ -351,6 +356,9 @@ button:hover {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  word-break: break-all;
+  /* p { */
+  /* } */
 }
 
 /* Upload form styles */
@@ -537,10 +545,21 @@ th {
   border: none;
 }
 
+th > a {
+  color: var(--accent);
+  white-space: nowrap;
+}
+
 td {
   padding: 0.5rem;
   text-transform: uppercase;
   border: none;
+}
+
+ul.pagination {
+  display: flex;
+  justify-content: space-around;
+  list-style-type: none;
 }
 
 #upload_spinner {

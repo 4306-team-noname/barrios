@@ -1,0 +1,11 @@
+{% extends 'dashboard_layout.html' %}
+
+{% block title %}{{ data_name }}{% endblock %}
+
+{% block main %}
+<section id="main-content">
+  <h1>{{ data_name }}</h1>
+  {% load render_table from django_tables2 %}
+  {% render_table data %}
+</section>
+{% endblock %}

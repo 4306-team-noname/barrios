@@ -1,6 +1,6 @@
 <div class="form-container">
-  <form id="upload-form" hx-post="/data/upload/" hx-trigger="change" hx-encoding="multipart/form-data"
-    action="/data/upload/" method="post" hx-target="#main-content" hx-select="#main-content"
+  <form id="upload-form" hx-post="/data/files/upload/" hx-trigger="change" hx-encoding="multipart/form-data"
+    action="/data/files/upload/" method="post" hx-target="#main-content" hx-select="#main-content"
     hx-indicator="#upload-spinner">
     {% csrf_token %}
     <div class="stacked">
