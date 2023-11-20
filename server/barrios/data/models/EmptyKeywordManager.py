@@ -1,7 +1,7 @@
-from django.db.models import Manager
+from postgres_copy import CopyManager
 
 
-class EmptyKeywordManager(Manager):
+class EmptyKeywordManager(CopyManager):
     def create(self, *args, **kwargs):
         newargs = {}
         for key in kwargs.keys():

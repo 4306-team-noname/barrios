@@ -1,4 +1,6 @@
 #~/bin/sh
+ADMIN_USERNAME=admin
+ADMIN_EMAIL=jcaldwell2+barriosadmin@angelo.edu
 
 python manage.py flush
 # run these two queries in pgadmin
@@ -8,7 +10,9 @@ python manage.py flush
 
 find . -path "*/migrations/*.py" -not -name "__init__.py" -delete
 
+rm media/uploads/*
+
 python manage.py makemigrations
 python manage.py migrate
 python manage.py loaddata category
-python manage.py createsuperuser
+python manage.py createsuperuser --username $ADMIN_USERNAME --email $ADMIN_EMAIL

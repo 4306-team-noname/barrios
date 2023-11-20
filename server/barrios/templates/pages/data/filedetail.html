@@ -5,7 +5,7 @@
 {% block main %}
 <section id="main-content">
   <h1>Preview: {{ filename }}</h1>
-  {% if column_names and fields %}
+  {% if column_names %}
     {% include 'components/data-table.html' %} 
   {% endif %}
 </section>

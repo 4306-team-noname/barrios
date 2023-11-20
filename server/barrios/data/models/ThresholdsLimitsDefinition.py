@@ -1,6 +1,8 @@
 # from .UserDataEntry import UserDataEntry
 from django.db.models import CASCADE, FloatField, ForeignKey, CharField, Model
 
+from data.models.EmptyKeywordManager import EmptyKeywordManager
+
 
 class ThresholdsLimitsDefinition(Model):
     # TODO: Since we're declaring a foreign key relation
@@ -8,15 +10,17 @@ class ThresholdsLimitsDefinition(Model):
     # fields from the user-provided CSV files match that table
     # we're going to need a way to match the `threshold_category`
     # field with that table. We'll need a lookup table or something.
-    threshold_category = CharField(max_length=200)
+    threshold_category = CharField(max_length=255, blank=True, null=True)
     threshold_value = FloatField()
-    threshold_owner = CharField(max_length=200, blank=True)
-    units = CharField(max_length=200)
+    threshold_owner = CharField(max_length=255, blank=True, null=True)
+    units = CharField(max_length=255, blank=True, null=True)
     # might be best to set this as a foreign key to a separate
     # 'categories' table that we populate ourselves
     category = ForeignKey(
         "Category", to_field="category_id", on_delete=CASCADE, null=True, blank=True
     )
+
+    objects = EmptyKeywordManager()
 
     class Meta:
         db_table = "thresholds_limits_definition"

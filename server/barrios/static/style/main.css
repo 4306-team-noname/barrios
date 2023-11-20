@@ -224,6 +224,11 @@ a.list-item:hover {
   gap: 0.5rem;
 }
 
+.pagination-menu {
+  font-size: 1.25rem;
+  margin: 1.25rem;
+}
+
 .gap-1 {
   gap: 1rem;
 }
@@ -271,6 +276,14 @@ a.list-item:hover {
 .flex-center {
   justify-content: center;
   align-items: center;
+}
+
+.flex-around {
+  justify-content: space-around;
+}
+
+.flex-between {
+  justify-content: space-between;
 }
 
 /* SVG Icon Styles 
@@ -530,6 +543,10 @@ td {
   border: none;
 }
 
+#upload_spinner {
+  animation:spin 2s ease-in-out infinite;
+}
+
 /* ANIMATIONS */
 @keyframes fade-in {
   from {
@@ -552,6 +569,18 @@ td {
 @keyframes slide-to-left {
   to {
     transform: translateX(-90px);
+  }
+}
+
+@keyframes spin
+{
+  0%
+  {
+    transform:rotate(45deg);
+  }
+  100%
+  {
+    transform:rotate(405deg);
   }
 }
 

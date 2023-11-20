@@ -5,7 +5,7 @@ from .FlightPlanManager import FlightPlanManager
 
 class IssFlightPlanCrew(Model):
     datedim = DateField()
-    nationality_category = CharField(max_length=200)
+    nationality_category = CharField(max_length=255, blank=True, null=True)
     crew_count = IntegerField()
 
     # NOTE: spread country column into multiple

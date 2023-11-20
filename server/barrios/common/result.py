@@ -1,8 +1,7 @@
-from typing import TypedDict
-from typing import Any
+from typing import Any, Optional, TypedDict
 
 
 class Result(TypedDict):
     ok: bool
-    value: Any
-    error: str
+    value: Optional[Any]
+    error: Optional[str]
