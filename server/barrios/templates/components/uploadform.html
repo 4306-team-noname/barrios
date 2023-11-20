@@ -3,7 +3,7 @@
     action="/data/files/upload/" method="post" hx-target="#main-content" hx-select="#main-content"
     hx-indicator="#upload-spinner">
     {% csrf_token %}
-    <div class="stacked">
+    <div class="stacked surface hover-surface">
       <input type="file" name="file" id="data-upload" />
       <label for="data-upload">
         {% include 'assets/icons/upload.svg' %}

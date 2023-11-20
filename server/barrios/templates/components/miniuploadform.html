@@ -1,0 +1,13 @@
+<div class="card list-item flex-v hover-surface">
+  <form hx-post="/data/files/upload/" hx-trigger="change" hx-encoding="multipart/form-data" action="/data/files/upload/"
+    method="post" hx-target="#main-content" hx-select="#main-content" hx-indicator="#upload-spinner">
+    {% csrf_token %}
+    <div class="stacked flex-v gap-2">
+      <input type="file" name="file" id="data-upload" />
+      <label for="data-upload" style="font-size: 1rem; font-weight: 500; text-transform: unset;">
+        {% include 'assets/icons/upload.svg' %}
+        {{ label }}
+      </label>
+    </div>
+  </form>
+</div>

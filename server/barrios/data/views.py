@@ -21,6 +21,7 @@ def index(request):
     # TODO: This can just be a dumb view with a list
     # of links to a detail view for each user-data model
     if request.user.is_authenticated:
+        data_service = DataService()
         uploads_queryset = Upload.objects.all()
         uploads = []
 
@@ -33,17 +34,61 @@ def index(request):
             uploads.append(upload_dict)
 
         data = [
-            {"name": "IMS Consumables", "ref": "ims_consumables"},
-            {"name": "Category Lookup", "ref": "category_lookup"},
-            {"name": "Flight Plan", "ref": "flight_plan"},
-            {"name": "Crew Flight Plan", "ref": "crew_flight_plan"},
-            {"name": "Crew Nationalities", "ref": "crew_nationality_lookup"},
-            {"name": "US Water Summary", "ref": "us_water_summary"},
-            {"name": "RSA Water Summary", "ref": "rsa_water_summary"},
-            {"name": "Weekly Gas Summary", "ref": "weekly_gas_summary"},
-            {"name": "Rates Definitions", "ref": "rates_definitions"},
-            {"name": "Tank Capacities", "ref": "tank_capacities"},
-            {"name": "Thresholds and Limits", "ref": "thresholds_and_limits"},
+            {
+                "name": "IMS Consumables",
+                "ref": "ims_consumables",
+                "count": data_service.get_count_by_ref("ims_consumables"),
+            },
+            {
+                "name": "Category Lookup",
+                "ref": "category_lookup",
+                "count": data_service.get_count_by_ref("category_lookup"),
+            },
+            {
+                "name": "Flight Plan",
+                "ref": "flight_plan",
+                "count": data_service.get_count_by_ref("flight_plan"),
+            },
+            {
+                "name": "Crew Flight Plan",
+                "ref": "crew_flight_plan",
+                "count": data_service.get_count_by_ref("crew_flight_plan"),
+            },
+            {
+                "name": "Crew Nationalities",
+                "ref": "crew_nationality_lookup",
+                "count": data_service.get_count_by_ref("crew_nationality_lookup"),
+            },
+            {
+                "name": "US Water Summary",
+                "ref": "us_water_summary",
+                "count": data_service.get_count_by_ref("us_water_summary"),
+            },
+            {
+                "name": "RSA Water Summary",
+                "ref": "rsa_water_summary",
+                "count": data_service.get_count_by_ref("rsa_water_summary"),
+            },
+            {
+                "name": "Weekly Gas Summary",
+                "ref": "weekly_gas_summary",
+                "count": data_service.get_count_by_ref("weekly_gas_summary"),
+            },
+            {
+                "name": "Rates Definitions",
+                "ref": "rates_definitions",
+                "count": data_service.get_count_by_ref("rates_definitions"),
+            },
+            {
+                "name": "Tank Capacities",
+                "ref": "tank_capacities",
+                "count": data_service.get_count_by_ref("tank_capacities"),
+            },
+            {
+                "name": "Thresholds and Limits",
+                "ref": "thresholds_and_limits",
+                "count": data_service.get_count_by_ref("thresholds_and_limits"),
+            },
         ]
         context = {"data": data, "uploads": uploads}
         return render(request, "pages/data/data_list.html", context)

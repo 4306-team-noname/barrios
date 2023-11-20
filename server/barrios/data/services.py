@@ -135,12 +135,16 @@ class DataService:
         elif ref == "weekly_gas_summary":
             model = UsRsWeeklyConsumableGasSummary
         elif ref == "rates_definitions":
-            model = RatesDefinition.objects.all()
+            model = RatesDefinition
         elif ref == "tank_capacities":
             model = TankCapacityDefinition
         elif ref == "thresholds_and_limits":
             model = ThresholdsLimitsDefinition
         return model
+
+    def get_count_by_ref(self, ref: str) -> int:
+        model = self.get_model_by_ref(ref)
+        return model.objects.count()
 
     def get_data_by_ref(self, ref: str) -> Result:
         results = None
