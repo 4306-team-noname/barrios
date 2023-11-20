@@ -391,6 +391,10 @@ button:hover {
   background-color: var(--background-surface-hover);
 }
 
+.relative-parent {
+  position: relative;
+}
+
 /* Take up the full width and height of the parent element.
    Note: This element's children make up the content that's displayed
    to the user (the label element) and the element
