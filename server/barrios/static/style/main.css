@@ -333,8 +333,12 @@ button:hover {
   background-color: var(--foreground);
 }
 
-.surface,
-.stacked {
+.data-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
+}
+
+.surface {
   background-color: var(--background-surface);
   border-radius: var(--default-radius);
 }
@@ -351,6 +355,9 @@ button:hover {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  word-break: break-all;
+  /* p { */
+  /* } */
 }
 
 /* Upload form styles */
@@ -369,17 +376,23 @@ button:hover {
  */
 .stacked {
   position: relative;
-  padding: 1rem;
-  transition: background-color var(--default-transition);
-}
-
-.stacked:hover {
-  background-color: var(--background-surface-hover);
 }
 
 .stacked .icon {
   width: 1.75rem;
   height: 1.75rem;
+}
+
+.hover-surface {
+  transition: background-color var(--default-transition);
+}
+
+.hover-surface:hover {
+  background-color: var(--background-surface-hover);
+}
+
+.relative-parent {
+  position: relative;
 }
 
 /* Take up the full width and height of the parent element.
@@ -537,10 +550,21 @@ th {
   border: none;
 }
 
+th > a {
+  color: var(--accent);
+  white-space: nowrap;
+}
+
 td {
   padding: 0.5rem;
   text-transform: uppercase;
   border: none;
+}
+
+ul.pagination {
+  display: flex;
+  justify-content: space-around;
+  list-style-type: none;
 }
 
 #upload_spinner {

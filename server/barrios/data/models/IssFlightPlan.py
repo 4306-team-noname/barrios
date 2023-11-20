@@ -15,9 +15,6 @@ class IssFlightPlan(Model):
 
     objects = FlightPlanManager()
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(args, kwargs)
-
     # NOTE: days_until_next_launch:
     # computed field?
 
