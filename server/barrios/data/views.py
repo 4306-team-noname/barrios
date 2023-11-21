@@ -1,17 +1,16 @@
 import numpy as np
 from pandas.compat import os
-from pandas import DataFrame
 from django.core.exceptions import PermissionDenied, ValidationError
 from django.http import HttpResponseNotAllowed
 from django.shortcuts import redirect, render
-from django.core.paginator import Paginator
 from barrios.settings import MEDIA_ROOT
-from .models import Upload
 from .models.mappings import mappings
 from .forms import UploadForm
 from .utils.data_dictionary import data_dictionary
 from .utils.FieldFileCsvHelper import FieldFileCsvHelper
 from .services import DataService
+# from pandas import DataFrame
+# from django.core.paginator import Paginator
 
 
 def index(request):
@@ -41,9 +40,9 @@ def index(request):
 
 
 def data_detail(request, slug):
-    # - Detailed table view for a given type of
-    #   user data. This view requests the DataService
-    #   for stored data by the data type's "slug"
+    # Detailed table view for a given type of
+    # user data. This view requests the DataService
+    # for stored data by the data type's "slug"
     data_service = DataService()
     result = data_service.get_data_by_slug(slug)
 
@@ -52,18 +51,14 @@ def data_detail(request, slug):
         name = result["value"]["name"]
 
         return render(
-            request, "pages/data/data_detail.html", {"data": data, "name": name}
+            request, "pages/data/data_detail.html", {
+                "data": data, "name": name}
         )
     else:
         return redirect("/data/")
 
 
 def upload_post(request):
-    """
-    Notes:
-        - use <ClassName>._meta.db_table to get table name?
-        - may still need a lookup dict to match cols to models
-    """
     if not request.user.is_authenticated:
         # send error if not authenticated
         # TODO: Add error templates
@@ -100,7 +95,8 @@ def upload_post(request):
 
         if model_name is None:
             # TODO: Send custom error template
-            raise ValidationError("Your file did not match any known data types")
+            raise ValidationError(
+                "Your file did not match any known data types")
         else:
             if new_fields is not None:
                 FieldFileCsvHelper().rewrite_csv(filepath, new_fields)
