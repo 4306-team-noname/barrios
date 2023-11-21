@@ -1,9 +1,15 @@
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
+from random import randint
 
 
 def index(request):
     if request.user.is_authenticated:
-        return render(request, "pages/dashboard/index.html")
+        usage_difference = randint(-50, 50)
+        return render(
+            request,
+            "pages/dashboard/index.html",
+            {"usage_difference": usage_difference},
+        )
     else:
         return redirect("/accounts/login")

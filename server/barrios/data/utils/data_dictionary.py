@@ -1,6 +1,8 @@
 data_dictionary = {
     "ims_consumables_category_lookup": {
         "model_name": "ImsConsumablesCategoryLookup",
+        "readable_name": "Category Lookup",
+        "slug": "category_lookup",
         "columns": {
             "category_name": "object",
             "categoryID": "int64",
@@ -11,6 +13,8 @@ data_dictionary = {
     },
     "iss_flight_plan": {
         "model_name": "IssFlightPlan",
+        "readable_name": "Flight Plan",
+        "slug": "flight_plan",
         "columns": {
             "datedim": "object",
             "vehicle_name": "object",
@@ -24,6 +28,8 @@ data_dictionary = {
     },
     "iss_flight_plan_crew": {
         "model_name": "IssFlightPlanCrew",
+        "readable_name": "Flight Plan Crew",
+        "slug": "crew_flight_plan",
         "columns": {
             "datedim": "object",
             "nationality_category": "object",
@@ -32,6 +38,8 @@ data_dictionary = {
     },
     "iss_flight_plan_crew_nationality_lookup": {
         "model_name": "IssFlightPlanCrewNationalityLookup",
+        "readable_name": "Crew Nationalities",
+        "slug": "crew_nationality_lookup",
         "columns": {
             "nationality": "object",
             "is_usos_crew": "int64",
@@ -40,6 +48,8 @@ data_dictionary = {
     },
     "rates_definition": {
         "model_name": "RatesDefinition",
+        "readable_name": "Rates Definitions",
+        "slug": "rates_definitions",
         "columns": {
             "rate_category": "object",
             "affected_consumable": "object",
@@ -51,6 +61,8 @@ data_dictionary = {
     },
     "rsa_consumable_water_summary": {
         "model_name": "RsaConsumableWaterSummary",
+        "readable_name": "RSA Water Summary",
+        "slug": "rsa_water_summary",
         "columns": {
             "Report Date": "object",
             "Remain. Potable (liters)": "float64",
@@ -60,6 +72,8 @@ data_dictionary = {
     },
     "tank_capacity_definition": {
         "model_name": "TankCapacityDefinition",
+        "readable_name": "Tank Capacities",
+        "slug": "tank_capacities",
         "columns": {
             "tank_category": "object",
             "tank_capacity": "float64",
@@ -68,6 +82,8 @@ data_dictionary = {
     },
     "thresholds_limits_definition": {
         "model_name": "ThresholdsLimitsDefinition",
+        "readable_name": "Thresholds and Limits",
+        "slug": "thresholds_and_limits",
         "columns": {
             "threshold_category": "object",
             "threshold_value": "float64",
@@ -77,6 +93,8 @@ data_dictionary = {
     },
     "us_rs_weekly_consumables_gas_summary": {
         "model_name": "UsRsWeeklyConsumableGasSummary",
+        "readable_name": "Weekly Gas Summary",
+        "slug": "weekly_gas_summary",
         "columns": {
             "Date": "object",
             "USOS O2 (kg)": "float64",
@@ -92,6 +110,8 @@ data_dictionary = {
     },
     "us_weekly_consumable_water_summary": {
         "model_name": "UsWeeklyConsumableWaterSummary",
+        "readable_name": "US Water Summary",
+        "slug": "us_water_summary",
         "columns": {
             "Date": "object",
             "Corrected Potable (L)": "float64",
@@ -104,6 +124,8 @@ data_dictionary = {
     },
     "inventory_mgmt_system_consumable": {
         "model_name": "InventoryMgmtSystemConsumables",
+        "readable_name": "IMS Consumables",
+        "slug": "ims_consumables",
         "columns": {
             "datedim": "object",
             "id": "int64",

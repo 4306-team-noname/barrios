@@ -286,6 +286,13 @@ a.list-item:hover {
   justify-content: space-between;
 }
 
+.grid {
+  display: grid;
+}
+
+.grid-column-2 {
+  grid-template-columns: repeat(2, 1fr);
+}
 /* SVG Icon Styles 
 * These rules are made to be applied to an SVG element with a class of 'icon'.
 * They allow you to add the svg to a parent element, an anchor, for example. Setting
@@ -347,6 +354,11 @@ button:hover {
   background-color: var(--background);
   border-radius: var(--default-radius);
   padding: 1em;
+}
+
+.card-header {
+  text-transform: uppercase;
+  letter-spacing: 0.075em;
 }
 
 .list-item {

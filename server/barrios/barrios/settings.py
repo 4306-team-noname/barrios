@@ -36,7 +36,7 @@ INSTALLED_APPS = [
     "dashboard.apps.DashboardConfig",
     "forecast.apps.ForecastConfig",
     "home.apps.HomeConfig",
-    "supply.apps.SupplyConfig",
+    "optimization.apps.OptimizationConfig",
     "usage.apps.UsageConfig",
     "data.apps.DataConfig",
     "django_tables2",
