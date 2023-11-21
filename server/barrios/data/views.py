@@ -23,15 +23,16 @@ def index(request):
         data_service = DataService()
         data = []
 
-        for key in data_dictionary.keys():
-            # loop through the data_dictionary and build
-            # the response data
-            item_dict = {
+        # loop through the data_dictionary and build
+        # the response data
+        data = [
+            {
                 "name": data_dictionary[key]["readable_name"],
                 "slug": data_dictionary[key]["slug"],
                 "count": data_service.get_count_by_slug(data_dictionary[key]["slug"]),
             }
-            data.append(item_dict)
+            for key in data_dictionary.keys()
+        ]
 
         return render(request, "pages/data/data_list.html", {"data": data})
     else:
