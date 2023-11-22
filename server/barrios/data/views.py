@@ -9,8 +9,6 @@ from .forms import UploadForm
 from .utils.data_dictionary import data_dictionary
 from .utils.FieldFileCsvHelper import FieldFileCsvHelper
 from .services import DataService
-# from pandas import DataFrame
-# from django.core.paginator import Paginator
 
 
 def index(request):
@@ -51,8 +49,7 @@ def data_detail(request, slug):
         name = result["value"]["name"]
 
         return render(
-            request, "pages/data/data_detail.html", {
-                "data": data, "name": name}
+            request, "pages/data/data_detail.html", {"data": data, "name": name}
         )
     else:
         return redirect("/data/")
@@ -95,8 +92,7 @@ def upload_post(request):
 
         if model_name is None:
             # TODO: Send custom error template
-            raise ValidationError(
-                "Your file did not match any known data types")
+            raise ValidationError("Your file did not match any known data types")
         else:
             if new_fields is not None:
                 FieldFileCsvHelper().rewrite_csv(filepath, new_fields)
@@ -110,59 +106,3 @@ def upload_post(request):
                 else:
                     os.remove(filepath)
                     return redirect("/data/")
-
-
-# def files(request):
-#     if request.user.is_authenticated:
-#         uploads_queryset = Upload.objects.all()
-#         uploads_count = uploads_queryset.count()
-#         uploads = []
-#
-#         for upload in uploads_queryset:
-#             upload_dict = {
-#                 "name": str(upload.file).split("/")[1],
-#                 "id": upload.id,
-#                 "upload_date": upload.upload_date,
-#             }
-#             uploads.append(upload_dict)
-#
-#         context = {"uploads": uploads}
-#
-#         # NOTE: We may be able to simplify this by just
-#         # sending the list of uploads and the form without
-#         # checking the upload count. If the template conditionally
-#         # renders what it needs to depending on uploads length.
-#         if uploads_count == 0:
-#             return render(request, "pages/data/index.html", context)
-#         else:
-#             return render(request, "pages/data/filelist.html", context)
-#     else:
-#         return redirect("/accounts/login")
-#
-#
-# def file_detail(request, id):
-#     upload = Upload.objects.get(id=id)
-#     file = upload.file
-#     csv_path = os.path.join(MEDIA_ROOT, str(upload.file))
-#     df: DataFrame = DataService().get_uploaded_file(csv_path)
-#     column_names = df.columns.tolist()
-#     rows = df.values.tolist()
-#
-#     paginator = Paginator(rows, 100)
-#
-#     page_num = request.GET.get("page")
-#     print(request.GET.get("page"))
-#     if not page_num:
-#         page_num = 1
-#     page_obj = paginator.get_page(page_num)
-#
-#     return render(
-#         request,
-#         "pages/data/filedetail.html",
-#         {
-#             "filename": file.name.split("/")[-1],
-#             "column_names": column_names,
-#             # "fields": fields,
-#             "page_obj": page_obj,
-#         },
-#     )

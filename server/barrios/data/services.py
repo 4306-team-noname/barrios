@@ -1,14 +1,10 @@
-from csv import DictReader
 from cases import to_snake
-from django.db.models import Model
 from common.result import Result
-from django.db import connections
 import pandas as pd
 import numpy as np
-import subprocess
+
 
 from .models import (
-    Category,
     ImsConsumablesCategoryLookup,
     InventoryMgmtSystemConsumables,
     IssFlightPlan,
@@ -26,11 +22,25 @@ from .models import (
 class DataService:
     file: str
 
-    def __init__(self, filepath: str = None) -> None:
+    def __init__(self, filepath: str | None = None) -> None:
         if filepath is not None:
             self.file = filepath
 
     def get_num_lines(self, csv_path):
+        """
+        Returns the number of lines in a csv file
+        located at the given file path
+
+        Parameters
+        ----------
+        csv_path : str
+            The path to a csv file
+
+        Returns
+        -------
+        int
+            The number of lines in a csv file
+        """
         chunk = 1024 * 1024  # Process 1 MB at a time.
         f = np.memmap(csv_path)
         num_newlines = sum(
@@ -39,14 +49,30 @@ class DataService:
         del f
         return num_newlines
 
-    def keys_to_snake(self, model_dict):
+    def keys_to_snake(self, original_dict):
+        """Create a copy of the given dict with keys
+           converted to snake_case.
+
+        Parameters
+        ----------
+        original_dict : dict[Any]
+            The dict whose keys need to be converted to
+            snake_case.
+
+        Returns
+        -------
+        dict[Any]
+            A copy of "original_dict" with snake_case keys
+        """
         new_dict = {}
-        for key in model_dict.keys():
+        for key in original_dict.keys():
             if "Unnamed" not in key:
-                new_dict[to_snake(key)] = model_dict[key]
+                new_dict[to_snake(key)] = original_dict[key]
         return new_dict
 
-    def insert_csv(self, model_name, mapping=None, file_object=None) -> Result:
+    def insert_csv(
+        self, model_name: str, mapping: dict[str, str] | None = None, file_object=None
+    ) -> Result:
         result = None
         if model_name == "ImsConsumablesCategoryLookup":
             result = ImsConsumablesCategoryLookup.objects.from_csv(
@@ -116,7 +142,7 @@ class DataService:
             df = pd.read_csv(csv_path, index_col=False, keep_default_na=False)
             return df
 
-    def get_model_by_slug(self, slug: str) -> Model:
+    def get_count_by_slug(self, slug: str) -> int:
         model = None
         if slug == "ims_consumables":
             model = InventoryMgmtSystemConsumables
@@ -140,11 +166,10 @@ class DataService:
             model = TankCapacityDefinition
         elif slug == "thresholds_and_limits":
             model = ThresholdsLimitsDefinition
-        return model
-
-    def get_count_by_slug(self, slug: str) -> int:
-        model = self.get_model_by_slug(slug)
-        return model.objects.count()
+        if model:
+            return model.objects.count()
+        else:
+            return 0
 
     def get_data_by_slug(self, slug: str) -> Result:
         results = None
