@@ -26,6 +26,12 @@ def index(request):
         print(df.columns[1:])
         y = list(df.columns)[1:]
         fig = px.line(df, x="date", y=y)
+        fig.update_layout(
+            paper_bgcolor="#091D41",
+            plot_bgcolor="#091D41",
+            title_font_color="#ffffff",
+            legend_font_color="#ffffff",
+        )
         line_plot = plot(fig, output_type="div")
         return render(
             request,
