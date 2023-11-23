@@ -45,12 +45,15 @@ def data_detail(request, slug):
     result = data_service.get_data_by_slug(slug)
 
     if result["ok"]:
-        data = result["value"]["data"]
-        name = result["value"]["name"]
+        if result["value"]:
+            data = result["value"]["data"]
+            name = result["value"]["name"]
 
-        return render(
-            request, "pages/data/data_detail.html", {"data": data, "name": name}
-        )
+            return render(
+                request, "pages/data/data_detail.html", {"data": data, "name": name}
+            )
+        else:
+            return redirect("/data/")
     else:
         return redirect("/data/")
 

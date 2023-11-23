@@ -9,7 +9,7 @@ from .RatesDefinition import RatesDefinition
 from .RsaConsumableWaterSummary import RsaConsumableWaterSummary
 from .TankCapacityDefinition import TankCapacityDefinition
 from .ThresholdsLimitsDefinition import ThresholdsLimitsDefinition
-
 from .UsRsWeeklyConsumableGasSummary import UsRsWeeklyConsumableGasSummary
 from .UsWeeklyConsumableWaterSummary import UsWeeklyConsumableWaterSummary
+from .Consumable import Consumable
 from .Category import Category

@@ -229,6 +229,10 @@ a.list-item:hover {
   margin: 1.25rem;
 }
 
+.gap-05 {
+  gap: 0.5rem;
+}
+
 .gap-1 {
   gap: 1rem;
 }

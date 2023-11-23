@@ -5,13 +5,14 @@
 {% block main %}
 <section id="main-content" class="flex-v gap-2">
   <div class="row grid grid-column-2 gap-2">
-    <a class="surface flex-v gap-2" href="/usage/">
+    <a class="surface flex-v" href="/usage/">
       <div class="card-header flex-h flex-between">
         <h2>Usage</h2>
         <div class="txt-large">
         {% include  'assets/icons/data.svg'%}
         </div>
       </div>
+      <div class="flex-v flex-center gap-2" style="height: 100%;">
       <div class="flex-h gap-1 flex-center">
         <span style="font-size: 8rem; font-weight: 800;">
           {{ usage_difference }}%
@@ -21,13 +22,41 @@
       <span class="txt-xlarge flex-h flex-center" style="font-weight: 800; text-transform: uppercase; color: var(--accent);">
           Below Predictions
       </span>
-    </a>
-    <a href="/optimization/" class="surface">
-      <div class="card-header flex-h flex-between">
-        <h2>Supply Optimization</h2>
-        {% include 'assets/icons/ruler.svg' %}
       </div>
     </a>
+    <a href="/optimization/" class="surface flex-v gap-1">
+      <div class="card-header flex-h flex-between">
+        <h2>Next Launch Optimization</h2>
+        <div class="txt-large">
+        {% include 'assets/icons/ruler.svg' %}
+        </div>
+      </div>
+      <div class="flex-v gap-05">
+        <h3>{{last_optimization.launch_name}}</h3>
+        <date>{{last_optimization.launch_date}}</date>
+      </div>
+      <table>
+          <thead>
+            <th>Consumable</th>
+            <th>Amount</th>
+          </thead>
+          {% for item in last_optimization.payload %}
+          <tr>
+            <td>{{item.name}}</td>
+            <td>
+              {{item.amount}}
+              {% if item.unit != item.name %}
+              {{item.unit}}
+              {% endif %}
+            </td>
+          </tr>
+          {% endfor %}
+        </table>
+    </a>
+  </div>
+  <div class="row">
+  <!--Use HTMX here to request a unified chart for all predictions-->
+    <p>Chart goes here</p>
   </div>
 </section>
 

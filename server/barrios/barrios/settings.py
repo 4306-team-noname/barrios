@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     "optimization.apps.OptimizationConfig",
     "usage.apps.UsageConfig",
     "data.apps.DataConfig",
+    "django_browser_reload",
     "django_tables2",
     "django.contrib.admin",
     "django.contrib.auth",
@@ -57,6 +58,7 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "barrios.middleware.HtmxMessageMiddleware",
+    "django_browser_reload.middleware.BrowserReloadMiddleware",
 ]
 
 ROOT_URLCONF = "barrios.urls"
