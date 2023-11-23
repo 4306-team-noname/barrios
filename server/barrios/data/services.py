@@ -30,15 +30,10 @@ class DataService:
         """
         Returns the number of lines in a csv file
         located at the given file path
-
-        Parameters
-        ----------
-        csv_path : str
+        :param csv_path: str
             The path to a csv file
 
-        Returns
-        -------
-        int
+        :return int:
             The number of lines in a csv file
         """
         chunk = 1024 * 1024  # Process 1 MB at a time.
@@ -53,15 +48,11 @@ class DataService:
         """Create a copy of the given dict with keys
            converted to snake_case.
 
-        Parameters
-        ----------
-        original_dict : dict[Any]
+        :param original_dict: dict[Any]:
             The dict whose keys need to be converted to
             snake_case.
 
-        Returns
-        -------
-        dict[Any]
+        :returns: dict[Any]:
             A copy of "original_dict" with snake_case keys
         """
         new_dict = {}
@@ -73,6 +64,18 @@ class DataService:
     def insert_csv(
         self, model_name: str, mapping: dict[str, str] | None = None, file_object=None
     ) -> Result:
+        """Inserts all rows of the given csv file into the database.
+
+        Params
+        ------
+        model_name : str
+            The name of the model to insert
+        mapping : str
+            A dict that maps the db table field names to the column
+            header names of the csv file to save. Default: None
+        file_object : File
+            A csv file object
+        """
         result = None
         if model_name == "ImsConsumablesCategoryLookup":
             result = ImsConsumablesCategoryLookup.objects.from_csv(
@@ -172,6 +175,14 @@ class DataService:
             return 0
 
     def get_data_by_slug(self, slug: str) -> Result:
+        """
+        Retrieves all IMS-related records associated with a slug.
+        :param slug: str:
+            The slug, defined in the data dictionary,
+            for the model to retrieve
+        :returns Result[Queryset]:
+            Any records associated with the given slug
+        """
         results = None
         name = None
         if slug == "ims_consumables":

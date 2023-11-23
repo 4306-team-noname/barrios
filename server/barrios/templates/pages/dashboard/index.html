@@ -56,7 +56,9 @@
   </div>
   <div class="row">
   <!--Use HTMX here to request a unified chart for all predictions-->
-    <p>Chart goes here</p>
+  {% autoescape off %}
+    {{forecast_plot}}
+  {% endautoescape %}
   </div>
 </section>
 
