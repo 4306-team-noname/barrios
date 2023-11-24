@@ -23,9 +23,7 @@ def index(request):
     if request.user.is_authenticated:
         forecasts = get_forecasts(request)
         df = pd.DataFrame(forecasts)
-        print(df.columns[1:])
-        y = list(df.columns)[1:]
-        fig = px.line(df, x="date", y=y)
+        fig = px.line(df, x="date", y=list(df.columns)[1:])
         fig.update_layout(
             paper_bgcolor="#091D41",
             plot_bgcolor="#091D41",

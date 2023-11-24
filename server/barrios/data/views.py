@@ -40,8 +40,8 @@ def index(request):
 def data_detail(request, slug):
     # Detailed table view for a given type of
     # user data. This view requests the DataService
-    # for stored data by the data type's "slug"
     data_service = DataService()
+
     result = data_service.get_data_by_slug(slug)
 
     if result["ok"]:
@@ -98,13 +98,14 @@ def upload_post(request):
             raise ValidationError("Your file did not match any known data types")
         else:
             if new_fields is not None:
+                # ensure field names match db table names by rewriting
+                # the csv file with a new header row
                 FieldFileCsvHelper().rewrite_csv(filepath, new_fields)
                 insert_result = data_service.insert_csv(model_name)
-
                 if insert_result["ok"]:
                     os.remove(filepath)
                     return redirect(
-                        f"/data/{slug}",
+                        f"/data/{slug}/",
                     )
                 else:
                     os.remove(filepath)
