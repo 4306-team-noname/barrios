@@ -1,5 +1,6 @@
 # flake8: noqa
 from .Upload import Upload
+from .ImsModels import ImsModel, ImsFlightplanModel
 from .ImsConsumablesCategoryLookup import ImsConsumablesCategoryLookup
 from .InventoryMgmtSystemConsumables import InventoryMgmtSystemConsumables
 from .IssFlightPlan import IssFlightPlan

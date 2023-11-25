@@ -7,17 +7,17 @@ from django.db.models import (
     OneToOneField,
 )
 
-from data.models.EmptyKeywordManager import EmptyKeywordManager
+from data.models import ImsModel
 
 
-class ImsConsumablesCategoryLookup(Model):
+class ImsConsumablesCategoryLookup(ImsModel):
     category_name = CharField()
     category = OneToOneField("Category", on_delete=RESTRICT, to_field="category_id")
-    module_name = CharField(max_length=255, null=True, blank=True)
+    module_name = CharField(max_length=255)
     module_id = IntegerField()
-    unique_cat_mod_id = CharField(max_length=255, null=True, blank=True)
+    unique_cat_mod_id = CharField(max_length=255, unique=True)
 
-    objects = EmptyKeywordManager()
+    # objects = EmptyKeywordManager()
 
     class Meta:
         db_table = "ims_consumables_category_lookup"

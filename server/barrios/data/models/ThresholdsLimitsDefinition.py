@@ -1,10 +1,8 @@
-# from .UserDataEntry import UserDataEntry
-from django.db.models import CASCADE, FloatField, ForeignKey, CharField, Model
-
-from data.models.EmptyKeywordManager import EmptyKeywordManager
+from django.db.models import CASCADE, FloatField, ForeignKey, CharField
+from data.models import ImsModel
 
 
-class ThresholdsLimitsDefinition(Model):
+class ThresholdsLimitsDefinition(ImsModel):
     # TODO: Since we're declaring a foreign key relation
     # to the category lookups table and none of the original
     # fields from the user-provided CSV files match that table
@@ -19,8 +17,6 @@ class ThresholdsLimitsDefinition(Model):
     category = ForeignKey(
         "Category", to_field="category_id", on_delete=CASCADE, null=True, blank=True
     )
-
-    objects = EmptyKeywordManager()
 
     class Meta:
         db_table = "thresholds_limits_definition"

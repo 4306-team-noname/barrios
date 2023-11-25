@@ -1,13 +1,11 @@
-from csv import DictReader
+from __future__ import annotations
 from cases import to_snake
 from common.result import Result
-from django.utils import timezone
 import pandas as pd
 import numpy as np
-from datetime import datetime
-from data.core.managers import BulkModelManager
-from .models import (
-    Category,
+from data.core.import_csv import import_csv
+
+from data.models import (
     ImsConsumablesCategoryLookup,
     InventoryMgmtSystemConsumables,
     IssFlightPlan,
@@ -64,115 +62,17 @@ class DataService:
                 new_dict[to_snake(key)] = original_dict[key]
         return new_dict
 
-    def insert_csv(
-        self, model_name: str, mapping: dict[str, str] | None = None, file_object=None
-    ) -> Result:
+    def insert_csv(self, model_name: str, file_object=None) -> Result:
         """Inserts all rows of the given csv file into the database.
 
         Params
         ------
         model_name : str
             The name of the model to insert
-        mapping : str
-            A dict that maps the db table field names to the column
-            header names of the csv file to save. Default: None
         file_object : File
             A csv file object
         """
-        result = None
-        if model_name == "ImsConsumablesCategoryLookup":
-            insert_list = []
-            with open(self.file, "r") as csv_file:
-                for row in DictReader(csv_file):
-                    cat = Category(row["category"])
-                    insert_dict = {**row, "category": cat}
-                    insert_list.append(ImsConsumablesCategoryLookup(**insert_dict))
-            result = ImsConsumablesCategoryLookup.objects.bulk_create(
-                insert_list, batch_size=500
-            )
-
-        if model_name == "InventoryMgmtSystemConsumables":
-            # with open(self.file, "r") as csv_file:
-            #     bulk_mgr = BulkModelManager(chunk_size=5000)
-            #     for row in DictReader(csv_file):
-            #         cat = Category(row["category_id"])
-            #         converted_datedim = timezone.make_aware(
-            #             datetime.strptime(row["datedim"], "%m/%d/%Y %H:%M"),
-            #             timezone.get_current_timezone(),
-            #         )
-            #         converted_action_date = timezone.make_aware(
-            #             datetime.strptime(row["action_date"], "%m/%d/%Y %H:%M"),
-            #             timezone.get_current_timezone(),
-            #         )
-            #         converted_move_date = timezone.make_aware(
-            #             datetime.strptime(row["move_date"], "%m/%d/%Y %H:%M"),
-            #             timezone.get_current_timezone(),
-            #         )
-            #         if row["expire_date"] != "":
-            #             converted_expire_date = timezone.make_aware(
-            #                 datetime.strptime(row["expire_date"], "%m/%d/%Y %H:%M"),
-            #             )
-            #         else:
-            #             converted_expire_date = None
-            #         del row["category_id"]
-            #         del row["datedim"]
-            #         del row["expire_date"]
-            #         del row["action_date"]
-            #         del row["move_date"]
-            #         bulk_mgr.add(
-            #             InventoryMgmtSystemConsumables(
-            #                 **row,
-            #                 datedim=converted_datedim,
-            #                 expire_date=converted_expire_date,
-            #                 action_date=converted_action_date,
-            #                 move_date=converted_move_date,
-            #                 category=cat,
-            #             )
-            #         )
-            #         # print(f"Inserting row {idx}")
-            #     bulk_mgr.done()
-            # result = "This is fine"
-            result = InventoryMgmtSystemConsumables.objects.from_csv(
-                self.file, encoding="utf-8", mapping=mapping
-            )
-        elif model_name == "IssFlightPlan":
-            result = IssFlightPlan.objects.from_csv(self.file, encoding="utf-8")
-        elif model_name == "IssFlightPlanCrew":
-            result = IssFlightPlanCrew.objects.from_csv(self.file, encoding="utf-8")
-        elif model_name == "IssFlightPlanCrewNationalityLookup":
-            result = IssFlightPlanCrewNationalityLookup.objects.from_csv(
-                self.file, encoding="utf-8"
-            )
-        elif model_name == "RatesDefinition":
-            result = RatesDefinition.objects.from_csv(self.file, encoding="utf-8")
-        elif model_name == "RsaConsumableWaterSummary":
-            result = RsaConsumableWaterSummary.objects.from_csv(
-                self.file, encoding="utf-8"
-            )
-        elif model_name == "TankCapacityDefinition":
-            result = TankCapacityDefinition.objects.from_csv(
-                self.file, encoding="utf-8"
-            )
-        elif model_name == "ThresholdsLimitsDefinition":
-            result = ThresholdsLimitsDefinition.objects.from_csv(
-                self.file, encoding="utf-8"
-            )
-        elif model_name == "UsRsWeeklyConsumableGasSummary":
-            result = UsRsWeeklyConsumableGasSummary.objects.from_csv(
-                self.file, encoding="utf-8"
-            )
-        elif model_name == "UsWeeklyConsumableWaterSummary":
-            result = UsWeeklyConsumableWaterSummary.objects.from_csv(
-                self.file, encoding="utf-8"
-            )
-        if result:
-            return {"ok": True, "value": result, "error": None}
-        else:
-            return {
-                "ok": False,
-                "value": None,
-                "error": "There was an error saving your data.",
-            }
+        return import_csv(model_name, self.file)
 
     def get_uploaded_file(self, csv_path):
         # TODO: Return a result with the dataframe,

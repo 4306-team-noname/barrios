@@ -8,12 +8,12 @@ from django.db.models import (
     RESTRICT,
 )
 from .CustomFields import EmptyStringToNoneFloatField, EmptyStringToNoneIntegerField
-from .EmptyKeywordManager import EmptyKeywordManager
 from django.utils.timezone import make_aware
 from datetime import datetime
+from data.models import ImsModel
 
 
-class ImsManager(EmptyKeywordManager):
+class ImsManager(ImsModel):
     date_fields = ["datedim", "expire_date", "action_date", "move_date"]
 
     def create(self, *args, **kwargs):
@@ -76,8 +76,6 @@ class InventoryMgmtSystemConsumables(Model):
     fill_status = CharField(blank=True, null=True)
     category = ForeignKey("Category", to_field="category_id", on_delete=RESTRICT)
     category_name = CharField(blank=True, null=True)
-
-    objects = ImsManager()
 
     class Meta:
         db_table = "inventory_mgmt_system_consumable"
