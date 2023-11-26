@@ -229,6 +229,8 @@ a.list-item:hover {
   margin: 1.25rem;
 }
 
+/* UTILITY CLASSES */
+
 .gap-05 {
   gap: 0.5rem;
 }
@@ -265,7 +267,6 @@ a.list-item:hover {
   display: flex;
   flex-direction: row;
   align-items: center;
-  /* min-width: 100%; */
 }
 
 .flex-v {
@@ -297,6 +298,22 @@ a.list-item:hover {
 .grid-column-2 {
   grid-template-columns: repeat(2, 1fr);
 }
+
+.menu-h {
+  list-style-type: none;
+  padding-inline: 1rem;
+  gap: 1px;
+  & li>button {
+    border-radius: 0;
+  }
+  & li:first-child>button {
+    border-radius: 0.5rem 0rem 0rem 0.5rem;
+  }
+  & li:last-child>button {
+    border-radius: 0rem 0.5rem 0.5rem 0rem;
+  }
+}
+
 /* SVG Icon Styles 
 * These rules are made to be applied to an SVG element with a class of 'icon'.
 * They allow you to add the svg to a parent element, an anchor, for example. Setting

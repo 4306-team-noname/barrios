@@ -21,28 +21,16 @@ DUMMY_CONSUMABLES = [
 
 def index(request):
     if request.user.is_authenticated:
-        forecasts = get_forecasts(request)
-        df = pd.DataFrame(forecasts)
-        fig = px.line(df, x="date", y=list(df.columns)[1:])
-        fig.update_layout(
-            paper_bgcolor="#091D41",
-            plot_bgcolor="#091D41",
-            title_font_color="#ffffff",
-            legend_font_color="#ffffff",
-        )
-        line_plot = plot(fig, output_type="div")
         return render(
             request,
             "pages/dashboard/index.html",
             {
                 "usage_difference": get_usage(request),
                 "last_optimization": get_optimizations(request),
-                "last_forecast": get_forecasts(request),
-                "forecast_plot": line_plot,
             },
         )
     else:
-        return redirect("/accounts/login")
+        return redirect("/accounts/login/")
 
 
 def get_usage(request):
