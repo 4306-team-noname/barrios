@@ -3,12 +3,14 @@ from pandas.compat import os
 from django.core.exceptions import PermissionDenied, ValidationError
 from django.http import HttpResponseNotAllowed
 from django.shortcuts import redirect, render
+from django_htmx.http import HttpResponseClientRedirect
+from common.conditionalredirect import conditionalredirect
 from barrios.settings import MEDIA_ROOT
-from .forms import UploadForm
 from data.core.data_dictionary import data_dictionary
 from data.core.FieldFileCsvHelper import FieldFileCsvHelper
 from data.core.get_file_info import get_file_info
 from data.services import DataService
+from .forms import UploadForm
 
 
 def index(request):
@@ -34,12 +36,15 @@ def index(request):
         return render(request, "pages/data/data_list.html", {"data": data})
     else:
         # redirect if user is not authenticated
-        return redirect("/accounts/login")
+        return conditionalredirect(request, "accounts/login")
 
 
 def data_detail(request, slug):
     # Detailed table view for a given type of
-    # user data. This view requests the DataService
+    # user data.
+    if not request.user.is_authenticated:
+        return conditionalredirect(request, "/accounts/login/")
+
     data_service = DataService()
 
     result = data_service.get_data_by_slug(slug)
@@ -53,9 +58,9 @@ def data_detail(request, slug):
                 request, "pages/data/data_detail.html", {"data": data, "name": name}
             )
         else:
-            return redirect("/data/")
+            return conditionalredirect(request, "/data/")
     else:
-        return redirect("/data/")
+        return conditionalredirect(request, "/data/")
 
 
 def upload_post(request):
@@ -95,9 +100,10 @@ def upload_post(request):
             insert_result = data_service.insert_csv(fileinfo["model_name"])
             if insert_result["ok"]:
                 os.remove(filepath)
-                return redirect(
+                return conditionalredirect(
+                    request,
                     f"/data/{fileinfo[ 'slug' ]}/",
                 )
             else:
                 os.remove(filepath)
-                return redirect("/data/")
+                return conditionalredirect(request, "/data/")

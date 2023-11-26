@@ -2,6 +2,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.messages import error, success
 from django.shortcuts import redirect, render
 from .forms import LoginForm
+from common.conditionalredirect import conditionalredirect
 
 
 def sign_in(request):
@@ -32,7 +33,7 @@ def sign_in(request):
 def sign_out(request):
     logout(request)
     success(request, "You have been logged out")
-    return redirect("/accounts/login")
+    return conditionalredirect(request, "/accounts/login/")
 
 
 def profile(request):
@@ -41,4 +42,4 @@ def profile(request):
             request, "pages/accounts/profile.html", context={"request": request}
         )
     else:
-        return redirect("/accounts/login")
+        return conditionalredirect(request, "/accounts/login/")
