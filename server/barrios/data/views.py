@@ -36,7 +36,7 @@ def index(request):
         return render(request, "pages/data/data_list.html", {"data": data})
     else:
         # redirect if user is not authenticated
-        return conditionalredirect(request, "accounts/login")
+        return conditionalredirect(request, "/accounts/login/")
 
 
 def data_detail(request, slug):

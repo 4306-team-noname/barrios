@@ -1,4 +1,4 @@
-from django.db.models import FloatField, CharField, Model
+from django.db.models import FloatField, CharField, Model, OneToOneField, RESTRICT
 from data.models import ImsModel
 
 
@@ -9,6 +9,9 @@ class RatesDefinition(ImsModel):
     units = CharField(max_length=255, null=True, blank=True)
     type = CharField(max_length=255, null=True, blank=True)
     efficiency = CharField(max_length=255, null=True, blank=True)
+    category = OneToOneField(
+        "Category", on_delete=RESTRICT, to_field="category_id", null=True, blank=True
+    )
 
     class Meta:
         db_table = "rates_definition"

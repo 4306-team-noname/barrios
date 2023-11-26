@@ -97,6 +97,7 @@ data_dictionary = {
             "units",
             "type",
             "efficiency",
+            "category",
         ],
         "database_columns": [
             "rate_category",
@@ -105,6 +106,7 @@ data_dictionary = {
             "units",
             "type",
             "efficiency",
+            "category",
         ],
         "dataframe_column_types": [
             "object",
@@ -112,6 +114,7 @@ data_dictionary = {
             "float64",
             "object",
             "object",
+            "int64",
             "int64",
         ],
     },
@@ -167,18 +170,21 @@ data_dictionary = {
             "threshold_value",
             "threshold_owner",
             "units",
+            "category",
         ],
         "database_columns": [
             "threshold_category",
             "threshold_value",
             "threshold_owner",
             "units",
+            "category",
         ],
         "dataframe_column_types": [
             "object",
             "int64",
             "object",
             "object",
+            "int64",
         ],
     },
     "us_rs_weekly_consumables_gas_summary": {
