@@ -21,6 +21,10 @@ Filter Inserts,5,Consumables,2,2-5
 Food-US,6,Consumables,2,2-6
 Food-RS,7,Consumables,2,2-7"""
 
+TEST_NOCOL_CSV_CONTENTS = b"""NORS O2 Tank,84,lbs
+NORS N2 Tank,63,lbs
+COTS Air Tank,7.4,lbs"""
+
 CATEGORIES = [
     {"category_id": 1, "category_name": "EDV", "rate_category": "Urine Receptacle"},
     {
@@ -52,6 +56,9 @@ class TestDataViews(TestCase):
             "test.csv",
             TEST_CSV_CONTENTS,
             content_type="text/csv",
+        )
+        self.test_nocol_csv = SimpleUploadedFile(
+            "test_nocol.csv", TEST_NOCOL_CSV_CONTENTS, content_type="text/csv"
         )
         for category in CATEGORIES:
             Category.objects.create(**category)
@@ -89,6 +96,16 @@ class TestDataViews(TestCase):
             reverse("upload_post"), {"file": self.test_csv}
         )
         self.assertRedirects(response, "/data/category_lookup/")
+
+    def test_file_upload_works_for_non_header_csv(self):
+        """
+        Test that file upload works for a csv file with no header
+        """
+        self.client.force_login(self.user)
+        response: HttpResponse | Any = self.client.post(
+            reverse("upload_post"), {"file": self.test_nocol_csv}
+        )
+        self.assertRedirects(response, "/data/tank_capacities/")
 
     def test_get_request_to_upload_not_allowed(self):
         """

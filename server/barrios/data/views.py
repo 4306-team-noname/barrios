@@ -4,11 +4,11 @@ from django.core.exceptions import PermissionDenied, ValidationError
 from django.http import HttpResponseNotAllowed
 from django.shortcuts import redirect, render
 from barrios.settings import MEDIA_ROOT
-from .models.mappings import mappings
 from .forms import UploadForm
-from .utils.data_dictionary import data_dictionary
-from .utils.FieldFileCsvHelper import FieldFileCsvHelper
-from .services import DataService
+from data.core.data_dictionary import data_dictionary
+from data.core.FieldFileCsvHelper import FieldFileCsvHelper
+from data.core.get_file_info import get_file_info
+from data.services import DataService
 
 
 def index(request):
@@ -70,43 +70,34 @@ def upload_post(request):
     form = UploadForm(request.POST, request.FILES)
 
     if form.is_valid():
-        upload_result = form.save()
-        filename = str(upload_result.file)
-        filepath = os.path.join(MEDIA_ROOT, filename)
+        upload_object = form.save()
+    else:
+        return render("/data/", form)
 
-        fieldnames = FieldFileCsvHelper().get_csv_header(filepath)
-        fieldnames_arr = np.asarray(fieldnames)
-        data_service = DataService(filepath)
-        model_name = None
-        new_fields = None
-        slug = None
+    filename = str(upload_object.file)
+    filepath = os.path.join(MEDIA_ROOT, filename)
+    data_service = DataService(filepath)
 
-        for key in data_dictionary.keys():
-            dictionary_entry = data_dictionary[key]
-            dictionary_fieldnames_arr = np.asarray(
-                list(dictionary_entry["columns"].keys())
-            )
-            matches = np.array_equal(fieldnames_arr, dictionary_fieldnames_arr)
+    fileinfo_result = get_file_info(filepath)
 
-            if matches is True:
-                model_name = dictionary_entry["model_name"]
-                new_fields = list(mappings[model_name].keys())
-                slug = dictionary_entry["slug"]
-
-        if model_name is None:
-            # TODO: Send custom error template
-            raise ValidationError("Your file did not match any known data types")
-        else:
-            if new_fields is not None:
-                # ensure field names match db table names by rewriting
-                # the csv file with a new header row
-                FieldFileCsvHelper().rewrite_csv(filepath, new_fields)
-                insert_result = data_service.insert_csv(model_name)
-                if insert_result["ok"]:
-                    os.remove(filepath)
-                    return redirect(
-                        f"/data/{slug}/",
-                    )
-                else:
-                    os.remove(filepath)
-                    return redirect("/data/")
+    if not fileinfo_result["ok"]:
+        # TODO: Send custom error template?
+        raise ValidationError(fileinfo_result["error"])
+    else:
+        if fileinfo_result["value"]:
+            fileinfo = fileinfo_result["value"]
+            # ensure csv column names are rewritten to reflect
+            # fields in db
+            # TODO: Rewrite this function so that it checks whether the
+            # given file's column names already match the table fields
+            # associated with the file's model.
+            FieldFileCsvHelper().rewrite_csv(filepath, fileinfo["db_fields"])
+            insert_result = data_service.insert_csv(fileinfo["model_name"])
+            if insert_result["ok"]:
+                os.remove(filepath)
+                return redirect(
+                    f"/data/{fileinfo[ 'slug' ]}/",
+                )
+            else:
+                os.remove(filepath)
+                return redirect("/data/")
