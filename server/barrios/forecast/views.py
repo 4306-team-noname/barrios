@@ -1,7 +1,8 @@
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from common.conditionalredirect import conditionalredirect
-from forecast.get_forecast_chart import get_forecast_chart
+from forecast.create_forecast_chart import create_forecast_chart
+from forecast.create_forecast import create_forecast
 
 
 def index(request):
@@ -15,7 +16,8 @@ def get_forecast(request, consumable_name):
     if not request.user.is_authenticated:
         return conditionalredirect(request, "/accounts/login/")
 
-    line_plot = get_forecast_chart(consumable_name)
+    forecast_obj = create_forecast(consumable_name)
+    line_plot = create_forecast_chart(forecast_obj)
 
     return render(
         request,

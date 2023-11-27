@@ -6,7 +6,8 @@ import plotly.express as px
 import pandas as pd
 from common.conditionalredirect import conditionalredirect
 from forecast.views import get_forecast
-from forecast.get_forecast_chart import get_forecast_chart
+from forecast.create_forecast import create_forecast
+from forecast.create_forecast_chart import create_forecast_chart
 
 
 DUMMY_CONSUMABLES = [
@@ -24,7 +25,8 @@ DUMMY_CONSUMABLES = [
 
 def index(request):
     if request.user.is_authenticated:
-        forecast_plot = get_forecast_chart("ACY Insert")
+        forecast_obj = create_forecast("ACY Insert")
+        forecast_plot = create_forecast_chart(forecast_obj)
 
         return render(
             request,
@@ -50,23 +52,3 @@ def get_optimizations(request):
         cp = {"amount": randint(1, 100), **consumable}
         dummy_opts["payload"].append(cp)
     return dummy_opts
-
-
-def get_forecasts(request):
-    next_launch = date(2023, 12, 23)
-    mission_period = timedelta(days=180)
-    launch_dates = [next_launch]
-    for i in range(1, 4):
-        launch_dates.append(next_launch - (mission_period * i))
-        launch_dates.append(next_launch + (mission_period * i))
-    launch_dates.sort()
-    dummy_forecast = []
-    for launch_date in launch_dates:
-        forecast = {
-            "date": launch_date,
-        }
-        seedrand = randint(20, 600)
-        for consumable in DUMMY_CONSUMABLES:
-            forecast[consumable["name"]] = randint(seedrand - 60, seedrand + 60)
-        dummy_forecast.append(forecast)
-    return dummy_forecast
