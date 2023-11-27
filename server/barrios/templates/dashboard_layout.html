@@ -25,7 +25,7 @@
 
 {% include 'components/sidebar.html' %}
 <main hx-boost="true" hx-target="#main-content" hx-select="#main-content"
-  hx-swap="outerHTML transition:true show:body:top" hx-disinherit="*">
+  hx-swap="outerHTML transition:true show:body:top">
   {% block main %}
   {% endblock main %}
 </main>

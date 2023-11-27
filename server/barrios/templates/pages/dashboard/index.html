@@ -54,94 +54,10 @@
         </table>
     </a>
   </div>
-  <div class="row flex-v gap-1" hx-ext="debug">
-    <div class="flex-h flex-between">
-    <h2>Latest Forecasts</h2>
-    <ul class="flex-h menu-h flex-end">
-      <li>
-        <button
-          hx-post="/forecast/ACY Insert/"
-          hx-target="#forecast-plot"
-          hx-swap="outerHTML"
-          hx-trigger="load, click delay:0.2s">
-          ACY Insert
-        </button>
-      </li>
-      <li>
-        <button
-          hx-post="/forecast/KTO/"
-          hx-target="#forecast-plot"
-          hx-swap="outerHTML"
-          hx-trigger="click delay:0.2s">
-          KTO
-        </button>
-      </li>
-      <li>
-        <button
-          hx-post="/forecast/Pretreat Tanks/"
-          hx-target="#forecast-plot"
-          hx-swap="outerHTML"
-          hx-trigger="click delay:0.2s">
-          Pretreat Tanks
-        </button>
-      </li>
-      <li>
-        <button
-          hx-post="/forecast/Filter Inserts/"
-          hx-target="#forecast-plot"
-          hx-swap="outerHTML"
-          hx-trigger="click delay:0.2s">
-          Filter Inserts
-        </button>
-      </li>
-      <li>
-        <button
-          hx-post="/forecast/Urine Receptacle/"
-          hx-target="#forecast-plot"
-          hx-swap="outerHTML"
-          hx-trigger="click delay:0.2s">
-          Urine Receptacle
-        </button>
-      </li>
-      <li>
-        <button
-          hx-post="/forecast/EDVs/"
-          hx-target="#forecast-plot"
-          hx-swap="outerHTML"
-          hx-trigger="click delay:0.2s">
-          EDVs
-        </button>
-      </li>
-      <li>
-        <button
-          hx-post="/forecast/O2 (Oxygen)/"
-          hx-target="#forecast-plot"
-          hx-swap="outerHTML"
-          hx-trigger="click delay:0.2s">
-          O2
-        </button>
-      </li>
-      <li>
-        <button
-          hx-post="/forecast/N2 (Nitrogen)/"
-          hx-target="#forecast-plot"
-          hx-swap="outerHTML"
-          hx-trigger="click delay:0.2s">
-          N2
-        </button>
-      </li>
-      <li>
-        <button
-          hx-post="/forecast/Water Alert/"
-          hx-target="#forecast-plot"
-          hx-swap="outerHTML"
-          hx-trigger="click delay:0.2s">
-          Water
-        </button>
-      </li>
-    </ul>
+  <div class="row flex-v gap-1" hx-ext="debug" hx-disinherit="*" style="overflow: hidden;">
+    <div id="forecast-plot" class="flex-v">
+      {% include 'pages/forecast/forecast_plot.html' %}
     </div>
-    <div id="forecast-plot"></div>
   </div>
 </section>
 

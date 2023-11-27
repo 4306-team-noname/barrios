@@ -4,6 +4,9 @@ from datetime import date, datetime, timedelta
 from plotly.offline import plot
 import plotly.express as px
 import pandas as pd
+from common.conditionalredirect import conditionalredirect
+from forecast.views import get_forecast
+from forecast.get_forecast_chart import get_forecast_chart
 
 
 DUMMY_CONSUMABLES = [
@@ -21,16 +24,20 @@ DUMMY_CONSUMABLES = [
 
 def index(request):
     if request.user.is_authenticated:
+        forecast_plot = get_forecast_chart("ACY Insert")
+
         return render(
             request,
             "pages/dashboard/index.html",
             {
                 "usage_difference": get_usage(request),
                 "last_optimization": get_optimizations(request),
+                "forecast_plot": forecast_plot,
+                "current": "ACY Insert",
             },
         )
     else:
-        return redirect("/accounts/login/")
+        return conditionalredirect(request, "/accounts/login/")
 
 
 def get_usage(request):

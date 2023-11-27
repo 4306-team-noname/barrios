@@ -39,15 +39,16 @@ body {
   background-color: var(--background);
   color: var(--foreground);
   font-family: var(--font-body);
+  margin: 0;
+  padding: 0;
 }
 
 body {
-  padding: 1rem;
   display: grid;
   grid-template-columns: auto 1fr;
   grid-template-areas:
     "sidebar main";
-  gap: 3rem;
+  gap: 4rem;
   height: 100vh;
   overflow: hidden;
 }
@@ -56,6 +57,7 @@ body {
 
 body {
   scrollbar-width: thin;
+  scrollbar-gutter: stable;
   scrollbar-color: var(--blue-highlight) var(--background-surface);
 }
 
@@ -110,8 +112,11 @@ a:hover, a.current {
 
 main {
   grid-area: main;
-  overflow: auto;
+  overflow-y: scroll;
+  scrollbar-gutter: stable;
   height: 100%;
+  padding-block: 2rem;
+  padding-inline-end: 2rem;
   /* overflow: hidden; */
 }
 
@@ -125,6 +130,8 @@ main {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  padding-block: 2rem;
+  padding-inline-start: 2rem;
 }
 
 nav ul {
@@ -301,7 +308,6 @@ a.list-item:hover {
 
 .menu-h {
   list-style-type: none;
-  padding-inline: 1rem;
   gap: 1px;
   & li>button {
     border-radius: 0;
@@ -311,6 +317,10 @@ a.list-item:hover {
   }
   & li:last-child>button {
     border-radius: 0rem 0.5rem 0.5rem 0rem;
+  }
+  & li button:disabled {
+    background-color: var(--foreground);
+    cursor: unset;
   }
 }
 
