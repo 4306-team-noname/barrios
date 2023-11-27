@@ -76,7 +76,7 @@ def create_forecast_chart(forecast_obj):
         )
     )
     line_plot = fig.to_html(
-        config={"display_modebar": False, "responsive": True},
+        config={"displayModeBar": False, "responsive": True},
         full_html=False,
         default_height=420,
         div_id="line_plot",
