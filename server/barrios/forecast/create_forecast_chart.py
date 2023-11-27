@@ -5,11 +5,12 @@ import plotly.graph_objs as go
 from math import floor
 
 
-def create_forecast_chart(forecast_obj):
+def create_forecast_chart(forecast_obj, with_title=True):
     consumable_name = forecast_obj["consumable_name"]
     df = forecast_obj["df"]
     threshold_value = forecast_obj["threshold_value"]
     threshold_plus_value = forecast_obj["threshold_plus_value"]
+    critical_value = forecast_obj["critical_value"]
     min_value = forecast_obj["min_value"]
     max_value = forecast_obj["max_value"]
 
@@ -36,6 +37,16 @@ def create_forecast_chart(forecast_obj):
             opacity=0.1,
             annotation_text="Threshold + 10%",
             annotation_position="top right",
+        )
+    if critical_value:
+        fig.add_hline(
+            y=critical_value,
+            line_width=3,
+            line_color="red",
+            line_dash="dot",
+            opacity=0.9,
+            annotation_text="Critical Level",
+            annotation_position="bottom right",
         )
     # below threshold coloring
     fig.add_hrect(
@@ -65,8 +76,11 @@ def create_forecast_chart(forecast_obj):
         font=dict(color="#ffffff"),
         hovermode="x",
         newshape_layer="below",
-        title={"text": consumable_name.upper()},
     )
+
+    if with_title:
+        fig.update_layout(title={"text": consumable_name.upper()})
+
     fig.add_trace(
         go.Scatter(
             x=list(df["date"]),
@@ -78,7 +92,8 @@ def create_forecast_chart(forecast_obj):
     line_plot = fig.to_html(
         config={"displayModeBar": False, "responsive": True},
         full_html=False,
-        default_height=420,
-        div_id="line_plot",
+        # default_height=600,
+        include_plotlyjs=False,
+        include_mathjax=False,
     )
     return line_plot

@@ -611,8 +611,18 @@ ul.pagination {
   list-style-type: none;
 }
 
+#main-content {
+  view-transition-name: slide-it;
+  /* view-transition-name: fade-it; */
+}
+
 #upload_spinner {
   animation:spin 2s ease-in-out infinite;
+}
+
+#forecast_plot {
+  min-height: 600px;
+  height: 600px;
 }
 
 /* ANIMATIONS */
@@ -670,9 +680,7 @@ ul.pagination {
   animation: 280ms cubic-bezier(0, 0, 0.2, 1) 90ms both fade-in;
 }
 
-#main-content {
-  view-transition-name: slide-it;
-}
+
 
 @media (prefers-reduced-motion) {
   #main-content {
