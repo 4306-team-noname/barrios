@@ -1,14 +1,16 @@
+{% load django_htmx %}
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  {% load static %}
   <link rel="stylesheet" href="{% static 'style/main.css' %}">
-  <script src="https://unpkg.com/htmx.org@1.9.6"></script>
-  {% load static %}
-  <script src="{% static 'scripts//toast.js' %}" defer></script>
+  <script src="{% static 'scripts/htmx.min.js' %}" defer></script>
+  <script src="{% static 'scripts/htmx-debug.js' %}" defer></script>
+  {% django_htmx_script %}
+  <script src="{% static 'scripts/toast.js' %}" defer></script>
   <link rel="icon" href="{% static 'favicon.svg'%}">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -23,11 +25,10 @@
 
 {% include 'components/sidebar.html' %}
 <main hx-boost="true" hx-target="#main-content" hx-select="#main-content"
-  hx-swap="outerHTML transition:true show:body:top" class="surface">
+  hx-swap="outerHTML transition:true show:body:top">
   {% block main %}
   {% endblock main %}
 </main>
-
 </body>
 
 </html>

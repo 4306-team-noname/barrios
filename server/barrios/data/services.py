@@ -1,14 +1,11 @@
-from csv import DictReader
+from __future__ import annotations
 from cases import to_snake
-from django.db.models import Model
 from common.result import Result
-from django.db import connections
 import pandas as pd
 import numpy as np
-import subprocess
+from data.core.import_csv import import_csv
 
-from .models import (
-    Category,
+from data.models import (
     ImsConsumablesCategoryLookup,
     InventoryMgmtSystemConsumables,
     IssFlightPlan,
@@ -26,11 +23,20 @@ from .models import (
 class DataService:
     file: str
 
-    def __init__(self, filepath: str = None) -> None:
+    def __init__(self, filepath: str | None = None) -> None:
         if filepath is not None:
             self.file = filepath
 
     def get_num_lines(self, csv_path):
+        """
+        Returns the number of lines in a csv file
+        located at the given file path
+        :param csv_path: str
+            The path to a csv file
+
+        :return int:
+            The number of lines in a csv file
+        """
         chunk = 1024 * 1024  # Process 1 MB at a time.
         f = np.memmap(csv_path)
         num_newlines = sum(
@@ -39,66 +45,34 @@ class DataService:
         del f
         return num_newlines
 
-    def keys_to_snake(self, model_dict):
+    def keys_to_snake(self, original_dict):
+        """Create a copy of the given dict with keys
+           converted to snake_case.
+
+        :param original_dict: dict[Any]:
+            The dict whose keys need to be converted to
+            snake_case.
+
+        :returns: dict[Any]:
+            A copy of "original_dict" with snake_case keys
+        """
         new_dict = {}
-        for key in model_dict.keys():
+        for key in original_dict.keys():
             if "Unnamed" not in key:
-                new_dict[to_snake(key)] = model_dict[key]
+                new_dict[to_snake(key)] = original_dict[key]
         return new_dict
 
-    def insert_csv(self, model_name, mapping=None, file_object=None) -> Result:
-        result = None
-        if model_name == "ImsConsumablesCategoryLookup":
-            result = ImsConsumablesCategoryLookup.objects.from_csv(
-                self.file, encoding="utf-8"
-            )
-        elif model_name == "InventoryMgmtSystemConsumables":
-            if not file_object:
-                result = InventoryMgmtSystemConsumables.objects.from_csv(
-                    self.file, encoding="utf-8", mapping=mapping
-                )
-            else:
-                result = InventoryMgmtSystemConsumables.objects.from_csv(
-                    file_object, encoding="utf-8", mapping=mapping
-                )
-        elif model_name == "IssFlightPlan":
-            result = IssFlightPlan.objects.from_csv(self.file, encoding="utf-8")
-        elif model_name == "IssFlightPlanCrew":
-            result = IssFlightPlanCrew.objects.from_csv(self.file, encoding="utf-8")
-        elif model_name == "IssFlightPlanCrewNationalityLookup":
-            result = IssFlightPlanCrewNationalityLookup.objects.from_csv(
-                self.file, encoding="utf-8"
-            )
-        elif model_name == "RatesDefinition":
-            result = RatesDefinition.objects.from_csv(self.file, encoding="utf-8")
-        elif model_name == "RsaConsumableWaterSummary":
-            result = RsaConsumableWaterSummary.objects.from_csv(
-                self.file, encoding="utf-8"
-            )
-        elif model_name == "TankCapacityDefinition":
-            result = TankCapacityDefinition.objects.from_csv(
-                self.file, encoding="utf-8"
-            )
-        elif model_name == "ThresholdsLimitsDefinition":
-            result = ThresholdsLimitsDefinition.objects.from_csv(
-                self.file, encoding="utf-8"
-            )
-        elif model_name == "UsRsWeeklyConsumableGasSummary":
-            result = UsRsWeeklyConsumableGasSummary.objects.from_csv(
-                self.file, encoding="utf-8"
-            )
-        elif model_name == "UsWeeklyConsumableWaterSummary":
-            result = UsWeeklyConsumableWaterSummary.objects.from_csv(
-                self.file, encoding="utf-8"
-            )
-        if result:
-            return {"ok": True, "value": result, "error": None}
-        else:
-            return {
-                "ok": False,
-                "value": None,
-                "error": "There was an error saving your data.",
-            }
+    def insert_csv(self, model_name: str, file_object=None) -> Result:
+        """Inserts all rows of the given csv file into the database.
+
+        Params
+        ------
+        model_name : str
+            The name of the model to insert
+        file_object : File
+            A csv file object
+        """
+        return import_csv(model_name, self.file)
 
     def get_uploaded_file(self, csv_path):
         # TODO: Return a result with the dataframe,
@@ -116,61 +90,80 @@ class DataService:
             df = pd.read_csv(csv_path, index_col=False, keep_default_na=False)
             return df
 
-    def get_model_by_ref(self, ref: str) -> Model:
+    def get_count_by_slug(self, slug: str) -> int:
         model = None
-        if ref == "ims_consumables":
+        if slug == "ims_consumables":
             model = InventoryMgmtSystemConsumables
-        elif ref == "category_lookup":
+        elif slug == "category_lookup":
             model = ImsConsumablesCategoryLookup
-        elif ref == "flight_plan":
+        elif slug == "flight_plan":
             model = IssFlightPlan
-        elif ref == "crew_flight_plan":
+        elif slug == "crew_flight_plan":
             model = IssFlightPlanCrew
-        elif ref == "crew_nationality_lookup":
+        elif slug == "crew_nationality_lookup":
             model = IssFlightPlanCrewNationalityLookup
-        elif ref == "us_water_summary":
+        elif slug == "us_water_summary":
             model = UsWeeklyConsumableWaterSummary
-        elif ref == "rsa_water_summary":
+        elif slug == "rsa_water_summary":
             model = RsaConsumableWaterSummary
-        elif ref == "weekly_gas_summary":
+        elif slug == "weekly_gas_summary":
             model = UsRsWeeklyConsumableGasSummary
-        elif ref == "rates_definitions":
+        elif slug == "rates_definitions":
             model = RatesDefinition
-        elif ref == "tank_capacities":
+        elif slug == "tank_capacities":
             model = TankCapacityDefinition
-        elif ref == "thresholds_and_limits":
+        elif slug == "thresholds_and_limits":
             model = ThresholdsLimitsDefinition
-        return model
+        if model:
+            return model.objects.count()
+        else:
+            return 0
 
-    def get_count_by_ref(self, ref: str) -> int:
-        model = self.get_model_by_ref(ref)
-        return model.objects.count()
-
-    def get_data_by_ref(self, ref: str) -> Result:
+    def get_data_by_slug(self, slug: str) -> Result:
+        """
+        Retrieves all IMS-related records associated with a slug.
+        :param slug: str:
+            The slug, defined in the data dictionary,
+            for the model to retrieve
+        :returns Result[Queryset]:
+            Any records associated with the given slug
+        """
         results = None
-        if ref == "ims_consumables":
+        name = None
+        if slug == "ims_consumables":
             results = InventoryMgmtSystemConsumables.objects.all().order_by("-datedim")
-        elif ref == "category_lookup":
+            name = "IMS Consumables"
+        elif slug == "category_lookup":
             results = ImsConsumablesCategoryLookup.objects.all().order_by("category_id")
-        elif ref == "flight_plan":
+            name = "Category Lookup"
+        elif slug == "flight_plan":
             results = IssFlightPlan.objects.all().order_by("datedim")
-        elif ref == "crew_flight_plan":
+            name = "Flight Plan"
+        elif slug == "crew_flight_plan":
             results = IssFlightPlanCrew.objects.all().order_by("datedim")
-        elif ref == "crew_nationality_lookup":
+            name = "Crew Flight Plan"
+        elif slug == "crew_nationality_lookup":
             results = IssFlightPlanCrewNationalityLookup.objects.all()
-        elif ref == "us_water_summary":
+            name = "Crew Nationality Lookup"
+        elif slug == "us_water_summary":
             results = UsWeeklyConsumableWaterSummary.objects.all().order_by("date")
-        elif ref == "rsa_water_summary":
+            name = "US Water Summary"
+        elif slug == "rsa_water_summary":
             results = RsaConsumableWaterSummary.objects.all().order_by("report_date")
-        elif ref == "weekly_gas_summary":
+            name = "RSA Water Summary"
+        elif slug == "weekly_gas_summary":
             results = UsRsWeeklyConsumableGasSummary.objects.all().order_by("date")
-        elif ref == "rates_definitions":
+            name = "Weekly Gas Summary"
+        elif slug == "rates_definitions":
             results = RatesDefinition.objects.all()
-        elif ref == "tank_capacities":
+            name = "Rates Definitions"
+        elif slug == "tank_capacities":
             results = TankCapacityDefinition.objects.all()
-        elif ref == "thresholds_and_limits":
+            name = "Tank Capacities"
+        elif slug == "thresholds_and_limits":
             results = ThresholdsLimitsDefinition.objects.all()
+            name = "Thresholds and Limits"
         if results is not None:
-            return {"ok": True, "value": results, "error": None}
+            return {"ok": True, "value": {"data": results, "name": name}, "error": None}
         else:
             return {"ok": False, "value": None, "error": "No results found"}

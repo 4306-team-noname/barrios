@@ -2,6 +2,7 @@
 from django.db.models import DateField, FloatField, Manager, Model
 from .CustomFields import EmptyStringToNoneFloatField
 from .EmptyKeywordManager import EmptyKeywordManager
+from data.models import ImsModel
 from datetime import datetime
 
 
@@ -20,7 +21,7 @@ class UsRsWeeklyConsumableManager(EmptyKeywordManager):
         super().create(*args, **newargs)
 
 
-class UsRsWeeklyConsumableGasSummary(Model):
+class UsRsWeeklyConsumableGasSummary(ImsModel):
     date = DateField(primary_key=True)
     usos_o2_kg = EmptyStringToNoneFloatField()
     rs_o2_kg = EmptyStringToNoneFloatField()

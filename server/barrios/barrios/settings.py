@@ -36,9 +36,10 @@ INSTALLED_APPS = [
     "dashboard.apps.DashboardConfig",
     "forecast.apps.ForecastConfig",
     "home.apps.HomeConfig",
-    "supply.apps.SupplyConfig",
+    "optimization.apps.OptimizationConfig",
     "usage.apps.UsageConfig",
     "data.apps.DataConfig",
+    "django_browser_reload",
     "django_tables2",
     "django.contrib.admin",
     "django.contrib.auth",
@@ -46,6 +47,8 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "django_htmx",
+    "import_export",
 ]
 
 MIDDLEWARE = [
@@ -57,6 +60,8 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "barrios.middleware.HtmxMessageMiddleware",
+    "django_browser_reload.middleware.BrowserReloadMiddleware",
+    "django_htmx.middleware.HtmxMiddleware",
 ]
 
 ROOT_URLCONF = "barrios.urls"
@@ -136,8 +141,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = "/static/"
-# STATIC_ROOT = BASE_DIR / "static"
+STATIC_URL = "static/"
+STATIC_ROOT = os.path.join(BASE_DIR, "static/collected")
 # STATIC_ROOT = os.path.join(BASE_DIR, "static")
 STATICFILES_DIRS = (os.path.join(BASE_DIR, "static"),)
 # Default primary key field type

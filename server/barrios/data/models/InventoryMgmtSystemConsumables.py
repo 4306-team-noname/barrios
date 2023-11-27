@@ -7,10 +7,12 @@ from django.db.models import (
     Model,
     RESTRICT,
 )
+from postgres_copy import CopyManager
 from .CustomFields import EmptyStringToNoneFloatField, EmptyStringToNoneIntegerField
-from .EmptyKeywordManager import EmptyKeywordManager
 from django.utils.timezone import make_aware
 from datetime import datetime
+from data.models import ImsModel
+from data.core.managers import EmptyKeywordManager
 
 
 class ImsManager(EmptyKeywordManager):
@@ -30,7 +32,7 @@ class ImsManager(EmptyKeywordManager):
                     )
                 else:
                     newargs[key] = None
-
+        del kwargs["id"]
         super().create(*args, **newargs)
 
 

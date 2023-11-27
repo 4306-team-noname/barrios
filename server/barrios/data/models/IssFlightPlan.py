@@ -1,8 +1,9 @@
-from django.db.models import DateField, CharField, Model
+from django.db.models import DateField, CharField
 from .FlightPlanManager import FlightPlanManager
+from data.models import ImsFlightplanModel
 
 
-class IssFlightPlan(Model):
+class IssFlightPlan(ImsFlightplanModel):
     datedim = DateField()
     vehicle_name = CharField(max_length=255, blank=True, null=True)
     port_name = CharField(max_length=255, blank=True, null=True)
@@ -12,11 +13,6 @@ class IssFlightPlan(Model):
     eva_type = CharField(max_length=255, blank=True, null=True)
     eva_accuracy = CharField(max_length=255, blank=True, null=True)
     event = CharField(max_length=255, blank=True, null=True)
-
-    objects = FlightPlanManager()
-
-    # NOTE: days_until_next_launch:
-    # computed field?
 
     class Meta:
         db_table = "iss_flight_plan"

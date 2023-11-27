@@ -5,11 +5,10 @@
 
 {% block main %}
  <section id="main-content" class="flex-v gap-2">
-   <h1>Data</h1>
    <div class="data-grid gap-2">
      {% for data_type in data %}
      {% if data_type.count > 0 %}
-        <a href="/data/{{ data_type.ref }}" class="list-item card flex-v gap-1">
+        <a href="/data/{{ data_type.slug }}" class="list-item card flex-v gap-1 surface">
             <span class="flex-h txt-xlarge">
               {% include 'assets/icons/table.svg' %}
             </span>

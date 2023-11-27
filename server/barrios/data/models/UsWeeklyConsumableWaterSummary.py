@@ -2,6 +2,7 @@
 from django.db.models import DateField, FloatField, Model
 from .CustomFields import EmptyStringToNoneFloatField
 from .EmptyKeywordManager import EmptyKeywordManager
+from data.models import ImsModel
 from datetime import datetime
 
 
@@ -20,7 +21,7 @@ class UsWeeklyConsumableManager(EmptyKeywordManager):
         super().create(*args, **newargs)
 
 
-class UsWeeklyConsumableWaterSummary(Model):
+class UsWeeklyConsumableWaterSummary(ImsModel):
     date = DateField(primary_key=True)
     corrected_potable_l = EmptyStringToNoneFloatField()
     corrected_technical_l = EmptyStringToNoneFloatField()

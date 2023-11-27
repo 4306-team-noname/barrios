@@ -1,9 +1,9 @@
 # from .UserDataEntry import UserDataEntry
 from django.db.models import CharField, DateField, IntegerField, Model
-from .FlightPlanManager import FlightPlanManager
+from data.models import ImsFlightplanModel
 
 
-class IssFlightPlanCrew(Model):
+class IssFlightPlanCrew(ImsFlightplanModel):
     datedim = DateField()
     nationality_category = CharField(max_length=255, blank=True, null=True)
     crew_count = IntegerField()
@@ -11,8 +11,6 @@ class IssFlightPlanCrew(Model):
     # NOTE: spread country column into multiple
     # columns with the same datedim. Will make it easier
     # to query how many people will be on station.
-
-    objects = FlightPlanManager()
 
     class Meta:
         db_table = "iss_flight_plan_crew"
