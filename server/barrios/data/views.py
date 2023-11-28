@@ -5,7 +5,7 @@ from django.http import HttpResponseNotAllowed
 from django.shortcuts import redirect, render
 from django_htmx.http import HttpResponseClientRedirect
 from common.conditionalredirect import conditionalredirect
-from barrios.settings import MEDIA_ROOT
+from core.settings import MEDIA_ROOT
 from data.core.data_dictionary import data_dictionary
 from data.core.FieldFileCsvHelper import FieldFileCsvHelper
 from data.core.get_file_info import get_file_info
