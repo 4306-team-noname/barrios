@@ -7,21 +7,34 @@
   <div class="row grid grid-column-2 gap-2">
     <a class="surface flex-v" href="/usage/">
       <div class="card-header flex-h flex-between">
-        <h2>Usage</h2>
+        <h2>Overall Usage</h2>
         <div class="txt-large">
         {% include  'assets/icons/data.svg'%}
         </div>
       </div>
       <div class="flex-v flex-center gap-2" style="height: 100%;">
+      
+      {% if usage_difference < 0 %}
       <div class="flex-h gap-1 flex-center">
         <span style="font-size: 8rem; font-weight: 800;">
-          {{ usage_difference }}%
+          {{ usage_difference|cut:"-" }}%
         </span>
         {% include 'assets/images/arrow.svg' %}
       </div>
       <span class="txt-xlarge flex-h flex-center" style="font-weight: 800; text-transform: uppercase; color: var(--accent);">
           Below Predictions
       </span>
+      {% else %}
+      <div class="flex-h gap-1 flex-center">
+        <span style="font-size: 8rem; font-weight: 800;">
+          {{ usage_difference }}%
+        </span>
+        {% include 'assets/images/arrow-up.svg' %}
+      </div>
+      <span class="txt-xlarge flex-h flex-center" style="font-weight: 800; text-transform: uppercase; color: var(--warn);">
+          Above Predictions
+      </span>
+      {% endif %}
       </div>
     </a>
     <a href="/optimization/" class="surface flex-v gap-1">
@@ -54,7 +67,7 @@
         </table>
     </a>
   </div>
-  <div class="row flex-v gap-1" hx-ext="debug" hx-disinherit="*" style="overflow: hidden;">
+  <div class="row flex-v gap-1" hx-ext="debug" hx-disinherit="*" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' style="overflow: hidden;">
     <div id="forecast-plot" class="flex-v">
       {% include 'components/forecast_plot.html' %}
     </div>

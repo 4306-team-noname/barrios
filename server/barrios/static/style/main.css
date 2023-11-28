@@ -12,6 +12,7 @@
   --chart-gray: #9E9E9E;
   --chart-gray-darker: #888888;
   --brand-gray: #d9d9d9;
+  --warn: #EB5740;
 
   --background: var(--blue);
   --background-surface: var(--blue-lighter);
@@ -610,11 +611,13 @@ ul.pagination {
   justify-content: space-around;
   list-style-type: none;
 }
-
-#main-content {
+main {
   view-transition-name: slide-it;
-  /* view-transition-name: fade-it; */
 }
+/* #main-content { */
+  /* view-transition-name: slide-it; */
+  /* view-transition-name: fade-it; */
+/* } */
 
 #upload_spinner {
   animation:spin 2s ease-in-out infinite;
@@ -623,6 +626,7 @@ ul.pagination {
 #forecast_plot {
   min-height: 600px;
   height: 600px;
+  view-transition-name: fade-it;
 }
 
 /* ANIMATIONS */

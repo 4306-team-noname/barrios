@@ -93,7 +93,7 @@ def create_forecast_chart(forecast_obj, with_title=True):
         config={"displayModeBar": False, "responsive": True},
         full_html=False,
         # default_height=600,
-        include_plotlyjs=False,
+        # include_plotlyjs=False,
         include_mathjax=False,
     )
     return line_plot
