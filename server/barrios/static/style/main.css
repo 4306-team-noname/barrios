@@ -107,8 +107,12 @@ a {
   text-decoration: none;
 }
 
-a:hover, a.current {
+a:hover, a.current-page {
   color: var(--accent);
+}
+
+a.current-page {
+  pointer-events: none;
 }
 
 main {

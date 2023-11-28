@@ -6,7 +6,9 @@ from data.models import IssFlightPlan
 def index(request):
     if request.user.is_authenticated:
         get_optimization(request, "US Food BOBs")
-        return render(request, "pages/optimization/index.html")
+        return render(
+            request, "pages/optimization/index.html", {"current_page": "optimization"}
+        )
     else:
         return redirect("/accounts/login")
 

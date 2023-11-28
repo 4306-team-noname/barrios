@@ -36,6 +36,7 @@ def index(request):
                 "last_optimization": get_optimizations(request),
                 "forecast_plot": forecast_plot,
                 "current": "ACY Insert",
+                "current_page": "dashboard",
             },
         )
     else:

@@ -33,7 +33,9 @@ def index(request):
             for key in data_dictionary.keys()
         ]
 
-        return render(request, "pages/data/data_list.html", {"data": data})
+        return render(
+            request, "pages/data/data_list.html", {"data": data, "current_page": "data"}
+        )
     else:
         # redirect if user is not authenticated
         return conditionalredirect(request, "/accounts/login/")

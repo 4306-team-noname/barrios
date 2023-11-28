@@ -67,7 +67,7 @@
         </table>
     </a>
   </div>
-  <div class="row flex-v gap-1" hx-ext="debug" hx-disinherit="*" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' style="overflow: hidden;">
+  <div class="row flex-v gap-1" hx-disinherit="*" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' style="overflow: hidden;">
     <div id="forecast-plot" class="flex-v">
       {% include 'components/forecast_plot.html' %}
     </div>

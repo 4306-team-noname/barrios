@@ -39,7 +39,9 @@ def sign_out(request):
 def profile(request):
     if request.user.is_authenticated:
         return render(
-            request, "pages/accounts/profile.html", context={"request": request}
+            request,
+            "pages/accounts/profile.html",
+            context={"request": request, "current_page": "profile"},
         )
     else:
         return conditionalredirect(request, "/accounts/login/")

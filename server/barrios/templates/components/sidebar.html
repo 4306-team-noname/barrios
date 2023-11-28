@@ -6,35 +6,69 @@
     </a>
     <ul>
       <li>
+        {% if current_page == 'dashboard' %}
+        <a href="/dashboard" class="icon-link current-page">
+          {% include 'assets/icons/dashboard.svg' %}
+          Dashboard
+        </a>
+        {% else %}
         <a href="/dashboard" class="icon-link">
           {% include 'assets/icons/dashboard.svg' %}
           Dashboard
         </a>
+        {% endif %}
       </li>
       <li>
+        {% if current_page == 'usage' %}
+        <a href="/usage" class="icon-link current-page">
+          {% include 'assets/icons/ruler.svg' %}
+          Usage
+        </a>
+        {% else %}
         <a href="/usage" class="icon-link">
           {% include 'assets/icons/ruler.svg' %}
           Usage
         </a>
+        {% endif %}
       </li>
       <li>
+        {% if current_page == 'optimization' %}
+        <a href="/optimization" class="icon-link current-page">
+          {% include 'assets/icons/box.svg' %}
+          Optimization
+        </a>
+        {% else %}
         <a href="/optimization" class="icon-link">
           {% include 'assets/icons/box.svg' %}
           Optimization
         </a>
+        {% endif %}
       </li>
-
       <li>
+        {% if current_page == 'forecast' %}
+        <a href="/forecast" class="icon-link current-page">
+          {% include 'assets/icons/chart.svg' %}
+          Forecast
+        </a>
+        {% else %}
         <a href="/forecast" class="icon-link">
           {% include 'assets/icons/chart.svg' %}
           Forecast
         </a>
+        {% endif %}
       </li>
       <li>
+        {% if current_page == data %}
+        <a href="/data" class="icon-link current-page">
+          {% include 'assets/icons/data.svg' %}
+          Data
+        </a>
+        {% else %}
         <a href="/data" class="icon-link">
           {% include 'assets/icons/data.svg' %}
           Data
         </a>
+        {% endif %}
       </li>
     </ul>
   </nav>
@@ -42,10 +76,17 @@
   <nav aria-label="User Menu">
     <ul>
       <li>
+        {% if current_page == 'profile' %}
+        <a href="/accounts/profile" class="icon-link current-page">
+          {% include 'assets/icons/user.svg' %}
+          Profile
+        </a>
+        {% else %}
         <a href="/accounts/profile" class="icon-link">
           {% include 'assets/icons/user.svg' %}
           Profile
         </a>
+        {% endif %}
       </li>
       {% if request.user.is_superuser %}
       <li>
@@ -63,4 +104,6 @@
       </li>
     </ul>
   </nav>
+  {% load static %}
+  <script src="{% static 'scripts/menu-update.js' %}" defer></script>
 </aside>
