@@ -116,7 +116,7 @@ chmod 775 resetdb.sh
 
   I don't use Windows, so I honestly don't know if the above is necessary (nor do I know if it will even do anything). It's required for Linux, though.
 
-2. Open the script in a text editor and change the `ADMIN_EMAIL` variable. This isn't necessarily required unless you're testing out the application's email capabilities (reset password, etc).
+2. Open the script in a text editor and change the `ADMIN_EMAIL` and `ADMIN_USERNAME` variables. This isn't necessarily required unless you're testing out the application's email capabilities (reset password, etc). If you don't change it, the admin username (for testing purposes only) will be `admin`.
 
 3. Run the script with the command `./resetdb.sh`. It will ask you if you want to proceed. Type `yes`. The script will then attempt to drop all of the data from an existing `barrios` database and reset all of the tables so they match the application's models. When it's done, it will prompt you for a password.
 
