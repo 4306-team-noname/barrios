@@ -111,7 +111,7 @@ This will pull the necessary docker images and set them up so you have a Postgre
 1. Make sure you're in the `server/barrios` directory. You're going to need to run one script and one Django command. Before running the script, you may need to make sure that you have the correct permissions to do so. If you're on Windows, navigate to the directory using `GitBash`. If you're on Linux, just navigate to the directory using a terminal. Then, run this command to change the script's permissions:
 
 ```bash
-chmod 775 setupdb.sh
+chmod 775 resetdb.sh
 ```
 
   I don't use Windows, so I honestly don't know if the above is necessary (nor do I know if it will even do anything). It's required for Linux, though.
