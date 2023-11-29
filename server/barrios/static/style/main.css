@@ -461,8 +461,6 @@ button:hover {
   justify-content: space-between;
   align-items: center;
   word-break: break-all;
-  /* p { */
-  /* } */
 }
 
 /* Upload form styles */
@@ -484,8 +482,8 @@ button:hover {
 }
 
 .stacked .icon {
-  width: 1.75rem;
-  height: 1.75rem;
+  width: 1.5rem;
+  height: 1.5rem;
 }
 
 .hover-surface {
