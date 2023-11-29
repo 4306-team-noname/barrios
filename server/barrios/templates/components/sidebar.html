@@ -1,9 +1,9 @@
 <aside class="sidebar" hx-boost="true" hx-target="#main-content" hx-select="#main-content"
   hx-swap="outerHTML transition:true show:body:top">
+  <a href=" /dashboard">
+    {% include 'assets/images/barrios_logo.svg' %}
+  </a>
   <nav aria-label="Main Navigation">
-    <a href=" /dashboard">
-      {% include 'assets/images/barrios_logo.svg' %}
-    </a>
     <ul>
       <li>
         <a href="/dashboard/" class="icon-link">
@@ -37,11 +37,11 @@
       </li>
     </ul>
   </nav>
-  <div class="flex-v gap-3">
+  <div class="flex-v gap-3 sidebar-form-container">
     {% include 'components/analysisform.html' %}
     {% include 'components/uploadform.html' %}
   </div>
-  <nav aria-label="User Menu" class="flex-v flex-end">
+  <nav aria-label="User Menu" class="flex-v">
     <ul class="flex-end">
       <li>
         <a href="/accounts/profile/" class="icon-link">

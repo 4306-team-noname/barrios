@@ -46,7 +46,7 @@ body {
 
 body {
   display: grid;
-  grid-template-columns: 16rem 1fr;
+  grid-template-columns: 18rem 1fr;
   grid-template-rows: 1fr;
   grid-template-areas:
     "sidebar main";
@@ -166,19 +166,28 @@ fieldset {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding-block: 2rem;
-  padding-inline: 2rem;
+  padding: 2rem;
   overflow-y: auto;
+  gap: 2rem;
 
   & nav ul {
     list-style-type: none;
     margin: 0;
-    margin-block: 3rem;
+    /* margin-block: 3rem; */
     padding: 0;
     display: flex;
     flex-direction: column;
     gap: 3rem;
   }
+
+  & details {
+    transition: background-color 0.2s ease-in-out;
+  }
+
+  & details:hover {
+    background-color: var(--background-surface-hover);
+  }
+
   & details > summary:focus {
     outline: none;
   }
@@ -193,7 +202,7 @@ fieldset {
     align-items: center;
     list-style: none;
   }
-
+  
 }
 
 .file-list {
@@ -325,6 +334,10 @@ a.list-item:hover {
 
 .flex-end {
   justify-content: flex-end;
+}
+
+.flex-start {
+  justify-content: flex-start;
 }
 
 .flex-center {
@@ -507,9 +520,11 @@ button:hover {
   font-weight: 700;
   text-transform: uppercase;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  white-space: nowrap;
   align-items: center;
-  margin-inline: auto;
+  justify-content: flex-start;
   gap: 1rem;
   z-index: 1;
   pointer-events: none;
@@ -565,15 +580,23 @@ progress::-moz-progress-bar {
   border-radius: 1em;
 }
 
+#upload-spinner-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .htmx-indicator{
-    opacity:0;
-    transition: opacity 500ms ease-in;
+  animation:spin 1s ease-in-out infinite;
+  height: 1px;
+  opacity:0;
+  transition: opacity 500ms ease-in;
 }
+
 .htmx-request .htmx-indicator{
-    opacity:1
-}
-.htmx-request.htmx-indicator{
-    opacity:1
+  height: unset;
+  /* transform: scaleY(1); */
+  opacity:1
 }
 
 .flash-container {
@@ -660,9 +683,7 @@ main {
   /* view-transition-name: fade-it; */
 /* } */
 
-#upload_spinner {
-  animation:spin 2s ease-in-out infinite;
-}
+
 
 #forecast_plot {
   min-height: 600px;
