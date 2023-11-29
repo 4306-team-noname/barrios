@@ -26,6 +26,7 @@ class RsaConsumableWaterSummary(Model):
     remain_rodnik_liters = FloatField()
 
     objects = RsaConsumablesManager()
+    readable_name = "RSA Water Summary"
 
     class Meta:
         db_table = "rsa_consumable_water_summary"

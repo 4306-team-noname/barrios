@@ -4,6 +4,7 @@ from django.core.exceptions import PermissionDenied, ValidationError
 from django.http import HttpResponseNotAllowed
 from django.shortcuts import redirect, render
 from django_htmx.http import HttpResponseClientRedirect
+import json
 from common.conditionalredirect import conditionalredirect
 from core.settings import MEDIA_ROOT
 from data.core.data_dictionary import data_dictionary
@@ -13,32 +14,40 @@ from data.services import DataService
 from .forms import UploadForm
 
 
-def index(request):
+def index(request, context=None):
     # - Main view of the /data route -
     # This is basically a "dumb" view that
     # lists the different types of data enumerated
     # in the imported data_dictionary
-    if request.user.is_authenticated:
-        data_service = DataService()
-        data = []
-
-        # loop through the data_dictionary and build
-        # the response data
-        data = [
-            {
-                "name": data_dictionary[key]["readable_name"],
-                "slug": data_dictionary[key]["slug"],
-                "count": data_service.get_count_by_slug(data_dictionary[key]["slug"]),
-            }
-            for key in data_dictionary.keys()
-        ]
-
-        return render(
-            request, "pages/data/data_list.html", {"data": data, "current_page": "data"}
-        )
-    else:
+    if not request.user.is_authenticated:
         # redirect if user is not authenticated
         return conditionalredirect(request, "/accounts/login/")
+
+    missing_data = None
+    if request.session.get("missing_data"):
+        missing_data = request.session.get("missing_data")
+
+    data_service = DataService()
+    data = []
+
+    # loop through the data_dictionary and build
+    # the response data
+    # TODO: Perhaps, set the data dictionary items
+    # as model attributes instead
+    data = [
+        {
+            "name": data_dictionary[key]["readable_name"],
+            "slug": data_dictionary[key]["slug"],
+            "count": data_service.get_count_by_slug(data_dictionary[key]["slug"]),
+        }
+        for key in data_dictionary.keys()
+    ]
+
+    return render(
+        request,
+        "pages/data/data_list.html",
+        {"data": data, "current_page": "data", "missing_data": missing_data},
+    )
 
 
 def data_detail(request, slug):

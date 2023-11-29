@@ -18,6 +18,7 @@ class ImsConsumablesCategoryLookup(ImsModel):
     unique_cat_mod_id = CharField(max_length=255, unique=True)
 
     # objects = EmptyKeywordManager()
+    readable_name = "Category Lookup"
 
     class Meta:
         db_table = "ims_consumables_category_lookup"

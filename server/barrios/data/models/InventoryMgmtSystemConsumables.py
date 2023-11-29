@@ -80,6 +80,7 @@ class InventoryMgmtSystemConsumables(Model):
     category_name = CharField(blank=True, null=True)
 
     objects = ImsManager()
+    readable_name = "IMS Consumables"
 
     class Meta:
         db_table = "inventory_mgmt_system_consumable"

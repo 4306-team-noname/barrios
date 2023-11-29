@@ -18,5 +18,7 @@ class ThresholdsLimitsDefinition(ImsModel):
         "Category", to_field="category_id", on_delete=CASCADE, null=True, blank=True
     )
 
+    readable_name = "Thresholds and Limits"
+
     class Meta:
         db_table = "thresholds_limits_definition"
