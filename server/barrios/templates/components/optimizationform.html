@@ -1,9 +1,10 @@
 <form action="/optimization" class="flex-v gap-1">
+  {% csrf_token %}
   <fieldset class="flex-v gap-05">
     <label for="start-date">Start Date</label>
     <input type="date" name="start-date">
     <label for="end-date">End Date</label>
     <input type="date" name="end-date">
-    <button type="submit">Analyze</button>
+    <button type="submit">Get Optimization</button>
   </fieldset>
 </form>

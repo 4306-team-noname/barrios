@@ -8,6 +8,7 @@
   </summary>
   <form action="/get_form/" hx-post="/get_form/" hx-trigger="change, load once" hx-target="#analysis-form-container"
     hx-swap="innerHTML" class="flex-v gap-05" style="margin-top: 0.5rem;">
+    {% csrf_token %}
     <select name="analysis_type">
       <option value="Usage">Usage</option>
       <option value="Optimization">Optimization</option>
