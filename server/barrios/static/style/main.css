@@ -170,6 +170,12 @@ fieldset {
   overflow-y: auto;
   gap: 2rem;
 
+  & nav {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+  }
+
   & nav ul {
     list-style-type: none;
     margin: 0;
