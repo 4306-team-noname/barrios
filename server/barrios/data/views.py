@@ -23,10 +23,6 @@ def index(request, context=None):
         # redirect if user is not authenticated
         return conditionalredirect(request, "/accounts/login/")
 
-    missing_data = None
-    if request.session.get("missing_data"):
-        missing_data = request.session.get("missing_data")
-
     data_service = DataService()
     data = []
 
@@ -46,7 +42,7 @@ def index(request, context=None):
     return render(
         request,
         "pages/data/data_list.html",
-        {"data": data, "current_page": "data", "missing_data": missing_data},
+        {"data": data},
     )
 
 

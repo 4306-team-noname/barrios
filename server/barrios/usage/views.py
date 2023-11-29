@@ -9,7 +9,7 @@ def index(request):
         return render(
             request,
             "pages/usage/index.html",
-            {"usage_difference": usage_difference, "current_page": "usage"},
+            {"usage_difference": usage_difference},
         )
     else:
         return redirect("/accounts/login")

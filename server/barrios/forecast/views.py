@@ -60,7 +60,6 @@ def get_forecast(request, consumable_name):
         {
             "forecast_plot": line_plot,
             "current": consumable_name,
-            "current_page": "forecast",
         },
     )
 

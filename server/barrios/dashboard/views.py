@@ -1,12 +1,6 @@
-from django.shortcuts import redirect, render
+from django.shortcuts import render
 from random import randint
-import json
-from datetime import date, datetime, timedelta
-from plotly.offline import plot
-import plotly.express as px
-import pandas as pd
 from common.conditionalredirect import conditionalredirect
-from forecast.views import get_forecast
 from forecast.create_forecast import create_forecast
 from forecast.create_forecast_chart import create_forecast_chart
 
@@ -78,7 +72,6 @@ def index(request):
                 "last_optimization": get_optimizations(request),
                 "forecast_plot": forecast_plot,
                 "current": "ACY Insert",
-                "current_page": "dashboard",
             },
         )
     else:

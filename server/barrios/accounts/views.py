@@ -7,6 +7,9 @@ from common.conditionalredirect import conditionalredirect
 
 def sign_in(request):
     if request.method == "GET":
+        if request.user.is_authenticated:
+            return conditionalredirect(request, "/dashboard/")
+
         form = LoginForm()
         return render(request, "pages/accounts/login.html", {"form": form})
 
@@ -37,11 +40,11 @@ def sign_out(request):
 
 
 def profile(request):
-    if request.user.is_authenticated:
-        return render(
-            request,
-            "pages/accounts/profile.html",
-            context={"request": request, "current_page": "profile"},
-        )
-    else:
+    if not request.user.is_authenticated:
         return conditionalredirect(request, "/accounts/login/")
+
+    return render(
+        request,
+        "pages/accounts/profile.html",
+        context={"request": request},
+    )
