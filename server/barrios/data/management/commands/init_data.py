@@ -1,4 +1,5 @@
 import os
+import time
 from django.core.management.base import BaseCommand, CommandError
 from core.settings import MEDIA_ROOT
 from data.core.data_dictionary import data_dictionary
@@ -36,7 +37,7 @@ class Command(BaseCommand):
 
         found_files_readable_names = []
 
-        print(f"expecting: {expected_files_readable_names}")
+        # print(f"expecting: {expected_files_readable_names}")
 
         file_list = [
             file
@@ -51,52 +52,64 @@ class Command(BaseCommand):
         bad_files = []
         error_files = []
         success_files = []
+        num_files = len(file_list)
 
+        if "README.md" in file_list:
+            num_files = num_files - 1
+
+        print(f"Attempting to load {num_files} files into the database...")
         for file in file_list:
             if file != "README.md":
                 filepath = os.path.join(DATA_PATH, file)
                 file_info_result = file_helper.get_file_info(filepath)
 
-                if not file_info_result["ok"]:
+                if file_info_result["ok"]:
+                    service = DataService(filepath)
+                    fileinfo = file_info_result["value"]
+                    file_helper.rewrite_csv(filepath, fileinfo["db_fields"])
+                    insert_result = service.insert_csv(fileinfo["model_name"])
+                    if insert_result["ok"]:
+                        print(
+                            f"✓ Successfully loaded {fileinfo['readable_name']}:  {file}"
+                        )
+                        success_files.append(file)
+                        expected_files_readable_names.remove(fileinfo["readable_name"])
+                    else:
+                        error_files.append(
+                            {"filename": file, "error": insert_result["error"]}
+                        )
+                        print(f"x Error loading file: {file}")
+                else:
                     print(f"?? File does not match known data: {file}")
                     bad_files.append(file)
 
-                service = DataService(filepath)
-                fileinfo = file_info_result["value"]
-
-                file_helper.rewrite_csv(filepath, fileinfo["db_fields"])
-                insert_result = service.insert_csv(fileinfo["model_name"])
-
-                if not insert_result["ok"]:
-                    error_files.append(
-                        {"filename": file, "error": insert_result["error"]}
-                    )
-                    print(f"x Error loading file: {file}")
-                else:
-                    print(f"✓ Successfully loaded file:  {file}")
-                    success_files.append(file)
-
         if len(bad_files) > 0:
             print(
-                f"{len(bad_files)} of your files did not match known data. Please double-check the formatting of files listed above."
+                f"{len(bad_files)} of {num_files} files did not match known data. Please double-check the formatting of the following files:"
             )
+            for badfile in bad_files:
+                print(badfile)
 
         if len(error_files) > 0:
             print(
-                f"len(error_files) of your files could not be saved to the database. See the errors above."
+                f"{len(error_files)} of {num_files} files could not be saved to the database. See errors below:"
             )
+            for errorfile in error_files:
+                print(f"{errorfile['filename']}:: errorfile['error']")
 
         if len(success_files) > 0:
             print(
-                f"len(success_files) of your files were saved to the database successfully."
+                f"{len(success_files)} of {num_files} files were saved to the database successfully."
             )
-
-        # 1. Read the contents of a predefined folder
-        # 2. For each file:
-        #   -Check if the file matches something
-        #    in the data dictionary
-        #   -If yes, add the data
-        #   -If no, print that the file is unknown
-        # 3. Keep a list of models inserted into the db
-        #   -If any models are missing, warn the user
+        if len(expected_files_readable_names) == 0:
+            print("All data loaded successfully!\n🙭 Good luck out there!")
+        else:
+            for readable_name in expected_files_readable_names:
+                print(f"Missing: {readable_name}")
+            print(
+                f"You need {len(expected_files_readable_names)} more files for everything to work properly."
+            )
+            print(
+                "Load the data manually after starting the server for analysis to work as expected."
+            )
         pass
