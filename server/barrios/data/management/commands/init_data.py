@@ -35,10 +35,6 @@ class Command(BaseCommand):
             data_dictionary[key]["readable_name"] for key in data_dictionary.keys()
         ]
 
-        found_files_readable_names = []
-
-        # print(f"expecting: {expected_files_readable_names}")
-
         file_list = [
             file
             for file in os.listdir(DATA_PATH)
