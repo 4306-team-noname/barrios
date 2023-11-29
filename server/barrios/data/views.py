@@ -88,7 +88,7 @@ def upload_post(request):
     filepath = os.path.join(MEDIA_ROOT, filename)
     data_service = DataService(filepath)
 
-    fileinfo_result = get_file_info(filepath)
+    fileinfo_result = FieldFileCsvHelper().get_file_info(filepath)
 
     if not fileinfo_result["ok"]:
         # TODO: Send custom error template?
