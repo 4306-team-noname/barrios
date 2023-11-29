@@ -46,7 +46,7 @@ body {
 
 body {
   display: grid;
-  grid-template-columns: auto 1fr;
+  grid-template-columns: 16rem 1fr;
   grid-template-areas:
     "sidebar main";
   gap: 4rem;
@@ -123,6 +123,18 @@ main {
   padding-block: 2rem;
   padding-inline-end: 2rem;
   /* overflow: hidden; */
+}
+
+fieldset {
+  padding-block: 1rem;
+  border: none;
+  padding: 0;
+
+  legend {
+    margin-bottom: 1rem;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
 }
 
 #main-logo>svg {

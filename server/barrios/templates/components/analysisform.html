@@ -1,0 +1,12 @@
+<div class="surface flex-v gap-1" hx-disinherit="*">
+  <form action="/get_form/" hx-post="/get_form/" hx-trigger="change, load once" hx-target="#analysis-form-container"
+    hx-swap="innerHTML" class="flex-v gap-1">
+    <h3 style="text-transform: uppercase">New Analysis</h3>
+    <select name="analysis_type">
+      <option value="Usage">Usage</option>
+      <option value="Optimization">Optimization</option>
+      <option value="Forecast">Forecast</option>
+    </select>
+  </form>
+  <div id="analysis-form-container"></div>
+</div>

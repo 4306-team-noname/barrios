@@ -2,9 +2,7 @@ import numpy as np
 from pandas.compat import os
 from django.core.exceptions import PermissionDenied, ValidationError
 from django.http import HttpResponseNotAllowed
-from django.shortcuts import redirect, render
-from django_htmx.http import HttpResponseClientRedirect
-import json
+from django.shortcuts import render
 from common.conditionalredirect import conditionalredirect
 from core.settings import MEDIA_ROOT
 from data.core.data_dictionary import data_dictionary
