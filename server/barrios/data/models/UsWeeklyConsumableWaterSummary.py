@@ -31,6 +31,7 @@ class UsWeeklyConsumableWaterSummary(ImsModel):
     corrected_predicted_l = EmptyStringToNoneFloatField()
 
     objects = UsWeeklyConsumableManager()
+    readable_name = "US Water Summary"
 
     class Meta:
         db_table = "us_weekly_consumable_water_summary"

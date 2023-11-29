@@ -34,6 +34,7 @@ class UsRsWeeklyConsumableGasSummary(ImsModel):
     resupply_air_kg = EmptyStringToNoneFloatField(blank=True, null=True)
 
     objects = UsRsWeeklyConsumableManager()
+    readable_name = "Weekly Gas Summary"
 
     class Meta:
         db_table = "us_rs_weekly_consumables_gas_summary"

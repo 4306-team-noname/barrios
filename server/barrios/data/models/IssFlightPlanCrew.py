@@ -12,5 +12,7 @@ class IssFlightPlanCrew(ImsFlightplanModel):
     # columns with the same datedim. Will make it easier
     # to query how many people will be on station.
 
+    readable_name = "Flight Plan Crew"
+
     class Meta:
         db_table = "iss_flight_plan_crew"

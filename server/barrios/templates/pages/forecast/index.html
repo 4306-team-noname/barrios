@@ -5,5 +5,13 @@
 {% block main %}
 <section id="main-content">
   <h1>Forecast</h1>
+  {% for forecast in forecasts %}
+  <div class="chart">
+    <h2>{{forecast.title}}</h2>
+    {% autoescape off %}
+    {{forecast.chart|safe}}
+    {% endautoescape %}
+  </div>
+  {% endfor %}
 </section>
 {% endblock %}

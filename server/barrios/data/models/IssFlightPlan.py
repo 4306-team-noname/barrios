@@ -14,5 +14,7 @@ class IssFlightPlan(ImsFlightplanModel):
     eva_accuracy = CharField(max_length=255, blank=True, null=True)
     event = CharField(max_length=255, blank=True, null=True)
 
+    readable_name = "Flight Plan"
+
     class Meta:
         db_table = "iss_flight_plan"

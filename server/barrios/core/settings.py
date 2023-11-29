@@ -59,12 +59,12 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "barrios.middleware.HtmxMessageMiddleware",
+    "core.middleware.HtmxMessageMiddleware",
     "django_browser_reload.middleware.BrowserReloadMiddleware",
     "django_htmx.middleware.HtmxMiddleware",
 ]
 
-ROOT_URLCONF = "barrios.urls"
+ROOT_URLCONF = "core.urls"
 
 TEMPLATES = [
     {
@@ -83,7 +83,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = "barrios.wsgi.application"
+WSGI_APPLICATION = "core.wsgi.application"
 
 
 # Database

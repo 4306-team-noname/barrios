@@ -6,67 +6,65 @@
     </a>
     <ul>
       <li>
-        <a href="/dashboard" class="icon-link">
+        <a href="/dashboard/" class="icon-link">
           {% include 'assets/icons/dashboard.svg' %}
           Dashboard
         </a>
       </li>
       <li>
-        <a href="/usage" class="icon-link">
+        <a href="/usage/" class="icon-link">
           {% include 'assets/icons/ruler.svg' %}
           Usage
         </a>
       </li>
       <li>
-        <a href="/optimization" class="icon-link">
+        <a href="/optimization/" class="icon-link">
           {% include 'assets/icons/box.svg' %}
           Optimization
         </a>
       </li>
-
       <li>
-        <a href="/forecast" class="icon-link">
+        <a href="/forecast/" class="icon-link">
           {% include 'assets/icons/chart.svg' %}
           Forecast
         </a>
       </li>
-      <!-- <li> -->
-      <!--   <a href="/flightplan" class="icon-link"> -->
-      <!--     {% include 'assets/icons/rocket.svg' %} -->
-      <!--     Flight Plan -->
-      <!--   </a> -->
-      <!-- </li> -->
       <li>
-        <a href="/data" class="icon-link">
+        <a href="/data/" class="icon-link">
           {% include 'assets/icons/data.svg' %}
           Data
         </a>
       </li>
     </ul>
   </nav>
-  {% include 'components/uploadform.html' %}
-  <nav aria-label="User Menu">
-    <ul>
+  <div class="flex-v gap-3 sidebar-form-container">
+    {% include 'components/analysisform.html' %}
+    {% include 'components/uploadform.html' %}
+  </div>
+  <nav aria-label="User Menu" class="flex-v">
+    <ul class="flex-end">
       <li>
-        <a href="/accounts/profile" class="icon-link">
+        <a href="/accounts/profile/" class="icon-link">
           {% include 'assets/icons/user.svg' %}
           Profile
         </a>
       </li>
       {% if request.user.is_superuser %}
       <li>
-        <a href="/admin" class="icon-link" hx-boost="false">
+        <a href="/admin/" class="icon-link" hx-boost="false">
           {% include 'assets/icons/admin.svg' %}
           Admin
         </a>
       </li>
       {% endif %}
       <li>
-        <a href="/accounts/logout" hx-boost="false" class="icon-link">
+        <a href="/accounts/logout/" hx-boost="false" class="icon-link">
           {% include 'assets/icons/logout.svg' %}
           Log Out
         </a>
       </li>
     </ul>
   </nav>
+  {% load static %}
+  <script src="{% static 'scripts/menu-update.js' %}" defer></script>
 </aside>

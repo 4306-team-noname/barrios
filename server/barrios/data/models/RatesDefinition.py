@@ -13,5 +13,7 @@ class RatesDefinition(ImsModel):
         "Category", on_delete=RESTRICT, to_field="category_id", null=True, blank=True
     )
 
+    readable_name = "Rates Definitions"
+
     class Meta:
         db_table = "rates_definition"

@@ -7,7 +7,9 @@ def index(request):
     if request.user.is_authenticated:
         usage_difference = randint(-50, 50)
         return render(
-            request, "pages/usage/index.html", {"usage_difference": usage_difference}
+            request,
+            "pages/usage/index.html",
+            {"usage_difference": usage_difference},
         )
     else:
         return redirect("/accounts/login")

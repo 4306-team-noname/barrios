@@ -1,14 +1,22 @@
-from django.shortcuts import redirect, render
+from django.shortcuts import render
 from random import randint
-from datetime import date, datetime, timedelta
-from plotly.offline import plot
-import plotly.express as px
-import pandas as pd
 from common.conditionalredirect import conditionalredirect
-from forecast.views import get_forecast
 from forecast.create_forecast import create_forecast
 from forecast.create_forecast_chart import create_forecast_chart
 
+from data.models import (
+    ImsConsumablesCategoryLookup,
+    InventoryMgmtSystemConsumables,
+    IssFlightPlan,
+    IssFlightPlanCrew,
+    IssFlightPlanCrewNationalityLookup,
+    RatesDefinition,
+    RsaConsumableWaterSummary,
+    TankCapacityDefinition,
+    ThresholdsLimitsDefinition,
+    UsRsWeeklyConsumableGasSummary,
+    UsWeeklyConsumableWaterSummary,
+)
 
 DUMMY_CONSUMABLES = [
     {"name": "ACY Insert", "unit": "ACY Insert"},
@@ -25,6 +33,34 @@ DUMMY_CONSUMABLES = [
 
 def index(request):
     if request.user.is_authenticated:
+        required_models = [
+            ImsConsumablesCategoryLookup,
+            InventoryMgmtSystemConsumables,
+            IssFlightPlan,
+            IssFlightPlanCrew,
+            IssFlightPlanCrewNationalityLookup,
+            RatesDefinition,
+            RsaConsumableWaterSummary,
+            TankCapacityDefinition,
+            ThresholdsLimitsDefinition,
+            UsRsWeeklyConsumableGasSummary,
+            UsWeeklyConsumableWaterSummary,
+        ]
+
+        missing_models_readable_names = []
+
+        for model in required_models:
+            if model.objects.count() == 0:
+                print(f"missing model: {model.__name__}")
+                missing_models_readable_names.append(model.readable_name)
+
+        if len(missing_models_readable_names) > 0:
+            request.session["missing_data"] = missing_models_readable_names
+            return conditionalredirect(
+                request,
+                "/data/",
+            )
+
         forecast_obj = create_forecast("ACY Insert")
         forecast_plot = create_forecast_chart(forecast_obj)
 

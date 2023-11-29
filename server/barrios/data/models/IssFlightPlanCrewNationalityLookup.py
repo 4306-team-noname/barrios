@@ -7,5 +7,7 @@ class IssFlightPlanCrewNationalityLookup(ImsFlightplanModel):
     is_usos_crew = BooleanField()
     is_rsa_crew = BooleanField()
 
+    readable_name = "Crew Nationalities"
+
     class Meta:
         db_table = "iss_flight_plan_crew_nationality_lookup"

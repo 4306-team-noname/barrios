@@ -1,0 +1,18 @@
+<details class="surface flex-v gap-1" hx-disinherit="*">
+  <summary class="flex-h gap-1"
+    style="text-transform: uppercase; font-weight: bold; cursor: pointer; justify-content: flex-start; align-items: center;">
+    <div class="txt-large">
+      {% include 'assets/icons/pulse.svg' %}
+    </div>
+    New Analysis
+  </summary>
+  <form action="/get_form/" hx-post="/get_form/" hx-trigger="change, load once" hx-target="#analysis-form-container"
+    hx-swap="innerHTML" class="flex-v gap-05" style="margin-top: 0.5rem;">
+    <select name="analysis_type">
+      <option value="Usage">Usage</option>
+      <option value="Optimization">Optimization</option>
+      <option value="Forecast">Forecast</option>
+    </select>
+  </form>
+  <div id="analysis-form-container" style="margin-top: 0.5rem;"></div>
+</details>

@@ -106,19 +106,33 @@ This will pull the necessary docker images and set them up so you have a Postgre
     2.  In the `General` tab, set the `Database` to `barrios`, and the `Owner` to `barrios`
     3.  Click `Save`
 
-#### Populate the database tables
-1. Now it's time to create the database tables. Django provides a mechanism for doing that based on models that have been created in the project. Back in the terminal, navigate to `server/barrios` in the top-level project folder and run two commands:
-   ```bash
-    cd server/barrios
-    python manage.py makemigrations
-    python manage.py migrate
-   ```
+#### Create a superuser and seed the database
 
-### Create an admin user
+1. Make sure you're in the `server/barrios` directory. You're going to need to run one script and one Django command. Before running the script, you may need to make sure that you have the correct permissions to do so. If you're on Windows, navigate to the directory using `GitBash`. If you're on Linux, just navigate to the directory using a terminal. Then, run this command to change the script's permissions:
 
-Now that the database has been created, you need to have an admin user to test different parts of the application. Django provides a command for that. Run the following and follow the prompts to create an admin user:
 ```bash
-python manage.py createsuperuser
+chmod 775 setupdb.sh
+```
+
+  I don't use Windows, so I honestly don't know if the above is necessary (nor do I know if it will even do anything). It's required for Linux, though.
+
+2. Open the script in a text editor and change the `ADMIN_EMAIL` variable. This isn't necessarily required unless you're testing out the application's email capabilities (reset password, etc).
+
+3. Run the script with the command `./resetdb.sh`. It will ask you if you want to proceed. Type `yes`. The script will then attempt to drop all of the data from an existing `barrios` database and reset all of the tables so they match the application's models. When it's done, it will prompt you for a password.
+
+4. Now, it's time to seed the database with the Barrios data. Copy everything except ` inventory_mgmt_system_consumables_20220101-20230905_header.csv` from the Barrios dataset into `server/barrios/media/seed_data` (that file has no header and I'm still trying to figure out how to properly rewrite it so it's usable).
+
+5. From the `server/barrios` directory, run the following command to seed the database with the Barrios data:
+
+```bash
+python manage.py init_data
+```
+It will list all of the files being loaded. If there are any errors, or any files don't match expected data types, it will tell you. If everything went well, it will output:
+
+```
+11 of 11 files were saved to the database successfully.
+All data loaded successfully!
+🙭 Good luck out there!
 ```
 
 ### Start the server

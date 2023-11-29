@@ -2,10 +2,9 @@ import numpy as np
 from pandas.compat import os
 from django.core.exceptions import PermissionDenied, ValidationError
 from django.http import HttpResponseNotAllowed
-from django.shortcuts import redirect, render
-from django_htmx.http import HttpResponseClientRedirect
+from django.shortcuts import render
 from common.conditionalredirect import conditionalredirect
-from barrios.settings import MEDIA_ROOT
+from core.settings import MEDIA_ROOT
 from data.core.data_dictionary import data_dictionary
 from data.core.FieldFileCsvHelper import FieldFileCsvHelper
 from data.core.get_file_info import get_file_info
@@ -13,30 +12,36 @@ from data.services import DataService
 from .forms import UploadForm
 
 
-def index(request):
+def index(request, context=None):
     # - Main view of the /data route -
     # This is basically a "dumb" view that
     # lists the different types of data enumerated
     # in the imported data_dictionary
-    if request.user.is_authenticated:
-        data_service = DataService()
-        data = []
-
-        # loop through the data_dictionary and build
-        # the response data
-        data = [
-            {
-                "name": data_dictionary[key]["readable_name"],
-                "slug": data_dictionary[key]["slug"],
-                "count": data_service.get_count_by_slug(data_dictionary[key]["slug"]),
-            }
-            for key in data_dictionary.keys()
-        ]
-
-        return render(request, "pages/data/data_list.html", {"data": data})
-    else:
+    if not request.user.is_authenticated:
         # redirect if user is not authenticated
         return conditionalredirect(request, "/accounts/login/")
+
+    data_service = DataService()
+    data = []
+
+    # loop through the data_dictionary and build
+    # the response data
+    # TODO: Perhaps, set the data dictionary items
+    # as model attributes instead
+    data = [
+        {
+            "name": data_dictionary[key]["readable_name"],
+            "slug": data_dictionary[key]["slug"],
+            "count": data_service.get_count_by_slug(data_dictionary[key]["slug"]),
+        }
+        for key in data_dictionary.keys()
+    ]
+
+    return render(
+        request,
+        "pages/data/data_list.html",
+        {"data": data},
+    )
 
 
 def data_detail(request, slug):
@@ -83,7 +88,7 @@ def upload_post(request):
     filepath = os.path.join(MEDIA_ROOT, filename)
     data_service = DataService(filepath)
 
-    fileinfo_result = get_file_info(filepath)
+    fileinfo_result = FieldFileCsvHelper().get_file_info(filepath)
 
     if not fileinfo_result["ok"]:
         # TODO: Send custom error template?
