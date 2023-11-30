@@ -8,8 +8,3 @@ class AnalysisForm(Form):
         ("Forecast", "Forecast"),
     )
     analysis_type = ChoiceField(choices=CHOICES)
-
-
-class ForecastForm(Form):
-    start_date = DateField()
-    end_date = DateField()
