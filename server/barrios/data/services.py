@@ -17,6 +17,7 @@ from data.models import (
     ThresholdsLimitsDefinition,
     UsRsWeeklyConsumableGasSummary,
     UsWeeklyConsumableWaterSummary,
+    VehicleCapacityDef,
 )
 
 
@@ -114,6 +115,8 @@ class DataService:
             model = TankCapacityDefinition
         elif slug == "thresholds_and_limits":
             model = ThresholdsLimitsDefinition
+        elif slug == "vehicle_capacities":
+            model = VehicleCapacityDef
         if model:
             return model.objects.count()
         else:
@@ -163,6 +166,9 @@ class DataService:
         elif slug == "thresholds_and_limits":
             results = ThresholdsLimitsDefinition.objects.all()
             name = "Thresholds and Limits"
+        elif slug == "vehicle_capacities":
+            results = VehicleCapacityDef.objects.all()
+            name = "Vehicle Capacities"
         if results is not None:
             return {"ok": True, "value": {"data": results, "name": name}, "error": None}
         else:

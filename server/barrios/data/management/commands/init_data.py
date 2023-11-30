@@ -98,7 +98,7 @@ class Command(BaseCommand):
                 f"{len(success_files)} of {num_files} files were saved to the database successfully."
             )
         if len(expected_files_readable_names) == 0:
-            print("All data loaded successfully!\n🙭 Good luck out there!")
+            print("All data loaded successfully!\n🙭⭑⭑ Good luck out there! ⭑⭑🙭")
         else:
             for readable_name in expected_files_readable_names:
                 print(f"Missing: {readable_name}")
