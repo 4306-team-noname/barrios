@@ -23,9 +23,9 @@ def get_consumable_names():
             and rate["affected_consumable"] not in consumables
             and rate["type"] != "generation"
         ):
-            consumables.append(
-                (rate["affected_consumable"], rate["affected_consumable"])
-            )
+            consumables.append(rate["affected_consumable"])
+    consumables = [(consumable, consumable) for consumable in consumables]
+    print(consumables)
     return consumables
 
 
