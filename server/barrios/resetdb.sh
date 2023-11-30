@@ -20,7 +20,7 @@
 # Set your first superuser credentials
 # here:
 ADMIN_USERNAME=admin
-ADMIN_EMAIL=jcaldwell2+barriosadmin@angelo.edu
+ADMIN_EMAIL=jlozano18+barriosadmin@angelo.edu
 
 # Remove all preexisting records from the database.
 python manage.py flush
