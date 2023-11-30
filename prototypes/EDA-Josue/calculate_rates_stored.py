@@ -1,28 +1,28 @@
 import pandas as pd
 
 # Assuming the provided data is in a file named 'your_file.csv'
-file_path = '../../iss-data\csv\eda\ims_filtered.csv'
+file_path = '../../iss-data\csv\eda\ims_filtered_stored.csv'
 
 # Read the CSV file
 df = pd.read_csv(file_path)
 
 # Convert the 'datedim' column to datetime with the correct format
-df['datedim'] = pd.to_datetime(df['datedim'], format='%Y-%m-%d %H:%M:%S.%f')
+df['datedim'] = pd.to_datetime(df['datedim'], format='%m/%d/%Y %H:%M')
 
 # Sort the DataFrame by 'datedim'
 df = df.sort_values(by=['id', 'datedim'])
 
-# Filter rows with category 'Water'
-water_df = df[df['category_name'] == 'KTO']
+# Filter rows with category ''
+category_df = df[df['category_name'] == 'ACY Inserts']
 
 # Initialize variables
 total_usage = 0
 total_duration = 0
 
 # Iterate through unique IDs
-unique_ids = water_df['id'].unique()
+unique_ids = category_df['id'].unique()
 for unique_id in unique_ids:
-    id_df = water_df[water_df['id'] == unique_id]
+    id_df = category_df[category_df['id'] == unique_id]
 
     # Get the first and last date for each ID
     first_date = id_df['datedim'].min()
@@ -41,6 +41,6 @@ for unique_id in unique_ids:
 # Calculate the average usage rate
 if total_duration > 0:
     average_usage_rate = total_usage / total_duration
-    print(f"The average usage rate for Water is: {average_usage_rate:.2f} per day")
+    print(f"The average usage rate for Catergory is: {average_usage_rate:.2f} per day")
 else:
     print("No valid data to calculate the average usage rate.")

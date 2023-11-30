@@ -2,7 +2,7 @@ import pandas as pd
 
 # Define the headers
 headers = [
-    "Field","datedim", "id", "id_parent", "id_path", "tree_depth", "tree", 
+    "datedim", "id", "id_parent", "id_path", "tree_depth", "tree", 
     "part_number", "serial_number", "location_name", "original_ip_owner", 
     "current_ip_owner", "operational_nomenclature", "russian_name", 
     "english_name", "barcode", "quantity", "width", "height", "length", 
@@ -14,14 +14,14 @@ headers = [
 ]
 
 # Load the CSV file without headers
-file_path = '../../iss-data\csv\inventory_mgmt_system\inv_mgmt_0.csv'  # Replace 'your_file.csv' with the actual file path
+file_path = '../../iss-data\csv\eda\inventory_mgmt_system_consumables_20220101-20230905.csv'  # Replace 'your_file.csv' with the actual file path
 df = pd.read_csv(file_path, header=None)
 
 # Add headers to the DataFrame
 df.columns = headers
 
 # Save the DataFrame back to a new CSV file
-output_file_path = '../../prototypes\EDA-Josue\ims_with_headers.csv'  # Replace with your desired output file path
+output_file_path = '../../iss-data\csv\eda\ims_with_headers.csv'  # Replace with your desired output file path
 df.to_csv(output_file_path, index=False)
 
 print("Headers added successfully.")
