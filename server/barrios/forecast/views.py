@@ -43,7 +43,17 @@ def analyze(request):
         if request.method == "POST":
             form = AnalysisForm(request.POST)
             if form.is_valid():
-                print(form)
-                return render(request, "pages/forecast/forecast_result.html")
+                start_date = form.cleaned_data["start_date"]
+                end_date = form.cleaned_data["end_date"]
+                consumable_name = form.cleaned_data["consumable_name"]
+                return render(
+                    request,
+                    "pages/forecast/forecast_result.html",
+                    {
+                        "start_date": start_date,
+                        "end_date": end_date,
+                        "consumable_name": consumable_name,
+                    },
+                )
         else:
             return conditionalredirect(request, "/forecast/")

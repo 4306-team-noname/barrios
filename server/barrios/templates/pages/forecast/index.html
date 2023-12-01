@@ -12,7 +12,7 @@
     action="analyze/"
     hx-post="analyze/"
     hx-target="#analysis-section"
-    hx-trigger="input"
+    hx-trigger="input, load once"
     hx-swap="outerHTML"
     >
     {% csrf_token %}
