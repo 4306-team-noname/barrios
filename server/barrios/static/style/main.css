@@ -175,7 +175,8 @@ select {
   cursor: pointer;
 }
 
-select, input[type="text"] {
+select {
+  appearance: none;
   margin: 0;
   width: max(10rem, 100%);
   background-color: var(--background-surface);
@@ -303,7 +304,9 @@ a.list-item:hover {
       padding: 0.75em;
       border-radius: 0.5em;
       border: none;
-      background-color: var(--brand-gray);
+      background-color: var(--background-surface);
+      border: 1px solid var(--highlight);
+      color: var(--foreground);
     }
   }
 }
@@ -729,7 +732,7 @@ main {
 
 .fade-in, .plotly-graph-div{
   animation: fade-in 0.75s ease-in-out;
-  transition: all 5s ease-in-out;
+  /* transition: all 0.75s ease-in-out; */
 }
 
 #forecast-plot {

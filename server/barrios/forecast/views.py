@@ -55,5 +55,7 @@ def analyze(request):
                         "consumable_name": consumable_name,
                     },
                 )
+            else:
+                return HttpResponse()
         else:
             return conditionalredirect(request, "/forecast/")
