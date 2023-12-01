@@ -13,6 +13,7 @@ from data.models import (
     ThresholdsLimitsDefinition,
     UsRsWeeklyConsumableGasSummary,
     UsWeeklyConsumableWaterSummary,
+    VehicleCapacityDef,
 )
 
 
@@ -40,6 +41,8 @@ def import_csv(model_name: str, filepath: str) -> Result:
         result = csv_to_db(UsRsWeeklyConsumableGasSummary, filepath)
     elif model_name == "UsWeeklyConsumableWaterSummary":
         result = csv_to_db(UsWeeklyConsumableWaterSummary, filepath)
+    elif model_name == "VehicleCapacityDef":
+        result = csv_to_db(VehicleCapacityDef, filepath)
     if result:
         return {"ok": True, "value": result, "error": None}
     else:

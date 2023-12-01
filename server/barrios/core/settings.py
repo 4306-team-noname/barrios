@@ -59,7 +59,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "core.middleware.HtmxMessageMiddleware",
+    # "core.middleware.HtmxMessageMiddleware",
     "django_browser_reload.middleware.BrowserReloadMiddleware",
     "django_htmx.middleware.HtmxMiddleware",
 ]
@@ -93,7 +93,7 @@ DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
         "HOST": "localhost",
-        #"HOST": "0.0.0.0",
+        # "HOST": "0.0.0.0",
         "NAME": "barrios",
         "USER": "barrios",
         "PASSWORD": "barrios123",

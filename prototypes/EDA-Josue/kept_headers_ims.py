@@ -1,7 +1,7 @@
 import pandas as pd
 
 # Load the CSV file with headers
-file_path = '../../prototypes/EDA-Josue/ims_with_headers.csv'
+file_path = '../..\iss-data\csv\eda\ims_with_headers.csv'
 df = pd.read_csv(file_path)
 
 # Define the columns to keep
@@ -15,7 +15,7 @@ columns_to_keep = [
 df_filtered = df[columns_to_keep]
 
 # Save the filtered DataFrame to a new CSV file
-output_file_path = '../../prototypes/EDA-Josue/ims_filtered.csv'
+output_file_path = '../../iss-data\csv\eda\ims_filtered.csv'
 df_filtered.to_csv(output_file_path, index=False)
 
 print("Columns filtered successfully.")

@@ -6,23 +6,6 @@ from data.core.data_dictionary import data_dictionary
 from data.core.FieldFileCsvHelper import FieldFileCsvHelper
 from data.services import DataService
 
-
-from data.models import (
-    Category,
-    Consumable,
-    ImsConsumablesCategoryLookup,
-    InventoryMgmtSystemConsumables,
-    IssFlightPlan,
-    IssFlightPlanCrew,
-    IssFlightPlanCrewNationalityLookup,
-    RatesDefinition,
-    RsaConsumableWaterSummary,
-    TankCapacityDefinition,
-    ThresholdsLimitsDefinition,
-    UsRsWeeklyConsumableGasSummary,
-    UsWeeklyConsumableWaterSummary,
-)
-
 DATA_PATH = os.path.join(MEDIA_ROOT, "seed_data")
 
 
@@ -69,7 +52,10 @@ class Command(BaseCommand):
                             f"✓ Successfully loaded {fileinfo['readable_name']}:  {file}"
                         )
                         success_files.append(file)
-                        expected_files_readable_names.remove(fileinfo["readable_name"])
+                        if fileinfo["readable_name"] in expected_files_readable_names:
+                            expected_files_readable_names.remove(
+                                fileinfo["readable_name"]
+                            )
                     else:
                         error_files.append(
                             {"filename": file, "error": insert_result["error"]}
@@ -98,7 +84,7 @@ class Command(BaseCommand):
                 f"{len(success_files)} of {num_files} files were saved to the database successfully."
             )
         if len(expected_files_readable_names) == 0:
-            print("All data loaded successfully!\n🙭 Good luck out there!")
+            print("All data loaded successfully!\n🙭⭑⭑ Good luck out there! ⭑⭑🙭")
         else:
             for readable_name in expected_files_readable_names:
                 print(f"Missing: {readable_name}")

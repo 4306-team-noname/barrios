@@ -260,6 +260,32 @@ data_dictionary = {
             "float64",
         ],
     },
+    "vehicle_capacity_def": {
+        "model_name": "VehicleCapacityDef",
+        "readable_name": "Vehicle Capacities",
+        "slug": "vehicle_capacities",
+        "file_columns": [
+            "vehicle",
+            "ascent_capacity_ctbe",
+            "descent_capacity_ctbe",
+            "trash_capacity_ctbe",
+            "total_capacity_ctbe",
+        ],
+        "database_columns": [
+            "vehicle",
+            "ascent_capacity_ctbe",
+            "descent_capacity_ctbe",
+            "trash_capacity_ctbe",
+            "total_capacity_ctbe",
+        ],
+        "dataframe_column_types": [
+            "object",
+            "int64",
+            "int64",
+            "int64",
+            "float64",
+        ],
+    },
     "inventory_mgmt_system_consumable": {
         "model_name": "InventoryMgmtSystemConsumables",
         "readable_name": "IMS Consumables",

@@ -3,7 +3,7 @@
 {% block title %}Forecast{% endblock %}
 
 {% block main %}
-<section id="main-content">
+<section id="main-content" hx-disinherit="*">
   <h1>Forecast</h1>
   {% for forecast in forecasts %}
   <div class="chart">

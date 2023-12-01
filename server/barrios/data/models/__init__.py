@@ -14,3 +14,4 @@ from .UsRsWeeklyConsumableGasSummary import UsRsWeeklyConsumableGasSummary
 from .UsWeeklyConsumableWaterSummary import UsWeeklyConsumableWaterSummary
 from .Consumable import Consumable
 from .Category import Category
+from .VehicleCapacityDef import VehicleCapacityDef

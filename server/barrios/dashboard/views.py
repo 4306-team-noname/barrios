@@ -79,7 +79,7 @@ def index(request):
 
 
 def get_usage(request):
-    return randint(-50, 50)
+    return randint(-10, 10)
 
 
 def get_optimizations(request):
