@@ -18,6 +18,7 @@
   --background-surface: var(--blue-lighter);
   --background-surface-hover: var(--blue-hover);
   --foreground: var(--white);
+  --highlight: var(--blue-highlight);
   --accent: var(--green);
   --hover: var(--green-darker);
 
@@ -144,6 +145,13 @@ main {
   }
 }
 
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-block-end: 2rem;
+}
+
 fieldset {
   padding-block: 1rem;
   border: none;
@@ -154,6 +162,32 @@ fieldset {
     font-weight: bold;
     text-transform: uppercase;
   }
+}
+
+label {
+  font-weight: 600;
+  text-transform: uppercase;
+  white-space: nowrap;
+  margin: 0;
+}
+
+select {
+  cursor: pointer;
+}
+
+select, input[type="text"] {
+  margin: 0;
+  width: max(10rem, 100%);
+  background-color: var(--background-surface);
+  padding: 0.5rem;
+  border-radius: 0.75rem;
+  color: var(--foreground);
+  border: none;border: 1px solid var(--highlight);
+  font-weight: 600;
+}
+
+option::selection, option:hover {
+  background-color: var(--background-surface-hover);
 }
 
 #main-logo>svg {
@@ -610,6 +644,8 @@ progress::-moz-progress-bar {
   right: 0;
   /* width: min(350px, 90%); */
   padding: 3rem;
+  pointer-events: none;
+  /* background: tomato; */
 
   & .flash {
     border-radius: var(--default-radius);
@@ -687,12 +723,19 @@ main {
   /* view-transition-name: fade-it; */
 /* } */
 
+/* .plotly-graph-div { */
+/*   transition: opacity 0.5s ease-in-out */
+/* } */
 
+.fade-in, .plotly-graph-div{
+  animation: fade-in 0.75s ease-in-out;
+  transition: all 5s ease-in-out;
+}
 
-#forecast_plot {
+#forecast-plot {
   min-height: 600px;
   height: 600px;
-  view-transition-name: fade-it;
+  /* view-transition-name: fade-it; */
 }
 
 /* ANIMATIONS */

@@ -12,14 +12,14 @@
     action="analyze/"
     hx-post="analyze/"
     hx-target="#analysis-section"
-    hx-trigger="change from:#id_consumable_name"
-    hx-swap="innerHTML"
+    hx-trigger="input"
+    hx-swap="outerHTML"
     >
     {% csrf_token %}
     {{ form }}
   </form>
   </div>
-  <div id="analysis-section"> This is really here</div>
+  <div id="analysis-section"></div>
 </section>
 <script defer>
 document.addEventListener("htmx:beforeSwap", function(evt) {
