@@ -21,13 +21,4 @@
   </div>
   <div id="analysis-section"></div>
 </section>
-<script defer>
-document.addEventListener("htmx:beforeSwap", function(evt) {
-  console.log(evt)
-  console.log(evt.detail)
-  console.log(evt.detail.target)
-  console.log(evt.detail.target.id)
-  console.log(evt.detail.serverResponse)
-})
-</script>
 {% endblock %}

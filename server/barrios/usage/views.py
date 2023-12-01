@@ -1,10 +1,7 @@
-from django.http import HttpResponse
 from django.shortcuts import redirect, render
-from random import randint
-from usage.forms import UsageForm
+from common.forms import AnalysisForm
 from usage.charts import create_usage_chart
 from common.conditionalredirect import conditionalredirect
-from datetime import date, datetime
 from common.date_helpers import get_date_object
 import pandas as pd
 from data.models import (
@@ -19,7 +16,7 @@ from data.models import (
 
 def index(request):
     if request.user.is_authenticated:
-        form = UsageForm()
+        form = AnalysisForm()
         return render(
             request,
             "pages/usage/index.html",
@@ -33,7 +30,7 @@ def analyze(request):
     if request.htmx.boosted:
         print("This is a boosted request")
     if request.method == "POST":
-        form = UsageForm(request.POST)
+        form = AnalysisForm(request.POST)
         if form.is_valid():
             start_date = get_date_object(form.cleaned_data["start_date"])
             end_date = get_date_object(form.cleaned_data["end_date"])
@@ -56,6 +53,28 @@ def analyze(request):
                 actual_usage_values = UsRsWeeklyConsumableGasSummary.objects.filter(
                     date__range=[start_date, end_date]
                 ).values()
+            else:
+                consumable_cat = RatesDefinition.objects.get(
+                    affected_consumable=consumable_name
+                )
+                actual_usage_values = InventoryMgmtSystemConsumables.objects.filter(
+                    category_id=consumable_cat.category
+                ).values(
+                    "datedim",
+                    "ims_id",
+                    "english_name",
+                    "quantity",
+                    "status",
+                    "category",
+                    "category_name",
+                )
+                # print(actual_usage_values)
+
+                # return render(
+                #     request,
+                #     "pages/usage/result.html",
+                #     {"error_message": "No analysis for that consumable yet."},
+                # )
 
             usage_df: pd.DataFrame | None = None
             usage_chart = None
@@ -103,7 +122,7 @@ def analyze(request):
                 return render(
                     request,
                     "pages/usage/result.html",
-                    {"usage_chart": usage_df.to_html()},
+                    {"table_data": actual_usage_values},
                 )
         else:
             return render(

@@ -1,5 +1,10 @@
 <div id="analysis-section" class="fade-in">
+  {% if usage_chart %}
   {% autoescape off %}
   {{usage_chart|safe}}
   {% endautoescape %}
+  {% elif table_data %}
+  {% load render_table from django_tables2 %}
+  {% render_table table_data %}
+  {% endif %}
 </div>
