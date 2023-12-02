@@ -33,7 +33,12 @@ find . -path "*/migrations/*.py" -not -name "__init__.py" -delete
 # rm media/uploads/*
 
 # migrate
-python manage.py makemigrations
+python manage.py makemigrations accounts
+python manage.py makemigrations data
+python manage.py makemigrations forecast
+python manage.py makemigrations optimization
+python manage.py makemigrations usage
+
 python manage.py migrate
 
 # Preload categories into the database
