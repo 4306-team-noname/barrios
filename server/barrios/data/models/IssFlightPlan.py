@@ -20,4 +20,4 @@ class IssFlightPlan(ImsFlightplanModel):
         db_table = "iss_flight_plan"
 
     def __str__(self):
-        return f"{self.vehicle_name} — {self.datedim.strftime('%m/%d/%Y')}"
+        return self.vehicle_name

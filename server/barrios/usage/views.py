@@ -1,3 +1,4 @@
+from datetime import date, datetime
 from django.shortcuts import redirect, render
 from common.forms import AnalysisForm
 from usage.charts import create_usage_chart
@@ -27,17 +28,24 @@ def index(request):
 
 
 def analyze(request):
-    if request.htmx.boosted:
-        print("This is a boosted request")
     if request.method == "POST":
         form = AnalysisForm(request.POST)
         if form.is_valid():
-            start_date = get_date_object(form.cleaned_data["start_date"])
-            end_date = get_date_object(form.cleaned_data["end_date"])
-            consumable_name = form.cleaned_data["consumable_name"]
+            start_date_obj = datetime.strptime(
+                str(form.cleaned_data["start_date"]), "%m/%d/%Y"
+            )
+            start_date = start_date_obj.strftime("%Y-%m-%d")
+            end_date_obj = datetime.strptime(
+                str(form.cleaned_data["end_date"]), "%m/%d/%Y"
+            )
+            end_date = end_date_obj.strftime("%Y-%m-%d")
+            consumable_name_obj = form.cleaned_data["consumable_name"]
+            consumable_name = str(consumable_name_obj)
+
             # get list of consumables
             rate_definition_value = RatesDefinition.objects.filter(
-                affected_consumable=consumable_name
+                affected_consumable=consumable_name,
+                type="usage",
             ).values()
 
             actual_usage_values = []

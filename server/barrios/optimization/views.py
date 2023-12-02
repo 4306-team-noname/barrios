@@ -17,8 +17,11 @@ def analyze(request):
     if request.user.is_authenticated:
         if request.method == "POST":
             form = OptimizationForm(request.POST)
+            if not form.is_valid():
+                return render(request, "pages/optimization/index.html", {"form": form})
             if form.is_valid():
-                mission = form.cleaned_data["mission"]
+                print(f"cleaned_data: {form.cleaned_data}")
+                mission = form.cleaned_data["mission"].vehicle_name
                 mission_values = IssFlightPlan.objects.filter(
                     vehicle_name=mission
                 ).values("datedim", "vehicle_name", "vehicle_type", "event")
