@@ -726,14 +726,21 @@ main {
   /* view-transition-name: fade-it; */
 /* } */
 
-/* .plotly-graph-div { */
-/*   transition: opacity 0.5s ease-in-out */
-/* } */
+#analysis-section > div,
+#analysis-section > article,
+#forecast-plot .plotly-graph-div {
+    /* transition: opacity 0.5s ease-in-out */
+    animation: fade-in 0.75s backwards ease-in-out;
+}
 
-.fade-in, .plotly-graph-div{
-  animation: fade-in 0.75s ease-in-out;
+.fade-in {
+  animation: fade-in 0.75s backwards ease-in-out;
   /* transition: all 0.75s ease-in-out; */
 }
+
+/* #analysis-section > div { */
+/*   animation: fade-in 0.75s backwards ease-in-out; */
+/* } */
 
 #forecast-plot {
   min-height: 600px;
