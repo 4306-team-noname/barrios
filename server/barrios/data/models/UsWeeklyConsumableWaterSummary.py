@@ -35,3 +35,6 @@ class UsWeeklyConsumableWaterSummary(ImsModel):
 
     class Meta:
         db_table = "us_weekly_consumable_water_summary"
+
+    def __str__(self):
+        return self.date
