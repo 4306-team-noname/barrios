@@ -24,12 +24,12 @@
 <body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
   {% include 'components/messages.html' %}
 
-{% include 'components/sidebar.html' %}
-<main hx-boost="true" hx-target="#main-content" hx-select="#main-content"
-  hx-swap="outerHTML transition:true show:body:top">
-  {% block main %}
-  {% endblock main %}
-</main>
+  {% include 'components/sidebar.html' %}
+  <main hx-boost="true" hx-target="#main-content" hx-select="#main-content"
+    hx-swap="outerHTML transition:true show:body:top">
+    {% block main %}
+    {% endblock main %}
+  </main>
 </body>
 
 </html>

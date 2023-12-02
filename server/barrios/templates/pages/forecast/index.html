@@ -4,14 +4,21 @@
 
 {% block main %}
 <section id="main-content" hx-disinherit="*">
+  <div class="section-header flex-h flex-between" style="border-top: 1px solid var(--background-surface-hover); border-bottom: 1px solid var(--background-surface-hover); padding-block: 1rem;">
   <h1>Forecast</h1>
-  {% for forecast in forecasts %}
-  <div class="chart">
-    <h2>{{forecast.title}}</h2>
-    {% autoescape off %}
-    {{forecast.chart|safe}}
-    {% endautoescape %}
+  <form 
+    class="flex-h flex-end gap-2"
+    method="POST"
+    action="analyze/"
+    hx-post="analyze/"
+    hx-target="#analysis-section"
+    hx-trigger="input, load once"
+    hx-swap="outerHTML"
+    >
+    {% csrf_token %}
+    {{ form }}
+  </form>
   </div>
-  {% endfor %}
+  <div id="analysis-section"></div>
 </section>
 {% endblock %}
