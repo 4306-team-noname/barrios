@@ -28,19 +28,19 @@ for unique_id in unique_ids:
     first_date = id_df['datedim'].min()
     last_date = id_df['datedim'].max()
 
-    # Calculate the duration between the first and last date for each ID
-    duration = (last_date - first_date).days
+    # Calculate the duration between the first and last date for each ID in weeks
+    duration_weeks = (last_date - first_date).days // 7
 
-    # Calculate daily usage rate for each ID
-    daily_usage_rate = 1 / (duration + 1)  # Add 1 to include the single-day usage
+    # Calculate weekly usage rate for each ID
+    weekly_usage_rate = 1 / (duration_weeks + 1)  # Add 1 to include the single-week usage
 
     # Add the total for the current ID to the overall total
-    total_usage += daily_usage_rate
-    total_duration += 1  # Since it's a single instance, use 1 day
+    total_usage += weekly_usage_rate
+    total_duration += 1  # Since it's a single instance, use 1 week
 
-# Calculate the average usage rate
+# Calculate the average usage rate per week
 if total_duration > 0:
-    average_usage_rate = total_usage / total_duration
-    print(f"The average usage rate for Water is: {average_usage_rate:.2f} per day")
+    average_weekly_usage_rate = total_usage / total_duration
+    print(f"The average usage rate for Water is: {average_weekly_usage_rate:.2f} per week")
 else:
     print("No valid data to calculate the average usage rate.")

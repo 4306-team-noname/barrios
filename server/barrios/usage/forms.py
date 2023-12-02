@@ -1,3 +1,11 @@
+<<<<<<< HEAD
+from django.forms import DateField, ChoiceField, Form
+
+
+class UsageForm(Form):
+    start_date = DateField()
+    end_date = DateField()
+=======
 from django.forms import ChoiceField, DateField, Form
 from data.models import RatesDefinition, UsWeeklyConsumableWaterSummary
 
@@ -33,3 +41,4 @@ class UsageForm(Form):
     start_date = ChoiceField(choices=get_date_range())
     end_date = ChoiceField(choices=get_date_range())
     consumable_name = ChoiceField(choices=get_consumable_names())
+>>>>>>> 3742991243eb8b4ccb42c3834f0d62f623d9a0db
