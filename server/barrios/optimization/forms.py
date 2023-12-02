@@ -7,5 +7,9 @@ from datetime import date
 
 class OptimizationForm(Form):
     mission = ModelChoiceField(
-        queryset=IssFlightPlan.objects.filter(event="Launch", datedim__gte=date.today())
+        queryset=IssFlightPlan.objects.filter(
+            event="Launch", datedim__gte=date.today()
+        ),
+        empty_label="Select Mission",
+        to_field_name="vehicle_name",
     )

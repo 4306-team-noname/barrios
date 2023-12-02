@@ -1,3 +1,4 @@
+from datetime import date, datetime
 from django.shortcuts import redirect, render
 from common.forms import AnalysisForm
 from usage.charts import create_usage_chart
@@ -15,6 +16,8 @@ from data.models import (
 
 
 def index(request):
+    # When the index is loaded, after checking whether the user is authenticated,
+    # we create a new AnalysisForm object and pass it to the template.
     if request.user.is_authenticated:
         form = AnalysisForm()
         return render(
@@ -27,17 +30,34 @@ def index(request):
 
 
 def analyze(request):
-    if request.htmx.boosted:
-        print("This is a boosted request")
+    # When the user submits the form, we check if the form is valid.
+    # If it is, we can begin the analysis. If not, we redirect to the index.
     if request.method == "POST":
         form = AnalysisForm(request.POST)
         if form.is_valid():
-            start_date = get_date_object(form.cleaned_data["start_date"])
-            end_date = get_date_object(form.cleaned_data["end_date"])
-            consumable_name = form.cleaned_data["consumable_name"]
+            # We receive a reference to the RatesDefinition object's
+            # 'affected_consumable' field and a reference to the
+            # UsWeeklyConsumableWaterSummary object's 'date' field.
+            # Those will need to be converted into something that's usable
+            # for additional queries. Each date field goes through two conversions. First,
+            # it's converted to a datetime object. Then, it's converted to a string
+            # that's formatted as YYYY-MM-DD.
+            start_date_obj = datetime.strptime(
+                str(form.cleaned_data["start_date"]), "%m/%d/%Y"
+            )
+            start_date = start_date_obj.strftime("%Y-%m-%d")
+            end_date_obj = datetime.strptime(
+                str(form.cleaned_data["end_date"]), "%m/%d/%Y"
+            )
+            end_date = end_date_obj.strftime("%Y-%m-%d")
+            consumable_name_obj = form.cleaned_data["consumable_name"]
+            # consumable_name can just be cast directly
+            consumable_name = str(consumable_name_obj)
+
             # get list of consumables
             rate_definition_value = RatesDefinition.objects.filter(
-                affected_consumable=consumable_name
+                affected_consumable=consumable_name,
+                type="usage",
             ).values()
 
             actual_usage_values = []
