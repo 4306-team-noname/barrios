@@ -1,6 +1,11 @@
-from django.forms import DateField, Form
+from django.forms import Form, ModelChoiceField
+from data.models import (
+    IssFlightPlan,
+)
+from datetime import date
 
 
 class OptimizationForm(Form):
-    start_date = DateField()
-    end_date = DateField()
+    mission = ModelChoiceField(
+        queryset=IssFlightPlan.objects.filter(event="Launch", datedim__gte=date.today())
+    )

@@ -78,6 +78,20 @@ def create_forecast_chart(forecast_obj, with_title=True):
         newshape_layer="below",
     )
 
+    fig.update_xaxes(
+        showline=True,
+        linewidth=1,
+        linecolor="#5d7bb0",
+        gridcolor="#5d7bb0",
+    )
+
+    fig.update_yaxes(
+        showline=True,
+        linewidth=1,
+        linecolor="#5d7bb0",
+        gridcolor="#5d7bb0",
+    )
+
     if with_title:
         fig.update_layout(title={"text": consumable_name.upper()})
 

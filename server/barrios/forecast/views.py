@@ -5,46 +5,15 @@ from common.conditionalredirect import conditionalredirect
 from data.models.ThresholdsLimitsDefinition import ThresholdsLimitsDefinition
 from forecast.create_forecast_chart import create_forecast_chart
 from forecast.create_forecast import create_forecast
+from common.forms import AnalysisForm
 
 
 def index(request):
     if not request.user.is_authenticated:
         return conditionalredirect(request, "/accounts/login/")
 
-    all_consumables = (
-        ThresholdsLimitsDefinition.objects.filter(
-            Q(threshold_owner="USOS") | Q(threshold_owner=None)
-        )
-        .values("threshold_category", "threshold_owner", "category_id")
-        .distinct()
-    )
-
-    forecast_charts = []
-    forecasts = []
-
-    for consumable in all_consumables:
-        if (
-            consumable["threshold_category"] != "Water Alert"
-            and consumable["threshold_category"] != "Water Critical"
-        ):
-            consumable_forecast = create_forecast(consumable["threshold_category"])
-            consumable_forecast_chart = create_forecast_chart(
-                consumable_forecast, with_title=False
-            )
-            forecasts.append(consumable_forecast)
-            forecast_charts.append(consumable_forecast_chart)
-
-    water_forecast = create_forecast("Water Alert")
-    water_chart = create_forecast_chart(water_forecast, with_title=False)
-    forecast_charts.append(water_chart)
-    forecasts.append(water_forecast)
-
-    forecasts = [
-        {"title": f["consumable_name"], "chart": forecast_charts[idx]}
-        for idx, f in enumerate(forecasts)
-    ]
-
-    return render(request, "pages/forecast/index.html", {"forecasts": forecasts})
+    form = AnalysisForm()
+    return render(request, "pages/forecast/index.html", {"form": form})
 
 
 def get_forecast(request, consumable_name):
@@ -67,3 +36,26 @@ def get_forecast(request, consumable_name):
 def get_all_forecasts(request):
     if not request.user.is_authenticated:
         return conditionalredirect(request, "/accounts/login/")
+
+
+def analyze(request):
+    if request.user.is_authenticated:
+        if request.method == "POST":
+            form = AnalysisForm(request.POST)
+            if form.is_valid():
+                start_date = form.cleaned_data["start_date"]
+                end_date = form.cleaned_data["end_date"]
+                consumable_name = form.cleaned_data["consumable_name"]
+                return render(
+                    request,
+                    "pages/forecast/forecast_result.html",
+                    {
+                        "start_date": start_date,
+                        "end_date": end_date,
+                        "consumable_name": consumable_name,
+                    },
+                )
+            else:
+                return HttpResponse()
+        else:
+            return conditionalredirect(request, "/forecast/")

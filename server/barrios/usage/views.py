@@ -1,23 +1,22 @@
-from django.http import HttpResponse
 from django.shortcuts import redirect, render
-from random import randint
-from .forms import UsageForm
+from common.forms import AnalysisForm
+from usage.charts import create_usage_chart
 from common.conditionalredirect import conditionalredirect
-<<<<<<< HEAD
-from data.models import InventoryMgmtSystemConsumables, RatesDefinition
-=======
-from datetime import date
+from common.date_helpers import get_date_object
+import pandas as pd
 from data.models import (
     InventoryMgmtSystemConsumables,
+    IssFlightPlanCrew,
+    IssFlightPlanCrewNationalityLookup,
     RatesDefinition,
+    UsRsWeeklyConsumableGasSummary,
     UsWeeklyConsumableWaterSummary,
 )
->>>>>>> 3742991243eb8b4ccb42c3834f0d62f623d9a0db
 
 
 def index(request):
     if request.user.is_authenticated:
-        form = UsageForm()
+        form = AnalysisForm()
         return render(
             request,
             "pages/usage/index.html",
@@ -28,46 +27,82 @@ def index(request):
 
 
 def analyze(request):
-<<<<<<< HEAD
-    form = UsageForm(request.POST)
-    print(form)
-    if form.is_valid:
-        start_date = form.cleaned_data["start_date"]
-        end_date = form.cleaned_data["end_date"]
-
-        # get list of consumables
-        rates_definitions_values = RatesDefinition.objects.all().values()
-        assumed_rates = []
-        for rate_definition in rates_definitions_values:
-            if rate_definition["type"] != "generation":
-                assumed_rates.append(rate_definition)
-                print(rate_definition)
-        # for each:
-        # - if consumable has category_id
-        #   query InventoryMgmtSystemConsumables
-        #   and begin calculation
-        # - else, determine if it is water, gas, etc.
-        #   and calculate usage from appropriate model
-        # - also, get assumed usage rate from RatesDefinitions
-        #   and calculate difference as a time series
-        #     - This can be displayed on a line chart with the actual
-        #       number of items(?)
-        return conditionalredirect(request, "/usage/")
-=======
     if request.htmx.boosted:
         print("This is a boosted request")
     if request.method == "POST":
-        form = UsageForm(request.POST)
+        form = AnalysisForm(request.POST)
         if form.is_valid():
-            start_date = form.cleaned_data["start_date"]
-            end_date = form.cleaned_data["end_date"]
+            start_date = get_date_object(form.cleaned_data["start_date"])
+            end_date = get_date_object(form.cleaned_data["end_date"])
             consumable_name = form.cleaned_data["consumable_name"]
-            print(
-                f"start_date: {start_date}, end_date: {end_date}, consumable_name: {consumable_name}"
-            )
-
             # get list of consumables
-            rates_definitions_values = RatesDefinition.objects.all().values()
+            rate_definition_value = RatesDefinition.objects.filter(
+                affected_consumable=consumable_name
+            ).values()
+
+            actual_usage_values = []
+            if consumable_name == "Water":
+                actual_usage_values = UsWeeklyConsumableWaterSummary.objects.filter(
+                    date__range=[start_date, end_date]
+                ).values()
+            elif (
+                consumable_name == "Oxygen"
+                or consumable_name == "Nitrogen"
+                or consumable_name == "Air"
+            ):
+                actual_usage_values = UsRsWeeklyConsumableGasSummary.objects.filter(
+                    date__range=[start_date, end_date]
+                ).values()
+            else:
+                consumable_cat = RatesDefinition.objects.get(
+                    affected_consumable=consumable_name
+                )
+                actual_usage_values = InventoryMgmtSystemConsumables.objects.filter(
+                    category_id=consumable_cat.category
+                ).values(
+                    "datedim",
+                    "ims_id",
+                    "english_name",
+                    "quantity",
+                    "status",
+                    "category",
+                    "category_name",
+                )
+                # print(actual_usage_values)
+
+                # return render(
+                #     request,
+                #     "pages/usage/result.html",
+                #     {"error_message": "No analysis for that consumable yet."},
+                # )
+
+            usage_df: pd.DataFrame | None = None
+            usage_chart = None
+
+            if len(actual_usage_values) > 0:
+                usage_df = pd.DataFrame(actual_usage_values)
+
+            if usage_df is not None:
+                if consumable_name == "Water":
+                    usage_df = usage_df.drop(
+                        columns=[
+                            "corrected_potable_l",
+                            "corrected_technical_l",
+                            "resupply_potable_l",
+                            "resupply_technical_l",
+                        ]
+                    )
+                    usage_df = usage_df.rename(
+                        columns={
+                            "corrected_total_l": "actual_value",
+                            "corrected_predicted_l": "predicted_value",
+                        }
+                    )
+
+                    usage_chart = create_usage_chart(
+                        {"consumable_name": consumable_name, "df": usage_df}
+                    )
+
             # for each:
             # - if consumable has category_id
             #   query InventoryMgmtSystemConsumables
@@ -78,11 +113,18 @@ def analyze(request):
             #   and calculate difference as a time series
             #     - This can be displayed on a line chart with the actual
             #       number of items(?)
-            return render(
-                request, "pages/usage/result.html", {"start_date": start_date}
-            )
+            # print(usage_chart)
+            if usage_chart:
+                return render(
+                    request, "pages/usage/result.html", {"usage_chart": usage_chart}
+                )
+            else:
+                return render(
+                    request,
+                    "pages/usage/result.html",
+                    {"table_data": actual_usage_values},
+                )
         else:
             return render(
                 request, "pages/usage/result.html", {"error": "Invalid selection"}
             )
->>>>>>> 3742991243eb8b4ccb42c3834f0d62f623d9a0db
