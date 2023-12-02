@@ -3,7 +3,7 @@ from django.db.models import DateField, FloatField, Model
 from .CustomFields import EmptyStringToNoneFloatField
 from .EmptyKeywordManager import EmptyKeywordManager
 from data.models import ImsModel
-from datetime import datetime
+from datetime import datetime, date
 
 
 class UsWeeklyConsumableManager(EmptyKeywordManager):
@@ -37,4 +37,4 @@ class UsWeeklyConsumableWaterSummary(ImsModel):
         db_table = "us_weekly_consumable_water_summary"
 
     def __str__(self):
-        return self.date
+        return self.date.strftime("%m/%d/%Y")
