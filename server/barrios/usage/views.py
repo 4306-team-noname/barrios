@@ -16,6 +16,8 @@ from data.models import (
 
 
 def index(request):
+    # When the index is loaded, after checking whether the user is authenticated,
+    # we create a new AnalysisForm object and pass it to the template.
     if request.user.is_authenticated:
         form = AnalysisForm()
         return render(
@@ -28,9 +30,18 @@ def index(request):
 
 
 def analyze(request):
+    # When the user submits the form, we check if the form is valid.
+    # If it is, we can begin the analysis. If not, we redirect to the index.
     if request.method == "POST":
         form = AnalysisForm(request.POST)
         if form.is_valid():
+            # We receive a reference to the RatesDefinition object's
+            # 'affected_consumable' field and a reference to the
+            # UsWeeklyConsumableWaterSummary object's 'date' field.
+            # Those will need to be converted into something that's usable
+            # for additional queries. Each date field goes through two conversions. First,
+            # it's converted to a datetime object. Then, it's converted to a string
+            # that's formatted as YYYY-MM-DD.
             start_date_obj = datetime.strptime(
                 str(form.cleaned_data["start_date"]), "%m/%d/%Y"
             )
@@ -40,6 +51,7 @@ def analyze(request):
             )
             end_date = end_date_obj.strftime("%Y-%m-%d")
             consumable_name_obj = form.cleaned_data["consumable_name"]
+            # consumable_name can just be cast directly
             consumable_name = str(consumable_name_obj)
 
             # get list of consumables

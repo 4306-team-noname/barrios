@@ -6,8 +6,16 @@ from optimization.forms import OptimizationForm
 
 
 def index(request):
+    # When the index is loaded, after checking whether the user is authenticated,
+    # we create a new OptimizationForm object and pass it to the template to display
+    # in the section's header. This form will make requests for a specific mission's optimized
+    # shipment values.
+    # We also run a complete optimization analysis and display the results in the
+    # section's body.
     if request.user.is_authenticated:
+        # Instantiate a new OptimizationForm object
         form = OptimizationForm()
+        # Generate full analysis results.
         return render(request, "pages/optimization/index.html", {"form": form})
     else:
         return redirect("/accounts/login")
