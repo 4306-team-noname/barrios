@@ -27,9 +27,10 @@ def index(request):
         )
         consumable_names = [d["affected_consumable"] for d in consumable_names_values]
         for consumable in consumable_names:
-            optimizer = Optimizer(consumable, "Dock")
+            print(consumable)
+            optimizer = Optimizer(consumable, "Launch")
             quantities = optimizer.consumable_ascension()
-            print(quantities)
+            # print(quantities)
             # 1. Get a list of event dates
         # event_type = "Launch"
         # event_date_list = get_flightplan_event_dates(event_type)

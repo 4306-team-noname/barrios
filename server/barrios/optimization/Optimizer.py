@@ -1,9 +1,15 @@
 from typing import Any
+from django.db.models import Sum
 import pandas as pd
 from pandas import DataFrame, Series
 import datetime as dt
 import math
-from data.models import IssFlightPlan, IssFlightPlanCrew, RatesDefinition
+from data.models import (
+    IssFlightPlan,
+    IssFlightPlanCrew,
+    IssFlightPlanCrewNationalityLookup,
+    RatesDefinition,
+)
 
 
 class Optimizer:
@@ -16,6 +22,10 @@ class Optimizer:
     event_deltas: list[int]
     event_count: int
     crew_per_event: list[int]
+    usos_crew_per_event: list[int]
+    rsos_crew_per_event: list[int]
+    commercial_crew_per_event: list[int]
+    other_crew_per_event: list[int]
 
     def __init__(self, consumable: str, event_type="Launch") -> None:
         self.consumable = consumable
@@ -27,8 +37,12 @@ class Optimizer:
         rd_queryset = RatesDefinition.objects.all().values()
         self.rates_definition = pd.DataFrame.from_records(rd_queryset, index="id")
         self.crew_per_event = []
+        self.usos_crew_per_event = []
+        self.rsos_crew_per_event = []
+        self.commercial_crew_per_event = []
+        self.other_crew_per_event = []
         self.init_dates()
-        self.init_crew_list()
+        self.init_crew_data()
         pass
 
     def init_dates(self) -> None:
@@ -48,15 +62,43 @@ class Optimizer:
         # Get the number of events
         self.event_count = len(self.event_dates) - 1
 
-    def init_crew_list(self) -> None:
+    def init_crew_data(self) -> None:
         # Uses self.crew_flight_plan to generate a
         # list of the number of people on the space station
         for date in self.event_dates:
-            crewNum = self.crew_flight_plan[self.crew_flight_plan["datedim"] == date][
-                "crew_count"
-            ].tolist()
-            amount = sum(crewNum)
-            self.crew_per_event.append(amount)
+            usos_sum = 0
+            rsos_sum = 0
+            commercial_sum = 0
+            other_sum = 0
+
+            total_crew_num = IssFlightPlanCrew.objects.filter(datedim=date).aggregate(
+                total=Sum("crew_count")
+            )["total"]
+            usos_nat_values = IssFlightPlanCrewNationalityLookup.objects.filter(
+                is_usos_crew=True
+            ).values("nationality")
+            usos_nationalities = [n["nationality"].strip() for n in usos_nat_values]
+            rsos_nat_values = IssFlightPlanCrewNationalityLookup.objects.filter(
+                is_rsa_crew=True
+            ).values("nationality")
+            rsos_nationalities = [n["nationality"].strip() for n in rsos_nat_values]
+            all_crew = IssFlightPlanCrew.objects.filter(datedim=date)
+
+            for crew in all_crew:
+                if crew.nationality_category in usos_nationalities:
+                    usos_sum += crew.crew_count
+                elif crew.nationality_category in rsos_nationalities:
+                    rsos_sum += crew.crew_count
+                elif crew.nationality_category == "Commercial":
+                    commercial_sum += crew.crew_count
+                else:
+                    other_sum += crew.crew_count
+
+            self.crew_per_event.append(total_crew_num)
+            self.usos_crew_per_event.append(usos_sum)
+            self.rsos_crew_per_event.append(rsos_sum)
+            self.commercial_crew_per_event.append(commercial_sum)
+            self.other_crew_per_event.append(other_sum)
 
     def rates(self, consumable):
         # wants the csv rates_definition, and a consumable
