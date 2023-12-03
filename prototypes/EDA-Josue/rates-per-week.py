@@ -1,13 +1,13 @@
 import pandas as pd
 
 # Assuming the provided data is in a file named 'your_file.csv'
-file_path = '../../iss-data\csv\eda\ims_filtered.csv'
+file_path = '../../iss-data\csv\eda\ims-datedim.csv'
 
 # Read the CSV file
 df = pd.read_csv(file_path)
 
 # Convert the 'datedim' column to datetime with the correct format
-df['datedim'] = pd.to_datetime(df['datedim'], format='%Y-%m-%d %H:%M:%S.%f')
+df['datedim'] = pd.to_datetime(df['datedim'], format='%Y-%m-%d')
 
 # Sort the DataFrame by 'datedim'
 df = df.sort_values(by=['id', 'datedim'])

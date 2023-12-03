@@ -1,5 +1,7 @@
 import pandas as pd
 
+#I change the large ims file to be in the 2022-01-19 format instead so I can merge them easier.
+
 # Assuming the provided data is in a file named 'your_crew_file.csv'
 file_path_crew = '../../iss-data\csv\eda\crew-by-week.csv'
 
@@ -9,20 +11,20 @@ df_crew = pd.read_csv(file_path_crew)
 # Convert the 'datedim' column to datetime with the correct format
 df_crew['datedim'] = pd.to_datetime(df_crew['datedim'], format='%Y-%m-%d')
 
-# Assuming the provided data is in a file named 'ims_filtered.csv'
+# Assuming the provided data is in a file named ''
 file_path_category = '../../iss-data\csv\eda\ims-datedim.csv'
 
 # Read the first CSV file
 df_category = pd.read_csv(file_path_category)
 
 # Convert the 'datedim' column to datetime with the correct format
-df_category['datedim'] = pd.to_datetime(df_category['datedim'], format='%Y-%m-%d %H:%M:%S.%f')
+df_category['datedim'] = pd.to_datetime(df_category['datedim'], format='%Y-%m-%d')
 
 # Sort the DataFrame by 'datedim'
 df_category = df_category.sort_values(by=['id', 'datedim'])
 
-# Filter rows with category 'Food'
-category_df = df_category[df_category['category_name'] == 'Food']
+# Filter rows with category 'category'
+category_df = df_category[df_category['category_name'] == 'KTO']
 
 # Initialize variables
 total_usage = 0
@@ -49,12 +51,11 @@ for unique_id in unique_ids:
     # Check for NaN values in the 'crew_count' column and fill with 0
     merged_df['crew_count'] = merged_df['crew_count'].fillna(0)
 
-    print(f"Merged DataFrame for ID {unique_id}:\n{merged_df}")
+    # Group by week and take the last crew count for each week
+    weekly_crew_counts = merged_df.groupby(merged_df['datedim'].dt.to_period("W")).last()['crew_count']
 
-    # Get the sum of crew members for the current week
-    crew_members = merged_df['crew_count'].sum()
-
-    print(f"For ID {unique_id}, Weekly Usage Rate: {weekly_usage_rate}, Crew Members: {crew_members}")
+    # Get the crew count for the last week
+    crew_members = weekly_crew_counts.iloc[-1] if not weekly_crew_counts.empty else 0
 
     # Multiply the weekly usage rate by the number of crew members
     total_usage += weekly_usage_rate * crew_members
