@@ -1,19 +1,19 @@
 import pandas as pd
 
 # Assuming the provided data is in a file named 'your_file.csv'
-file_path = '../../iss-data\csv\eda\ims_filtered.csv'
+file_path = '../../iss-data\csv\eda\Mockup - Sheet1.csv'
 
 # Read the CSV file
 df = pd.read_csv(file_path)
 
-# Convert the 'datedim' column to datetime with the correct format
-df['datedim'] = pd.to_datetime(df['datedim'], format='%Y-%m-%d %H:%M:%S.%f')
+# Convert the 'datedim' column to datetime
+df['datedim'] = pd.to_datetime(df['datedim'], format='%m-%d-%Y')
 
 # Sort the DataFrame by 'datedim'
 df = df.sort_values(by=['id', 'datedim'])
 
-# Filter rows with category ''
-category_df = df[df['category_name'] == 'Food']
+# Filter rows with category 'Water'
+category_df = df[df['category_name'] == 'Water']
 
 # Initialize variables
 total_usage = 0
@@ -44,3 +44,6 @@ if total_duration > 0:
     print(f"The average usage rate for Category is: {average_weekly_usage_rate:.2f} per week")
 else:
     print("No valid data to calculate the average usage rate.")
+
+
+
