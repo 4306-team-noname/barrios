@@ -145,11 +145,22 @@ main {
   }
 }
 
-.section-header {
+.section-header, .article-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.section-header {
+  padding-block: 1rem;
+  border-top: 1px solid var(--background-surface-hover);
+  border-bottom: 1px solid var(--background-surface-hover);
   margin-block-end: 2rem;
+}
+
+.article-header {
+  /* border-top: 1px solid var(--background-surface-hover); */
+  margin-block-end: 0.5rem;
 }
 
 fieldset {
