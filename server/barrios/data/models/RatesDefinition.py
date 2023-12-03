@@ -17,3 +17,6 @@ class RatesDefinition(ImsModel):
 
     class Meta:
         db_table = "rates_definition"
+
+    def __str__(self):
+        return self.affected_consumable

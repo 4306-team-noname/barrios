@@ -20,7 +20,7 @@
 # Set your first superuser credentials
 # here:
 ADMIN_USERNAME=admin
-ADMIN_EMAIL=jlozano18+barriosadmin@angelo.edu
+ADMIN_EMAIL=testadmin@example.com
 
 # Remove all preexisting records from the database.
 python manage.py flush
@@ -30,10 +30,15 @@ find . -path "*/migrations/*.py" -not -name "__init__.py" -delete
 
 # remove previously uploaded files
 # from the media folder
-rm media/uploads/*
+# rm media/uploads/*
 
 # migrate
-python manage.py makemigrations
+python manage.py makemigrations accounts
+python manage.py makemigrations data
+python manage.py makemigrations forecast
+python manage.py makemigrations optimization
+python manage.py makemigrations usage
+
 python manage.py migrate
 
 # Preload categories into the database

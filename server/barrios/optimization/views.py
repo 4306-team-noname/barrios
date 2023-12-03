@@ -1,14 +1,77 @@
 from datetime import date, datetime, timedelta
 from django.shortcuts import redirect, render
 from data.models import IssFlightPlan
+from data.models.VehicleCapacityDef import VehicleCapacityDef
+from optimization.forms import OptimizationForm
 
 
 def index(request):
+    # When the index is loaded, after checking whether the user is authenticated,
+    # we create a new OptimizationForm object and pass it to the template to display
+    # in the section's header. This form will make requests for a specific mission's optimized
+    # shipment values.
+    # We also run a complete optimization analysis and display the results in the
+    # section's body.
     if request.user.is_authenticated:
-        get_optimization(request, "US Food BOBs")
-        return render(request, "pages/optimization/index.html")
+        # Instantiate a new OptimizationForm object
+        form = OptimizationForm()
+        # Generate full analysis results.
+        return render(request, "pages/optimization/index.html", {"form": form})
     else:
         return redirect("/accounts/login")
+
+
+def analyze(request):
+    if request.user.is_authenticated:
+        if request.method == "POST":
+            form = OptimizationForm(request.POST)
+            if not form.is_valid():
+                return render(request, "pages/optimization/index.html", {"form": form})
+            if form.is_valid():
+                print(f"cleaned_data: {form.cleaned_data}")
+                mission = form.cleaned_data["mission"].vehicle_name
+                mission_values = IssFlightPlan.objects.filter(
+                    vehicle_name=mission
+                ).values("datedim", "vehicle_name", "vehicle_type", "event")
+
+                if len(mission_values) > 0:
+                    mission_info = {
+                        "vehicle_name": mission,
+                        "vehicle_type": None,
+                        "launch_date": None,
+                        "dock_date": None,
+                        "undock_date": None,
+                        "landing_date": None,
+                    }
+
+                    for value in mission_values:
+                        mission_info["vehicle_type"] = value["vehicle_type"]
+
+                        if value["event"] == "Launch":
+                            mission_info["launch_date"] = value["datedim"]
+                        elif value["event"] == "Dock":
+                            mission_info["dock_date"] = value["datedim"]
+                        elif value["event"] == "Undock":
+                            mission_info["undock_date"] = value["datedim"]
+                        elif value["event"] == "Landing":
+                            mission_info["landing_date"] = value["datedim"]
+
+                    capacity_values = (
+                        VehicleCapacityDef.objects.filter(
+                            vehicle__in=mission_info["vehicle_type"],
+                        ).values()
+                        | VehicleCapacityDef.objects.filter(
+                            vehicle__in=mission_info["vehicle_name"]
+                        ).values()
+                    )
+                    print(capacity_values)
+                    return render(
+                        request,
+                        "pages/optimization/optimization_result.html",
+                        {"mission_info": mission_info},
+                    )
+        else:
+            return redirect("/optimization")
 
 
 def get_optimization(request, consumable):

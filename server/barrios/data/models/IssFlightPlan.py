@@ -18,3 +18,6 @@ class IssFlightPlan(ImsFlightplanModel):
 
     class Meta:
         db_table = "iss_flight_plan"
+
+    def __str__(self):
+        return self.vehicle_name

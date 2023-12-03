@@ -1,1 +1,10 @@
-{{start_date}}
+<div id="analysis-section">
+  {% if usage_chart %}
+  {% autoescape off %}
+  {{usage_chart|safe}}
+  {% endautoescape %}
+  {% elif table_data %}
+  {% load render_table from django_tables2 %}
+  {% render_table table_data %}
+  {% endif %}
+</div>

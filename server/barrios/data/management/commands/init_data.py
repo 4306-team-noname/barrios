@@ -1,5 +1,5 @@
 import os
-import time
+from git import Repo
 from django.core.management.base import BaseCommand, CommandError
 from core.settings import MEDIA_ROOT
 from data.core.data_dictionary import data_dictionary
@@ -13,6 +13,13 @@ class Command(BaseCommand):
     def handle(self, *args, **kwargs):
         help = f"Loads the initial dataset for the analysis application. File should be located in {DATA_PATH}"
         print(f"Looking for files in {DATA_PATH}")
+        if not os.path.exists(MEDIA_ROOT):  # 1. Ensure '/media' directory exists
+            os.mkdir(MEDIA_ROOT, mode=0o766)
+
+        if not os.path.exists(DATA_PATH):
+            print(
+                "No directory found at '/media/init_data'. Please create the directory and add seed csv files to it."
+            )
 
         expected_files_readable_names = [
             data_dictionary[key]["readable_name"] for key in data_dictionary.keys()
