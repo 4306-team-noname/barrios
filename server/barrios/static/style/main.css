@@ -94,6 +94,8 @@ h5 {
   line-height: 1;
   padding: 0;
   margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
 h1 {
@@ -116,6 +118,70 @@ a:hover, a.current-page {
 
 a.current-page {
   pointer-events: none;
+}
+
+button, a.button {
+  border: none;
+  cursor: pointer;
+  padding: 0.5em;
+  border-radius: 0.25em;
+  background-color: var(--brand-gray);
+  color: var(--background);
+  font-weight: bold;
+}
+
+button:hover {
+  color: var(--black);
+  background-color: var(--foreground);
+}
+
+a.header-button {
+  text-transform: uppercase;
+  background-color: var(--background-surface);
+  border: 1px solid var(--highlight);
+  border-radius: 0.5rem;
+  color: var(--foreground);
+}
+
+fieldset {
+  padding-block: 1rem;
+  border: none;
+  padding: 0;
+
+  legend {
+    margin-bottom: 1rem;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+}
+
+label {
+  font-weight: 600;
+  text-transform: uppercase;
+  white-space: nowrap;
+  margin: 0;
+}
+
+select {
+  cursor: pointer;
+}
+
+select {
+  appearance: none;
+  margin: 0;
+  width: max(10rem, 100%);
+  background-color: var(--background-surface);
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  color: var(--foreground);
+  border: none;border: 1px solid var(--highlight);
+  font-weight: 600;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+option::selection, option:hover {
+  background-color: var(--background-surface-hover);
 }
 
 main {
@@ -161,45 +227,6 @@ main {
 .article-header {
   /* border-top: 1px solid var(--background-surface-hover); */
   margin-block-end: 0.5rem;
-}
-
-fieldset {
-  padding-block: 1rem;
-  border: none;
-  padding: 0;
-
-  legend {
-    margin-bottom: 1rem;
-    font-weight: bold;
-    text-transform: uppercase;
-  }
-}
-
-label {
-  font-weight: 600;
-  text-transform: uppercase;
-  white-space: nowrap;
-  margin: 0;
-}
-
-select {
-  cursor: pointer;
-}
-
-select {
-  appearance: none;
-  margin: 0;
-  width: max(10rem, 100%);
-  background-color: var(--background-surface);
-  padding: 0.5rem;
-  border-radius: 0.75rem;
-  color: var(--foreground);
-  border: none;border: 1px solid var(--highlight);
-  font-weight: 600;
-}
-
-option::selection, option:hover {
-  background-color: var(--background-surface-hover);
 }
 
 #main-logo>svg {
@@ -343,6 +370,21 @@ a.list-item:hover {
 
 /* UTILITY CLASSES */
 
+.relative {
+  position: relative;
+}
+
+.absolute {
+  position: absolute;
+}
+
+.absolute-fill {
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
 .gap-05 {
   gap: 0.5rem;
 }
@@ -466,20 +508,7 @@ a.list-item:hover {
   text-transform: uppercase;
 }
 
-button {
-  border: none;
-  cursor: pointer;
-  padding: 0.5em;
-  border-radius: 0.25em;
-  background-color: var(--brand-gray);
-  color: var(--background);
-  font-weight: bold;
-}
 
-button:hover {
-  color: var(--black);
-  background-color: var(--foreground);
-}
 
 .data-grid {
   display: grid;
@@ -640,7 +669,6 @@ progress::-moz-progress-bar {
 
 .htmx-indicator{
   animation:spin 1s ease-in-out infinite;
-  height: 1px;
   opacity:0;
   transition: opacity 500ms ease-in;
 }

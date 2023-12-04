@@ -1,0 +1,25 @@
+<div id="analysis-section" class="grid gap-2 relative" style="grid-template-columns: repeat(2, 1fr);">
+  {% for mission in missions %}
+  <article class="flex-v gap-05 surface">
+    <div class="article-header">
+      <h3 class="txt-large">{{mission.vehicle_name}}</h3>
+      <h4>{{mission.event_date}}</h4>
+    </div>
+    <table>
+      <thead>
+        <th>Consumable</th>
+        <th>Amount</th>
+      </thead>
+      {% for key, value in mission.items %}
+      <tr>
+        {% if key != 'event_date' and key != 'vehicle_name' %}
+        <td>{{key}}</td>
+        <td>{{value}}</td>
+        {% endif %}
+      </tr>
+      {% endfor %}
+    </table>
+  </article>
+  {% endfor %}
+  {% include 'components/spinner.html' %}
+</div>

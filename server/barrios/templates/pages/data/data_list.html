@@ -4,9 +4,12 @@
 
 {% block main %}
  <section id="main-content" class="flex-v gap-2">
+   <div class="section-header">
+    <h1>Data</h1>
+   </div>
    <div class="data-grid gap-2">
-     {% for data_type in data %}
-     {% if data_type.count > 0 %}
+    {% for data_type in data %}
+      {% if data_type.count > 0 %}
         <a href="/data/{{ data_type.slug }}" class="list-item card flex-v gap-1 surface">
             <span class="flex-h txt-xlarge">
               {% include 'assets/icons/table.svg' %}
@@ -15,28 +18,12 @@
               {{ data_type.name }}
             </p>
         </a>
-    {% else %}
-      {% with label=data_type.name %}
+      {% else %}
+        {% with label=data_type.name %}
           {% include 'components/miniuploadform.html' %}
-      {% endwith %}
-
-    {% endif %}
+        {% endwith %}
+      {% endif %}
     {% endfor %}
    </div>
-   <!-- <h2>Your Files</h2> -->
-   <!-- <div class="data-grid gap-2"> -->
-   <!--   {% if uploads|length > 0 %} -->
-   <!--   {% for upload in uploads %} -->
-   <!--      <a href="/data/files/{{ upload.id }}" class="list-item card flex-v gap-1"> -->
-   <!--        <span class="flex-h txt-xlarge"> -->
-   <!--          {% include 'assets/icons/file.svg' %} -->
-   <!--        </span> -->
-   <!--        <p>{{ upload.name }}</p> -->
-   <!--        <p>{{ upload.upload_date }}</p> -->
-   <!--      </a> -->
-   <!--   {% endfor %} -->
-   <!--   {% endif %} -->
-   <!-- </div> -->
-
 </section>
 {% endblock %}
