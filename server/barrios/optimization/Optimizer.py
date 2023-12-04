@@ -27,12 +27,14 @@ class Optimizer:
     commercial_crew_per_event: list[int]
     other_crew_per_event: list[int]
 
-    def __init__(self, consumable: str, event_type="Launch") -> None:
+    def __init__(
+        self, consumable: str, event_type="Launch", min_date=dt.date.today()
+    ) -> None:
         self.consumable = consumable
         self.event_type = event_type
-        fp_queryset = IssFlightPlan.objects.all().values()
+        fp_queryset = IssFlightPlan.objects.filter(datedim__gte=min_date).values()
         self.flight_plan = pd.DataFrame.from_records(fp_queryset, index="id")
-        cfp_queryset = IssFlightPlanCrew.objects.all().values()
+        cfp_queryset = IssFlightPlanCrew.objects.filter(datedim__gte=min_date).values()
         self.crew_flight_plan = pd.DataFrame.from_records(cfp_queryset, index="id")
         rd_queryset = RatesDefinition.objects.all().values()
         self.rates_definition = pd.DataFrame.from_records(rd_queryset, index="id")

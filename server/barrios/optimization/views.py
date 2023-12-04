@@ -1,11 +1,28 @@
 import math
 from datetime import date, datetime, timedelta
+import pandas as pd
 from django.db.models import Sum
 from django.shortcuts import redirect, render
 from data.models import IssFlightPlan, IssFlightPlanCrew, VehicleCapacityDef
 from data.models.RatesDefinition import RatesDefinition
 from optimization.forms import OptimizationForm
 from optimization.Optimizer import Optimizer
+
+
+# Okay, here's the plan:
+# 1. Load a grid of missions to display on index.
+#   - Each mission consists of:
+#       - vehicle name
+#       - launch date
+#       - dock date
+#       - Consumables/amounts table
+# 2. Optimization form allows user to select a specific consumable
+#    and sends a request to generate a single optimization for that item.
+#    - Request's response is a chart showing how much of a given
+#      consumable to ship on each launch date. The chart should include
+#      thresholds ... I'm not sure what else. Considering that the optimization
+#      will rely on calculated actual rates, it will essentially be a forecast
+#      chart.
 
 
 def index(request):
@@ -26,178 +43,39 @@ def index(request):
             .values("affected_consumable")
         )
         consumable_names = [d["affected_consumable"] for d in consumable_names_values]
+
+        # This dict is what we'll package as a DataFrame
+        # and use for plotting.
+        current_optimization = {
+            "event_date": [],
+            "vehicle_name": [],
+        }
+
+        MIN_DATE = date.today()
+
         for consumable in consumable_names:
-            print(consumable)
             optimizer = Optimizer(consumable, "Launch")
             quantities = optimizer.consumable_ascension()
-            # print(quantities)
-            # 1. Get a list of event dates
-        # event_type = "Launch"
-        # event_date_list = get_flightplan_event_dates(event_type)
-        # # print(f"event_dates: {event_date_list}")
-        #
-        # optimization_results = {}
-        # for consumable_name in consumable_names:
-        #     optimized_values = consumable_ascension(consumable_name, event_date_list)
-        #     optimization_results[consumable_name] = optimized_values
-        #
-        # optimization_results["event_dates"] = [
-        #     event_date_list[i] for i in range(0, len(event_date_list) - 1)
-        # ]
-        # optimization_results["event_type"] = event_type
-        #
-        # optimization_results["vehicle_names"] = []
-        # optimization_results["vehicle_types"] = []
-        #
-        # for event in optimization_results["event_dates"]:
-        #     event_vehicle = IssFlightPlan.objects.filter(datedim=event).first()
-        #     optimization_results["vehicle_names"].append(event_vehicle.vehicle_name)
-        #     optimization_results["vehicle_types"].append(event_vehicle.vehicle_type)
-        #
-        # missions = []
-        # for i in range(0, len(optimization_results["event_dates"])):
-        #     mission = {
-        #         "vehicle_name": optimization_results["vehicle_names"][i],
-        #         "vehicle_type": optimization_results["vehicle_types"][i],
-        #         "event_date": optimization_results["event_dates"][i],
-        #         "event_type": optimization_results["event_type"],
-        #         "payload": [],
-        #     }
-        #     for consumable_name in consumable_names:
-        #         mission["payload"].append(
-        #             {
-        #                 "name": consumable_name,
-        #                 "amount": optimization_results[consumable_name][i],
-        #             }
-        #         )
-        #
-        #     missions.append(mission)
-        #
-        # print(missions)
+            fp_qs = IssFlightPlan.objects.filter(
+                event="Launch", datedim__gte=MIN_DATE
+            ).values("datedim", "vehicle_name")
+            current_optimization["event_date"] = [d["datedim"] for d in fp_qs][:-1]
+            current_optimization["vehicle_name"] = [v["vehicle_name"] for v in fp_qs][
+                :-1
+            ]
+
+            current_optimization[consumable] = quantities
+
+        opt_df = pd.DataFrame(current_optimization)
+        missions = opt_df.to_dict("records")
 
         return render(
             request,
             "pages/optimization/index.html",
-            {"form": form},
-            # {"form": form, "missions": missions},
+            {"form": form, "missions": missions},
         )
     else:
         return redirect("/accounts/login")
-
-
-def consumable_ascension(consumable_name: str, event_date_list: list[date]):
-    # 1. Get a list of days between launches
-    event_deltas = get_flightplan_deltas(event_date_list)
-    # print(f"deltas: {event_deltas}")
-    # 2. Grab the number of event dates
-    num_events = len(event_date_list) - 1
-    crew_count_list = get_crew_per_event_date(event_date_list)
-    # print(f"crew_count: {crew_count_list}")
-    # print(
-    #     f"num_events: {num_events}, num_deltas: {len(event_deltas)}, num_crew_counts: {len(crew_count_list)}"
-    # )
-    sum_generated, sum_usage, sum_usage_crew = get_assumed_rates(consumable_name)
-
-    listofrates = [sum_usage] * (num_events)
-    # print(f"list_of_rates: {listofrates}")
-    listofrates_crew = []
-    consumable_to_send = []
-    current_sum = 0
-    res_list = []
-
-    for i in range(0, len(listofrates)):
-        listofrates_crew.append(crew_count_list[i] * sum_usage_crew)
-        res_list.append(
-            ((listofrates[i] + listofrates_crew[i]) - sum_generated) * event_deltas[i]
-        )
-
-    for i, value in enumerate(res_list):
-        current_sum += value
-        consumable_to_send.append(math.trunc(current_sum))
-        current_sum = current_sum - math.trunc(current_sum)
-
-    return consumable_to_send
-
-
-def get_assumed_rates(consumable_name: str):
-    # Get the sum of rate values for a given consumable
-    # Parameters:
-    #  consumable_name: str
-    #  The consumable to get the rate for
-
-    # 1. Get the sum of rates with a rate type of 'generation'
-    sum_generated_values = RatesDefinition.objects.filter(
-        affected_consumable=consumable_name, type="generation"
-    ).aggregate(Sum("rate"))
-
-    if sum_generated_values["rate__sum"] is None:
-        sum_generated = 0
-    else:
-        sum_generated = sum_generated_values["rate__sum"]
-
-    # 2. Get the sum of rates with a rate type of 'usage' and
-    #   units containing 'Crew/Day'
-    sum_usage_with_crew_values = RatesDefinition.objects.filter(
-        affected_consumable=consumable_name, type="usage", units__contains="Crew/Day"
-    ).aggregate(Sum("rate"))
-
-    if sum_usage_with_crew_values["rate__sum"] is None:
-        sum_usage_crew = 0
-    else:
-        sum_usage_crew = sum_usage_with_crew_values["rate__sum"]
-
-    # 3. Get the sum of rates with a rate type of 'usage' and
-    #  units not containing 'Crew/Day'
-    sum_usage_without_values = (
-        RatesDefinition.objects.filter(
-            affected_consumable=consumable_name, type="usage"
-        )
-        .exclude(units__contains="Crew/Day")
-        .aggregate(Sum("rate"))
-    )
-
-    if sum_usage_without_values["rate__sum"] is None:
-        sum_usage = 0
-    else:
-        sum_usage = sum_usage_without_values["rate__sum"]
-
-    return sum_usage, sum_usage_crew, sum_generated
-
-
-def get_crew_per_event_date(event_date_list: list[date]) -> list[int]:
-    # Get a list of crew counts for a given list of event dates
-    # Parameters:
-    # event_date_list: list[date]
-    #  A list of event dates to get crew counts for
-    crew_count_list = []
-    for event_date in event_date_list:
-        crew_count = IssFlightPlanCrew.objects.filter(datedim=event_date).aggregate(
-            Sum("crew_count")
-        )
-        crew_count_list.append(crew_count["crew_count__sum"])
-    return crew_count_list
-
-
-def get_flightplan_event_dates(event_type: str) -> list[date]:
-    # Get a list of dates for a given event type
-    # Parameters:
-    #  event_type: str
-    #    The event type to get dates for
-    #    Valid values: 'Launch', 'Dock', 'Undock', 'Landing'
-    event_date_values = IssFlightPlan.objects.filter(event=event_type).values("datedim")
-    event_dates = [d["datedim"] for d in event_date_values]
-    return event_dates
-
-
-def get_flightplan_deltas(date_list: list[date]) -> list[int]:
-    days_list = []
-    for idx, d1 in enumerate(date_list):
-        j = idx + 1
-        if j < len(date_list):
-            d2 = date_list[j]
-            delta = d2 - d1
-            days_list.append(delta.days)
-    return days_list
 
 
 # route: /optimization/analyze
