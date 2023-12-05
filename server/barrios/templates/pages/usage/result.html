@@ -1,4 +1,9 @@
 <div id="analysis-section">
+  <div class="txt-large flex-v gap-1" style="margin-block-end: 2rem;">
+    <h2 class="txt-large" style="font-size: 1.25rem">Assumed: {{rate_info.assumed_rate_per_day}}/day</h2>
+    <h2 class="txt-large" style="font-size: 1.25rem">Actual Rate: {{rate_info.actual_rate_per_day}}/day</h2>
+    <h2 class="txt-large" style="font-size: 1.25rem">Days Sampled: {{rate_info.days_sampled}}</h2>
+  </div>
   {% if usage_chart %}
   {% autoescape off %}
   {{usage_chart|safe}}

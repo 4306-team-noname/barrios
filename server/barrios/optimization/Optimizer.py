@@ -1,9 +1,7 @@
 import pandas as pd
-from pandas import DataFrame, Series
-import plotly.graph_objs as go
+from pandas import DataFrame
 import plotly.express as px
 import datetime as dt
-from typing import Any
 import math
 from django.db.models import Sum
 from data.models import (
