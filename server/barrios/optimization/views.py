@@ -8,7 +8,7 @@ from data.models.RatesDefinition import RatesDefinition
 from optimization.forms import OptimizationForm
 from optimization.Optimizer import Optimizer
 from common.conditionalredirect import conditionalredirect
-from common.consumable_helpers import get_consumable_names
+from common.consumable_helpers import get_consumable_names, get_consumable_units
 
 
 # Okay, here's the plan:
@@ -63,12 +63,15 @@ def missions(request):
     for consumable in consumable_names:
         optimizer = Optimizer(consumable, "Launch")
         quantities = optimizer.consumable_ascension()
+        quantities_units = [
+            f"{q} {get_consumable_units(consumable)}" for q in quantities
+        ]
         fp_qs = IssFlightPlan.objects.filter(
             event="Launch", datedim__gte=MIN_DATE
         ).values("datedim", "vehicle_name")
         current_optimization["event_date"] = [d["datedim"] for d in fp_qs][:-1]
         current_optimization["vehicle_name"] = [v["vehicle_name"] for v in fp_qs][:-1]
-        current_optimization[consumable] = quantities
+        current_optimization[consumable] = quantities_units
 
     opt_df = pd.DataFrame(current_optimization)
     missions = opt_df.to_dict("records")

@@ -73,8 +73,6 @@ def index(request):
         forecast_plot = create_forecast_chart(forecast_obj)
         next_optimization = get_next_optimization(consumable_names)
 
-        print(f"next_optimization: {next_optimization}")
-
         return render(
             request,
             "pages/dashboard/index.html",
