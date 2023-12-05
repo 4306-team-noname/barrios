@@ -15,6 +15,33 @@ from data.models import (
 
 
 class Optimizer:
+    """
+    This class manages optimizations and a number of additional helper methods for
+    displaying those optimizations and their accompanying data.
+
+    Note
+    ----
+    Optimization code created by Carlos Cardenas in the `prototypes` directory
+    and integrated into the server architecture afterward.
+
+    Attributes:
+        consumable: The name of the consumable to optimize
+        flight_plan: A DataFrame derived from iss_flight_plan dataset
+        crew_flight_plan: A DataFrame derived from iss_flight_plan_crew dataset
+        rates_definition: A DataFrame derived from rates_definitions dataset
+        event_type: The type of flight plan event to optimize on.
+            valid values: 'Dock' | 'Launch'
+        event_dates: List of dates derived from querying iss_flight_plan for entries
+                     that match `event_type`
+        event_vehicles: List of vehicles that coincide with dates from `event_dates`
+        event_deltas: List of the number of days between each date in `event_dates`
+        event_count: The number of events in `event_dates`
+        crew_per_event: Number of crew members on the ISS for each date in `event_dates`
+        usos_crew_per_event: Number of USOS crew members on the ISS for each date in `event_dates`
+        rsos_crew_per_event: Number of crew RSOS members on the ISS for each date in `event_dates`
+        other_crew_per_event: Number of other crew members ('Commercial') on the ISS for each date in `event_dates`
+    """
+
     consumable: str
     flight_plan: DataFrame
     crew_flight_plan: DataFrame
@@ -52,7 +79,6 @@ class Optimizer:
 
     def run_optimization(self):
         launch_dates = self.event_dates
-        vehicle_names = self.event_dates
         optimized_amounts = self.consumable_ascension()
 
         return {
@@ -75,7 +101,6 @@ class Optimizer:
         fig.update_layout(
             paper_bgcolor="#091D41",
             plot_bgcolor="#091D41",
-            # title_font_color="#ffffff",
             legend_font_color="#ffffff",
             margin=dict(t=32, r=8, b=8, l=0),
             font=dict(color="#ffffff"),
@@ -111,7 +136,6 @@ class Optimizer:
             config={"displayModeBar": False, "responsive": True},
             full_html=False,
             default_height=600,
-            # include_plotlyjs=False,
             include_mathjax=False,
         )
         return bar_plot
@@ -192,6 +216,8 @@ class Optimizer:
 
     def rates(self, consumable):
         # wants the csv rates_definition, and a consumable
+        # TODO: Use Josue's rate calculation code instead of
+        # the assumed rates.
         rater = self.rates_definition
         # sum of generated
         sum_generated = sum(
