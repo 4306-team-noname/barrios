@@ -1,4 +1,3 @@
-import math
 from datetime import date
 import pandas as pd
 from django.shortcuts import redirect, render
@@ -7,22 +6,6 @@ from optimization.forms import OptimizationForm
 from optimization.Optimizer import Optimizer
 from common.conditionalredirect import conditionalredirect
 from common.consumable_helpers import get_consumable_names, get_consumable_units
-
-
-# Okay, here's the plan:
-# 1. Load a grid of missions to display on index.
-#   - Each mission consists of:
-#       - vehicle name
-#       - launch date
-#       - dock date
-#       - Consumables/amounts table
-# 2. Optimization form allows user to select a specific consumable
-#    and sends a request to generate a single optimization for that item.
-#    - Request's response is a chart showing how much of a given
-#      consumable to ship on each launch date. The chart should include
-#      thresholds ... I'm not sure what else. Considering that the optimization
-#      will rely on calculated actual rates, it will essentially be a forecast
-#      chart.
 
 
 def index(request):
@@ -58,20 +41,34 @@ def missions(request):
 
     MIN_DATE = date.today()
 
+    # Generate an optimization for every consumable
     for consumable in consumable_names:
+        # Instantiate the Optimizer
         optimizer = Optimizer(consumable, "Launch")
+
+        # Generate optimized quantities
         quantities = optimizer.consumable_ascension()
+
+        # Get the unit for the consumable
         quantities_units = [
             f"{q} {get_consumable_units(consumable)}" for q in quantities
         ]
+
+        # Get the date and vehicle_name from FlightPlan
         fp_qs = IssFlightPlan.objects.filter(
             event="Launch", datedim__gte=MIN_DATE
         ).values("datedim", "vehicle_name")
+
+        # Assign values to the current_optimization dict
         current_optimization["event_date"] = [d["datedim"] for d in fp_qs][:-1]
         current_optimization["vehicle_name"] = [v["vehicle_name"] for v in fp_qs][:-1]
         current_optimization[consumable] = quantities_units
 
+    # Convert to a dataframe for easy organization of the information
     opt_df = pd.DataFrame(current_optimization)
+
+    # and convert DataFrame to a list of dicts
+    # for easy display on the template.
     missions = opt_df.to_dict("records")
 
     return render(
@@ -94,9 +91,11 @@ def consumables(request):
 
     # Get the optimization for the first chart to be displayed
     optimizer = Optimizer("ACY Inserts")
-    optimization_df = optimizer.get_optimization_dataframe()
+
+    # Generate a plot
     plot = optimizer.plot()
 
+    # Render template with consumable names and first plot
     return render(
         request,
         "pages/optimization/optimization_chart.html",
@@ -106,15 +105,17 @@ def consumables(request):
 
 def get_optimization(request, consumable_name):
     # Returns an individual optimization chart
-    # for a given consumable.
+    # for a single consumable.
     if not request.user.is_authenticated:
         return conditionalredirect(request, "/accounts/login/")
 
-    print(consumable_name)
-    # Get single optimization for the given consumable
+    # Generate the optimization
     optimizer = Optimizer(consumable_name)
+
+    # Generate the plot
     plot = optimizer.plot()
 
+    # Render the partial template with the plot
     return render(
         request,
         "components/optimization_plot.html",
