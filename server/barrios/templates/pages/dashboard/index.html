@@ -45,21 +45,21 @@
         </div>
       </div>
       <div class="flex-v gap-05">
-        <h3>{{last_optimization.launch_name}}</h3>
-        <date>{{last_optimization.launch_date}}</date>
+        <h3>{{next_optimization.vehicle}}</h3>
+        <date>{{next_optimization.date}}</date>
       </div>
       <table>
           <thead>
             <th>Consumable</th>
             <th>Amount</th>
           </thead>
-          {% for item in last_optimization.payload %}
+          {% for item in next_optimization.payload %}
           <tr>
             <td>{{item.name}}</td>
             <td>
               {{item.amount}}
-              {% if item.unit != item.name %}
-              {{item.unit}}
+              {% if item.units != item.name %}
+              {{item.units}}
               {% endif %}
             </td>
           </tr>

@@ -19,6 +19,13 @@ def get_consumable_names() -> list[str]:
     return consumable_names
 
 
+def get_consumable_units(consumable_name):
+    consumable_qs = RatesDefinition.objects.filter(
+        affected_consumable=consumable_name
+    ).values("units")[0]
+    return consumable_qs["units"]
+
+
 def get_consumable_thresholds(consumable_name):
     critical_value = None
     print(f"forecast consumable name: {consumable_name}")

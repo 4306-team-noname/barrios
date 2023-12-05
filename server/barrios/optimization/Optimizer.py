@@ -97,16 +97,6 @@ class Optimizer:
             linecolor="#5d7bb0",
             gridcolor="#5d7bb0",
         )
-
-        # fig.add_trace(
-        #     go.Bar(
-        #         x=list(df["date"]),
-        #         y=list(df["amount"]),
-        #         name=self.consumable,
-        #         width=50.0,
-        #         # line=dict(color="#dade35", width=2),
-        #     )
-        # )
         bar_plot = fig.to_html(
             config={"displayModeBar": False, "responsive": True},
             full_html=False,
