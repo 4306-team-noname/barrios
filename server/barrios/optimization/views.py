@@ -8,6 +8,8 @@ from data.models.RatesDefinition import RatesDefinition
 from optimization.forms import OptimizationForm
 from optimization.Optimizer import Optimizer
 from common.conditionalredirect import conditionalredirect
+from common.consumable_helpers import get_consumable_names
+
 
 # Okay, here's the plan:
 # 1. Load a grid of missions to display on index.
@@ -47,12 +49,7 @@ def missions(request):
     # payloads.
     # Generate full analysis results.
     # 1. Get a list of all consumable names
-    consumable_names_values = (
-        RatesDefinition.objects.order_by("affected_consumable")
-        .distinct("affected_consumable")
-        .values("affected_consumable")
-    )
-    consumable_names = [d["affected_consumable"] for d in consumable_names_values]
+    consumable_names = get_consumable_names()
 
     # This dict is what we'll package as a DataFrame
     # and use for plotting.
@@ -87,38 +84,38 @@ def consumables(request):
     # Consumables chart view on Optimizations page.
     # Generates a menu of buttons with a chart below.
     # The buttons are used to select which consumable
-    # to generate an optimization chart for.
-    consumable_names_values = (
-        RatesDefinition.objects.order_by("affected_consumable")
-        .distinct("affected_consumable")
-        .values("affected_consumable")
-    )
-    consumable_names = [d["affected_consumable"] for d in consumable_names_values]
-    print(f"consumable_names: {consumable_names}")
+    # to generate an optimization chart for
 
-    # This dict is what we'll package as a DataFrame
-    # and use for plotting.
-    current_optimization = {
-        "event_date": [],
-        "vehicle_name": [],
-    }
+    # Get consumable names to pass into
+    # optimization chart interface
+    # (populates consumable selection buttons)
+    consumable_names = get_consumable_names()
 
-    MIN_DATE = date.today()
+    # Get the optimization for the first chart to be displayed
+    optimizer = Optimizer("ACY Inserts")
+    optimization_df = optimizer.get_optimization_dataframe()
+    plot = optimizer.plot()
 
     return render(
         request,
         "pages/optimization/optimization_chart.html",
-        {"consumable_names": consumable_names},
+        {"consumable_names": consumable_names, "optimization_plot": plot},
     )
 
 
 def get_optimization(request, consumable_name):
+    # Returns an individual optimization chart
+    # for a given consumable.
     if not request.user.is_authenticated:
         return conditionalredirect(request, "/accounts/login/")
 
-    MIN_DATE = date.today()
+    print(consumable_name)
+    # Get single optimization for the given consumable
+    optimizer = Optimizer(consumable_name)
+    plot = optimizer.plot()
+
     return render(
         request,
-        "pages/optimization/optimization_chart.html",
-        {"optimization_plot": None},
+        "components/optimization_plot.html",
+        {"optimization_plot": plot, "current": consumable_name},
     )

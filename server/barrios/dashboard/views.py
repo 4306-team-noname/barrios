@@ -17,6 +17,7 @@ from data.models import (
     UsRsWeeklyConsumableGasSummary,
     UsWeeklyConsumableWaterSummary,
 )
+from common.consumable_helpers import get_consumable_names
 
 DUMMY_CONSUMABLES = [
     {"name": "ACY Insert", "unit": "ACY Insert"},
@@ -33,6 +34,9 @@ DUMMY_CONSUMABLES = [
 
 def index(request):
     if request.user.is_authenticated:
+        # We're intercepting the user's request here to make sure
+        # they've loaded the necessary data to proceed. This should
+        # probably be in a middleware.
         required_models = [
             ImsConsumablesCategoryLookup,
             InventoryMgmtSystemConsumables,
@@ -61,6 +65,7 @@ def index(request):
                 "/data/",
             )
 
+        consumable_names = get_consumable_names()
         forecast_obj = create_forecast("ACY Insert")
         forecast_plot = create_forecast_chart(forecast_obj)
 
@@ -71,6 +76,7 @@ def index(request):
                 "usage_difference": get_usage(request),
                 "last_optimization": get_optimizations(request),
                 "forecast_plot": forecast_plot,
+                "consumable_names": consumable_names,
                 "current": "ACY Insert",
             },
         )

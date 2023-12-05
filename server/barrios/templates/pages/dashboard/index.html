@@ -67,10 +67,14 @@
         </table>
     </a>
   </div>
+  <!-- 
+    Remember, we're initially (on first index page load)
+    populating this chart by calling the get_forecast() method
+    in the view and passing data to the forecast_plot template.
+    We don't use HTMX unless the user clicks on one of the buttons.
+  -->
   <div class="row flex-v gap-1" hx-disinherit="*" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' style="overflow: hidden;">
-    <div id="forecast-plot" class="flex-v">
       {% include 'pages/forecast/forecast_plot.html' %}
-    </div>
   </div>
 </section>
 {% endblock %}

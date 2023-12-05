@@ -1,9 +1,11 @@
-from typing import Any
-from django.db.models import Sum
 import pandas as pd
 from pandas import DataFrame, Series
+import plotly.graph_objs as go
+import plotly.express as px
 import datetime as dt
+from typing import Any
 import math
+from django.db.models import Sum
 from data.models import (
     IssFlightPlan,
     IssFlightPlanCrew,
@@ -19,6 +21,7 @@ class Optimizer:
     rates_definition: DataFrame
     event_type: str
     event_dates: list[dt.date]
+    event_vehicles: list[str]
     event_deltas: list[int]
     event_count: int
     crew_per_event: list[int]
@@ -43,11 +46,90 @@ class Optimizer:
         self.rsos_crew_per_event = []
         self.commercial_crew_per_event = []
         self.other_crew_per_event = []
-        self.init_dates()
+        self.init_flightplan_data()
         self.init_crew_data()
         pass
 
-    def init_dates(self) -> None:
+    def run_optimization(self):
+        launch_dates = self.event_dates
+        vehicle_names = self.event_dates
+        optimized_amounts = self.consumable_ascension()
+
+        return {
+            "date": launch_dates[:-1],
+            "vehicle_names": self.event_vehicles[:-1],
+            "amount": optimized_amounts,
+        }
+
+    def get_optimization_dataframe(self) -> DataFrame:
+        optimization_object = self.run_optimization()
+        optim_df = pd.DataFrame(optimization_object)
+        return optim_df
+
+    def plot(self):
+        df = self.get_optimization_dataframe()
+        # fig = go.Figure()
+        fig = px.bar(df, x="date", y="amount")
+        fig.update_traces(width=259_200_000, marker_color="#85a7e0")
+
+        fig.update_layout(
+            paper_bgcolor="#091D41",
+            plot_bgcolor="#091D41",
+            # title_font_color="#ffffff",
+            legend_font_color="#ffffff",
+            margin=dict(t=32, r=8, b=8, l=8),
+            font=dict(color="#ffffff"),
+            hovermode="x",
+            newshape_layer="below",
+            title=dict(
+                text=self.consumable.upper(),
+                automargin=False,
+                font=dict(
+                    size=22,
+                    color="#ffffff",
+                ),
+            ),
+        )
+
+        fig.update_yaxes(
+            showline=True,
+            linewidth=1,
+            linecolor="#5d7bb0",
+            gridcolor="#5d7bb0",
+        )
+
+        # fig.add_trace(
+        #     go.Bar(
+        #         x=list(df["date"]),
+        #         y=list(df["amount"]),
+        #         name=self.consumable,
+        #         width=50.0,
+        #         # line=dict(color="#dade35", width=2),
+        #     )
+        # )
+        bar_plot = fig.to_html(
+            config={"displayModeBar": False, "responsive": True},
+            full_html=False,
+            default_height=600,
+            # include_plotlyjs=False,
+            include_mathjax=False,
+        )
+        return bar_plot
+
+    def get_event_dates(self):
+        return self.event_dates
+
+    def get_event_vehicles(self):
+        return self.event_vehicles
+
+    def get_crew_counts(self):
+        return {
+            "usos_crew_per_event": self.usos_crew_per_event,
+            "rsos_crew_per_event": self.rsos_crew_per_event,
+            "other_crew_per_event": self.other_crew_per_event,
+        }
+
+    def init_flightplan_data(self) -> None:
         # Uses self.flight_plan to generate a list of event dates,
         # time deltas between those event dates, and a count of events
 
@@ -55,6 +137,12 @@ class Optimizer:
         self.event_dates = self.flight_plan[
             self.flight_plan["event"] == self.event_type
         ]["datedim"].tolist()
+
+        # query to get the names of the vehicles associated
+        # with self.event_type
+        self.event_vehicles = self.flight_plan[
+            self.flight_plan["event"] == self.event_type
+        ]["vehicle_name"].tolist()
 
         # Create a list of the days difference between each date
         self.event_deltas = (
