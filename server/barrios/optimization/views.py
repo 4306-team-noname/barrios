@@ -1,8 +1,11 @@
-from datetime import date, datetime, timedelta
+from datetime import date
+import pandas as pd
 from django.shortcuts import redirect, render
 from data.models import IssFlightPlan
-from data.models.VehicleCapacityDef import VehicleCapacityDef
 from optimization.forms import OptimizationForm
+from optimization.Optimizer import Optimizer
+from common.conditionalredirect import conditionalredirect
+from common.consumable_helpers import get_consumable_names, get_consumable_units
 
 
 def index(request):
@@ -15,96 +18,106 @@ def index(request):
     if request.user.is_authenticated:
         # Instantiate a new OptimizationForm object
         form = OptimizationForm()
-        # Generate full analysis results.
+
         return render(request, "pages/optimization/index.html", {"form": form})
     else:
         return redirect("/accounts/login")
 
 
-def analyze(request):
-    if request.user.is_authenticated:
-        if request.method == "POST":
-            form = OptimizationForm(request.POST)
-            if not form.is_valid():
-                return render(request, "pages/optimization/index.html", {"form": form})
-            if form.is_valid():
-                print(f"cleaned_data: {form.cleaned_data}")
-                mission = form.cleaned_data["mission"].vehicle_name
-                mission_values = IssFlightPlan.objects.filter(
-                    vehicle_name=mission
-                ).values("datedim", "vehicle_name", "vehicle_type", "event")
+def missions(request):
+    # Missions view on Optimizations page.
+    # Displays a grid of missions with optimized
+    # payloads.
+    # Generate full analysis results.
+    # 1. Get a list of all consumable names
+    consumable_names = get_consumable_names()
 
-                if len(mission_values) > 0:
-                    mission_info = {
-                        "vehicle_name": mission,
-                        "vehicle_type": None,
-                        "launch_date": None,
-                        "dock_date": None,
-                        "undock_date": None,
-                        "landing_date": None,
-                    }
+    # This dict is what we'll package as a DataFrame
+    # and use for plotting.
+    current_optimization = {
+        "event_date": [],
+        "vehicle_name": [],
+    }
 
-                    for value in mission_values:
-                        mission_info["vehicle_type"] = value["vehicle_type"]
+    MIN_DATE = date.today()
 
-                        if value["event"] == "Launch":
-                            mission_info["launch_date"] = value["datedim"]
-                        elif value["event"] == "Dock":
-                            mission_info["dock_date"] = value["datedim"]
-                        elif value["event"] == "Undock":
-                            mission_info["undock_date"] = value["datedim"]
-                        elif value["event"] == "Landing":
-                            mission_info["landing_date"] = value["datedim"]
+    # Generate an optimization for every consumable
+    for consumable in consumable_names:
+        # Instantiate the Optimizer
+        optimizer = Optimizer(consumable, "Launch")
 
-                    capacity_values = (
-                        VehicleCapacityDef.objects.filter(
-                            vehicle__in=mission_info["vehicle_type"],
-                        ).values()
-                        | VehicleCapacityDef.objects.filter(
-                            vehicle__in=mission_info["vehicle_name"]
-                        ).values()
-                    )
-                    print(capacity_values)
-                    return render(
-                        request,
-                        "pages/optimization/optimization_result.html",
-                        {"mission_info": mission_info},
-                    )
-        else:
-            return redirect("/optimization")
+        # Generate optimized quantities
+        quantities = optimizer.consumable_ascension()
 
+        # Get the unit for the consumable
+        quantities_units = [
+            f"{q} {get_consumable_units(consumable)}" for q in quantities
+        ]
 
-def get_optimization(request, consumable):
-    # The following call to IssFlightPlan.objects.filter()
-    # is equivalent to:
-    # SELECT datedim FROM iss_flight_plan WHERE event = 'Dock';
-    docking_date_values = IssFlightPlan.objects.filter(event="Dock").values("datedim")
+        # Get the date and vehicle_name from FlightPlan
+        fp_qs = IssFlightPlan.objects.filter(
+            event="Launch", datedim__gte=MIN_DATE
+        ).values("datedim", "vehicle_name")
 
-    # The above query returns a list of dicts that looks like
-    # {'datedim': datetime.date(2022, 2, 17)}, so we can use
-    # list comprehension to reduce that to a list of
-    # datetime objects.
-    docking_dates = [d["datedim"] for d in docking_date_values]
-    print(f"{len(docking_dates)} docking_dates found: {docking_dates}")
+        # Assign values to the current_optimization dict
+        current_optimization["event_date"] = [d["datedim"] for d in fp_qs][:-1]
+        current_optimization["vehicle_name"] = [v["vehicle_name"] for v in fp_qs][:-1]
+        current_optimization[consumable] = quantities_units
 
-    # Sweet, we have a list of date objects. Let's use that
-    # to get a list of the number of days between
-    # docking dates. (I extracted that logic into its
-    # own function -- below this function.)
-    deltas_list = get_flightplan_deltas(docking_dates)
-    print(f"deltas_list: {deltas_list}")
-    # ideally, we'd check whether we have any errors
-    # here and either raise an exception or render a template
-    # For now, let's just pass.
-    pass
+    # Convert to a dataframe for easy organization of the information
+    opt_df = pd.DataFrame(current_optimization)
+
+    # and convert DataFrame to a list of dicts
+    # for easy display on the template.
+    missions = opt_df.to_dict("records")
+
+    return render(
+        request,
+        "pages/optimization/mission_grid.html",
+        {"missions": missions},
+    )
 
 
-def get_flightplan_deltas(date_list: list[date]) -> list[int]:
-    days_list = []
-    for idx, d1 in enumerate(date_list):
-        j = idx + 1
-        if j < len(date_list):
-            d2 = date_list[j]
-            delta = d2 - d1
-            days_list.append(delta.days)
-    return days_list
+def consumables(request):
+    # Consumables chart view on Optimizations page.
+    # Generates a menu of buttons with a chart below.
+    # The buttons are used to select which consumable
+    # to generate an optimization chart for
+
+    # Get consumable names to pass into
+    # optimization chart interface
+    # (populates consumable selection buttons)
+    consumable_names = get_consumable_names()
+
+    # Get the optimization for the first chart to be displayed
+    optimizer = Optimizer("ACY Inserts")
+
+    # Generate a plot
+    plot = optimizer.plot()
+
+    # Render template with consumable names and first plot
+    return render(
+        request,
+        "pages/optimization/optimization_chart.html",
+        {"consumable_names": consumable_names, "optimization_plot": plot},
+    )
+
+
+def get_optimization(request, consumable_name):
+    # Returns an individual optimization chart
+    # for a single consumable.
+    if not request.user.is_authenticated:
+        return conditionalredirect(request, "/accounts/login/")
+
+    # Generate the optimization
+    optimizer = Optimizer(consumable_name)
+
+    # Generate the plot
+    plot = optimizer.plot()
+
+    # Render the partial template with the plot
+    return render(
+        request,
+        "components/optimization_plot.html",
+        {"optimization_plot": plot, "current": consumable_name},
+    )

@@ -1,116 +1,20 @@
-<div class="card-header flex-h flex-between">
-  <h2>Latest Forecasts</h2>
-  <ul class="flex-h menu-h flex-end">
-    <li>
-      {% if current == "ACY Insert" %}
-      <button disabled="true">
-        ACY Insert
-      </button>
-      {% else %}
-      <button hx-post="/forecast/get_forecast/ACY Insert/" hx-target="#forecast-plot" hx-swap="innerHTML"
-        hx-trigger="click delay:0.2s">
-        ACY Insert
-      </button>
-      {% endif %}
-    </li>
-    <li>
-      {% if current == "KTO" %}
-      <button disabled="true">
-        KTO
-      </button>
-      {% else %}
-      <button hx-post="/forecast/get_forecast/KTO/" hx-target="#forecast-plot" hx-swap="innerHTML"
-        hx-trigger="click delay:0.2s">
-        KTO
-      </button>
-      {% endif %}
-    </li>
-    <li>
-      {% if current == "Pretreat Tanks" %}
-      <button disabled="true">
-        Pretreat Tanks
-      </button>
-      {% else %}
-      <button hx-post="/forecast/get_forecast/Pretreat Tanks/" hx-target="#forecast-plot" hx-swap="innerHTML"
-        hx-trigger="click delay:0.2s">
-        Pretreat Tanks
-      </button>
-      {% endif %}
-    </li>
-    <li>
-      {% if current == "Filter Inserts" %}
-      <button disabled="true">
-        Filter Inserts
-      </button>
-      {% else %}
-      <button hx-post="/forecast/get_forecast/Filter Inserts/" hx-target="#forecast-plot" hx-swap="innerHTML"
-        hx-trigger="click delay:0.2s">
-        Filter Inserts
-      </button>
-      {% endif %}
-    </li>
-    <li>
-      {% if current == "Urine Receptacle" %}
-      <button disabled="true">
-        Urine Receptacle
-      </button>
-      {% else %}
-      <button hx-post="/forecast/get_forecast/Urine Receptacle/" hx-target="#forecast-plot" hx-swap="innerHTML"
-        hx-trigger="click delay:0.2s">
-        Urine Receptacle
-      </button>
-      {% endif %}
-    </li>
-    <li>
-      {% if current == "EDVs" %}
-      <button disabled="true">
-        EDVs
-      </button>
-      {% else %}
-      <button hx-post="/forecast/get_forecast/EDVs/" hx-target="#forecast-plot" hx-swap="innerHTML"
-        hx-trigger="click delay:0.2s">
-        EDVs
-      </button>
-      {% endif %}
-    </li>
-    <li>
-      {% if current == 'O2 (Oxygen)' %}
-      <button disabled="true">
-        O2
-      </button>
-      {% else %}
-      <button hx-post="/forecast/get_forecast/O2 (Oxygen)/" hx-target="#forecast-plot" hx-swap="innerHTML"
-        hx-trigger="click delay:0.2s">
-        O2
-      </button>
-      {% endif %}
-    </li>
-    <li>
-      {% if current == "N2 (Nitrogen)" %}
-      <button disabled="true">
-        N2
-      </button>
-      {% else %}
-      <button hx-post="/forecast/get_forecast/N2 (Nitrogen)/" hx-target="#forecast-plot" hx-swap="innerHTML"
-        hx-trigger="click delay:0.2s">
-        N2
-      </button>
-      {% endif %}
-    </li>
-    <li>
-      {% if current == "Water Alert" %}
-      <button disabled="true">
-        Water
-      </button>
-      {% else %}
-      <button hx-post="/forecast/get_forecast/Water Alert/" hx-target="#forecast-plot" hx-swap="innerHTML"
-        hx-trigger="click delay:0.2s">
-        Water
-      </button>
-      {% endif %}
-    </li>
-  </ul>
+<div id="analysis-section">
+  <div class="card-header flex-h flex-between">
+    <h2>Forecasts</h2>
+    <ul class="flex-h menu-h flex-end">
+      {% for consumable_name in consumable_names %}
+      <li>
+        <button hx-post="/forecast/get_forecast/{{consumable_name}}/" hx-target="#forecast-plot" hx-swap="innerHTML"
+          hx-trigger="click delay:0.2s" data-consumable={{consumable_name}}>
+          {{consumable_name}}
+        </button>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+  <div id="forecast-plot">
+    {% autoescape off %}
+    {{forecast_plot|safe}}
+    {% endautoescape %}
+  </div>
 </div>
-{% autoescape off %}
-{{forecast_plot|safe}}
-{% endautoescape %}

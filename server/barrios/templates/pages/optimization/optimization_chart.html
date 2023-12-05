@@ -1,0 +1,26 @@
+<div id="analysis-section">
+  <div class="card-header flex-h flex-between" style="grid-column: span 2;">
+    <h2>By Consumable</h2>
+    <ul class="flex-h menu-h flex-end">
+      {% for consumable_name in consumable_names %}
+      <li>
+        <button hx-post="/optimization/get_optimization/{{consumable_name}}/" hx-target="#optimization-plot"
+          hx-swap="outerHTML" hx-trigger="click delay:0.2s">
+          {{consumable_name}}
+        </button>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+  <!-- 
+    Remember, we're initially (on first consumables() page load)
+    populating this chart by calling the Optimizer.consumable_ascension() 
+    method from the view and passing data to the optimization_plot template.
+    We don't use HTMX unless the user clicks on one of the buttons.
+  -->
+  <div id="optimization-plot">
+    {% autoescape off %}
+    {{optimization_plot|safe}}
+    {% endautoescape %}
+  </div>
+</div>

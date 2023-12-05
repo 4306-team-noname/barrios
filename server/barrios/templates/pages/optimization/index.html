@@ -4,20 +4,13 @@
 
 {% block main %}
 <section id="main-content" hx-disinherit="*">
-  <div class="section-header flex-h flex-between" style="border-top: 1px solid var(--background-surface-hover); border-bottom: 1px solid var(--background-surface-hover); padding-block: 1rem;">
+  <div class="section-header flex-h flex-between">
   <h1>Optimization</h1>
-  <form 
-    class="flex-h flex-end gap-2"
-    method="POST"
-    action="analyze/"
-    hx-post="analyze/"
-    hx-target="#analysis-section"
-    hx-trigger="input, load once"
-    hx-swap="outerHTML"
-    >
-    {% csrf_token %}
-    {{ form }}
-  </form>
+  {% include 'components/spinner.html' %}
+  <div class="flex-h gap-2">
+    <a href="/optimization/missions/" hx-get="/optimization/missions/" hx-target="#analysis-section" hx-trigger="load once, click" hx-swap="outerHTML" hx-indicator="#spinner" class="button header-button">View Missions</a>
+    <a href="/optimization/consumables/" hx-get="/optimization/consumables/" hx-target="#analysis-section" hx-swap="outerHTML" hx-indicator="#spinner" class="button header-button">View Consumables</a>
+  </div>
   </div>
   <div id="analysis-section"></div>
 </section>

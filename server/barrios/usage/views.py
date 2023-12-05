@@ -13,6 +13,7 @@ from data.models import (
     UsRsWeeklyConsumableGasSummary,
     UsWeeklyConsumableWaterSummary,
 )
+from usage.Rater import Rater
 
 
 def index(request):
@@ -54,6 +55,9 @@ def analyze(request):
             # consumable_name can just be cast directly
             consumable_name = str(consumable_name_obj)
 
+            rater = Rater(consumable_name, start_date_obj, end_date_obj)
+            rate_object = rater.rate()
+            print(rate_object)
             # get list of consumables
             rate_definition_value = RatesDefinition.objects.filter(
                 affected_consumable=consumable_name,
@@ -136,7 +140,9 @@ def analyze(request):
             # print(usage_chart)
             if usage_chart:
                 return render(
-                    request, "pages/usage/result.html", {"usage_chart": usage_chart}
+                    request,
+                    "pages/usage/result.html",
+                    {"usage_chart": usage_chart, "rate_info": rate_object},
                 )
             else:
                 return render(

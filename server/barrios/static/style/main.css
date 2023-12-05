@@ -94,6 +94,8 @@ h5 {
   line-height: 1;
   padding: 0;
   margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
 h1 {
@@ -118,38 +120,27 @@ a.current-page {
   pointer-events: none;
 }
 
-main {
-  grid-area: main;
-  /* overflow: hidden; */
-  overflow-x: scroll;
-  overflow-y: scroll;
-  scrollbar-gutter: stable;
-  height: 100%;
-  /* max-height: fit-content; */
-  padding-block: 2rem;
-  padding-inline-end: 2rem;
-  /* overflow: hidden; */
+button, a.button {
+  border: none;
+  cursor: pointer;
+  padding: 0.5em;
+  border-radius: 0.25em;
+  background-color: var(--brand-gray);
+  color: var(--background);
+  font-weight: bold;
 }
 
-#main-content {
-  /* overflow: auto; */
-  /* scrollbar-gutter: stable; */
-  max-height: fit-content;
-  margin-block-end: 2rem;
-  & > h1 {
-    margin-bottom: 2rem;
-  }
-
-  & .table-container {
-    overflow: auto;
-  }
+button:hover {
+  color: var(--black);
+  background-color: var(--foreground);
 }
 
-.section-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-block-end: 2rem;
+a.header-button {
+  text-transform: uppercase;
+  background-color: var(--background-surface);
+  border: 1px solid var(--highlight);
+  border-radius: 0.5rem;
+  color: var(--foreground);
 }
 
 fieldset {
@@ -181,14 +172,61 @@ select {
   width: max(10rem, 100%);
   background-color: var(--background-surface);
   padding: 0.5rem;
-  border-radius: 0.75rem;
+  border-radius: 0.5rem;
   color: var(--foreground);
   border: none;border: 1px solid var(--highlight);
   font-weight: 600;
+  text-transform: uppercase;
+  font-weight: bold;
 }
 
 option::selection, option:hover {
   background-color: var(--background-surface-hover);
+}
+
+main {
+  grid-area: main;
+  /* overflow: hidden; */
+  overflow-x: scroll;
+  overflow-y: scroll;
+  scrollbar-gutter: stable;
+  height: 100%;
+  /* max-height: fit-content; */
+  padding-block: 2rem;
+  padding-inline-end: 2rem;
+  /* overflow: hidden; */
+}
+
+#main-content {
+  /* overflow: auto; */
+  /* scrollbar-gutter: stable; */
+  max-height: fit-content;
+  margin-block-end: 2rem;
+  & > h1 {
+    margin-bottom: 2rem;
+  }
+
+  & .table-container {
+    overflow: auto;
+  }
+}
+
+.section-header, .article-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.section-header {
+  padding-block: 1rem;
+  border-top: 1px solid var(--background-surface-hover);
+  border-bottom: 1px solid var(--background-surface-hover);
+  margin-block-end: 2rem;
+}
+
+.article-header {
+  /* border-top: 1px solid var(--background-surface-hover); */
+  margin-block-end: 0.5rem;
 }
 
 #main-logo>svg {
@@ -332,6 +370,21 @@ a.list-item:hover {
 
 /* UTILITY CLASSES */
 
+.relative {
+  position: relative;
+}
+
+.absolute {
+  position: absolute;
+}
+
+.absolute-fill {
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
 .gap-05 {
   gap: 0.5rem;
 }
@@ -455,20 +508,7 @@ a.list-item:hover {
   text-transform: uppercase;
 }
 
-button {
-  border: none;
-  cursor: pointer;
-  padding: 0.5em;
-  border-radius: 0.25em;
-  background-color: var(--brand-gray);
-  color: var(--background);
-  font-weight: bold;
-}
 
-button:hover {
-  color: var(--black);
-  background-color: var(--foreground);
-}
 
 .data-grid {
   display: grid;
@@ -489,6 +529,7 @@ button:hover {
 .card-header {
   text-transform: uppercase;
   letter-spacing: 0.075em;
+  width: 100%;
 }
 
 .list-item {
@@ -629,7 +670,6 @@ progress::-moz-progress-bar {
 
 .htmx-indicator{
   animation:spin 1s ease-in-out infinite;
-  height: 1px;
   opacity:0;
   transition: opacity 500ms ease-in;
 }
@@ -728,14 +768,18 @@ main {
 
 #analysis-section > div,
 #analysis-section > article,
-#forecast-plot .plotly-graph-div {
+#forecast-plot .plotly-graph-div,
+#optimization-plot .plotly-graph-div {
     /* transition: opacity 0.5s ease-in-out */
     animation: fade-in 0.75s backwards ease-in-out;
 }
 
 .fade-in {
-  animation: fade-in 0.75s backwards ease-in-out;
-  /* transition: all 0.75s ease-in-out; */
+  animation-name: fade-in;
+  animation-duration: 0.75s;
+  animation-direction: normal;
+  animation-fill-mode: both;
+  animation-timing-function: ease-in-out;
 }
 
 /* #analysis-section > div { */
