@@ -1,10 +1,8 @@
 import math
-from datetime import date, datetime, timedelta
+from datetime import date
 import pandas as pd
-from django.db.models import Sum
 from django.shortcuts import redirect, render
-from data.models import IssFlightPlan, IssFlightPlanCrew, VehicleCapacityDef
-from data.models.RatesDefinition import RatesDefinition
+from data.models import IssFlightPlan
 from optimization.forms import OptimizationForm
 from optimization.Optimizer import Optimizer
 from common.conditionalredirect import conditionalredirect
