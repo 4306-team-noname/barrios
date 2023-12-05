@@ -529,6 +529,7 @@ a.list-item:hover {
 .card-header {
   text-transform: uppercase;
   letter-spacing: 0.075em;
+  width: 100%;
 }
 
 .list-item {
@@ -767,14 +768,18 @@ main {
 
 #analysis-section > div,
 #analysis-section > article,
-#forecast-plot .plotly-graph-div {
+#forecast-plot .plotly-graph-div,
+#optimization-plot .plotly-graph-div {
     /* transition: opacity 0.5s ease-in-out */
     animation: fade-in 0.75s backwards ease-in-out;
 }
 
 .fade-in {
-  animation: fade-in 0.75s backwards ease-in-out;
-  /* transition: all 0.75s ease-in-out; */
+  animation-name: fade-in;
+  animation-duration: 0.75s;
+  animation-direction: normal;
+  animation-fill-mode: both;
+  animation-timing-function: ease-in-out;
 }
 
 /* #analysis-section > div { */
