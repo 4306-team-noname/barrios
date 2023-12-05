@@ -23,7 +23,22 @@ def get_consumable_units(consumable_name):
     consumable_qs = RatesDefinition.objects.filter(
         affected_consumable=consumable_name
     ).values("units")[0]
-    return consumable_qs["units"]
+    unpartitioned = consumable_qs["units"]
+    partitioned_slash = unpartitioned.partition("/")
+    first = partitioned_slash[0]
+    if (
+        first.lower() in consumable_name.lower()
+        or consumable_name.lower() in first.lower()
+    ):
+        first = ""
+    partitioned_space = first.partition(" ")
+    first_space = partitioned_space[0]
+    if (
+        first_space.lower() in consumable_name.lower()
+        or consumable_name.lower() in first_space.lower()
+    ):
+        first = ""
+    return first
 
 
 def get_consumable_thresholds(consumable_name):
