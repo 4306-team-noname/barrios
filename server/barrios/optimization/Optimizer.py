@@ -77,7 +77,7 @@ class Optimizer:
             plot_bgcolor="#091D41",
             # title_font_color="#ffffff",
             legend_font_color="#ffffff",
-            margin=dict(t=32, r=8, b=8, l=8),
+            margin=dict(t=32, r=8, b=8, l=0),
             font=dict(color="#ffffff"),
             hovermode="x",
             newshape_layer="below",
@@ -91,11 +91,21 @@ class Optimizer:
             ),
         )
 
+        fig.update_xaxes(
+            linewidth=1,
+            linecolor="#264171",
+            gridcolor="#264171",
+            zerolinecolor="#264171",
+            title_text="",
+        )
+
         fig.update_yaxes(
             showline=True,
             linewidth=1,
-            linecolor="#5d7bb0",
-            gridcolor="#5d7bb0",
+            linecolor="#264171",
+            gridcolor="#264171",
+            zerolinecolor="#264171",
+            title_text="",
         )
         bar_plot = fig.to_html(
             config={"displayModeBar": False, "responsive": True},
