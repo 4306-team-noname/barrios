@@ -1,4 +1,5 @@
 import pandas as pd
+import numpy as np
 from pandas import DataFrame
 import plotly.graph_objs as go
 from django.db.models import Q, Sum
@@ -539,20 +540,23 @@ class Rater:
     def derive_ims_df(self, df):
         df = df[df["status"] != "Discard"]
         df = df[df["status"] != "Return"]
+        df = df[df["status"] != np.nan]
         df["datedim"] = df["datedim"].dt.date
+
+        unique = df.drop_duplicates(
+            subset=["ims_id", "datedim", "status", "category_name"]
+        )
+
         group_one = (
-            df.groupby(["datedim", "ims_id", "category_name", "status"])
+            unique.groupby(["datedim", "ims_id", "category_name"])
             .size()
             .reset_index(name="actual_value")
         )
-        group_one_unique = group_one.drop_duplicates(
-            subset=["ims_id", "datedim", "category_name", "status"]
-        )
-        print(group_one_unique)
-        group_one_unique.to_csv("what_is_going_on.csv")
+
+        print(group_one)
 
         grouped_df = (
-            group_one_unique.groupby(["datedim", "category_name"])
+            group_one.groupby(["datedim", "category_name"])
             .agg({"actual_value": "sum"})
             .reset_index()
         )
