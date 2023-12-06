@@ -2,35 +2,47 @@ from math import ceil, floor
 from random import randint
 import pandas as pd
 from django.db.models import Q
-from data.models import IssFlightPlan, ThresholdsLimitsDefinition
+from data.models import (
+    IssFlightPlan,
+    ThresholdsLimitsDefinition,
+    UsWeeklyConsumableWaterSummary,
+)
 from common.consumable_helpers import get_consumable_thresholds
+from common.forms import AnalysisForm
+import pandas as pd
+from prophet import Prophet
+import numpy as np
+from sklearn.metrics import mean_absolute_error, mean_squared_error
 
 
-def create_forecast(consumable_name):
-    docking_date_values = IssFlightPlan.objects.filter(event="Dock").values("datedim")
-    docking_dates = [d["datedim"] for d in docking_date_values]
+def create_forecast(consumable_name, min_date, max_date):
+    consumable = consumable_name.lower()
 
-    thresholds_object = get_consumable_thresholds(consumable_name)
+    # if consumable == "water":
+    if consumable:
+        water_obj_qs = UsWeeklyConsumableWaterSummary.objects.filter(
+            date__range=[min_date, max_date]
+        ).values()
+        df = pd.DataFrame.from_records(water_obj_qs)
+        df["date"] = pd.to_datetime(df["date"])
+        prophet_data = df[["date", "corrected_total_l"]].rename(
+            columns={"date": "ds", "corrected_total_l": "y"}
+        )  # type: ignore
 
-    dummy_forecast = []
-    for docking_date in docking_dates:
-        forecast = {
-            "date": docking_date,
-            consumable_name: randint(
-                thresholds_object["min_value"], thresholds_object["max_value"]
-            ),
-        }
-        dummy_forecast.append(forecast)
+        split_index = int(len(prophet_data) * 0.8)
+        train_data = prophet_data[:split_index]
+        test_data = prophet_data[split_index:]
 
-    forecast_obj = {
-        "consumable_name": consumable_name,
-        "threshold_value": thresholds_object["threshold_value"],
-        "threshold_plus_value": thresholds_object["threshold_plus_value"],
-        "critical_value": thresholds_object["critical_value"],
-        "min_value": thresholds_object["min_value"],
-        "max_value": thresholds_object["max_value"],
-        "df": pd.DataFrame(dummy_forecast),
-        # TODO: Include actual start date, actual end date,
-        # forecast start date, and forecast end date
-    }
-    return forecast_obj
+        model = Prophet(
+            yearly_seasonality=True,  # type: ignore
+            weekly_seasonality=True,  # type: ignore
+            daily_seasonality=False,  # type: ignore
+            seasonality_mode="multiplicative",
+            changepoint_prior_scale=0.05,
+        )
+        model.fit(train_data)
+
+        future = model.make_future_dataframe(periods=732)
+        forecast = model.predict(future)
+
+        return {"model": model, "forecast": forecast}

@@ -6,6 +6,7 @@ from optimization.forms import OptimizationForm
 from optimization.Optimizer import Optimizer
 from common.conditionalredirect import conditionalredirect
 from common.consumable_helpers import get_consumable_names, get_consumable_units
+from optimization.OrOptimizer import OrOptimizer
 
 
 def index(request):
@@ -18,6 +19,8 @@ def index(request):
     if request.user.is_authenticated:
         # Instantiate a new OptimizationForm object
         form = OptimizationForm()
+        # or_optimizer = OrOptimizer()
+        # or_optimizer.optimize()
 
         return render(request, "pages/optimization/index.html", {"form": form})
     else:

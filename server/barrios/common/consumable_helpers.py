@@ -43,7 +43,7 @@ def get_consumable_units(consumable_name):
 
 def get_consumable_thresholds(consumable_name):
     critical_value = None
-    print(f"forecast consumable name: {consumable_name}")
+    print(f"consumable name: {consumable_name}")
 
     if consumable_name.lower() == "water":
         water_values = ThresholdsLimitsDefinition.objects.filter(
@@ -53,6 +53,30 @@ def get_consumable_thresholds(consumable_name):
         critical_value = water_values[1]["threshold_value"]
     elif consumable_name.lower() == "air":
         threshold = {"threshold_value": 0}
+    elif consumable_name.lower() == "acy inserts":
+        threshold = list(
+            ThresholdsLimitsDefinition.objects.filter(
+                threshold_category="ACY Insert"
+            ).values()
+        )[0]
+    elif consumable_name.lower() == "nitrogen":
+        threshold = list(
+            ThresholdsLimitsDefinition.objects.filter(
+                threshold_category="N2 (Nitrogen)"
+            ).values()
+        )[0]
+    elif consumable_name.lower() == "oxygen":
+        threshold = list(
+            ThresholdsLimitsDefinition.objects.filter(
+                threshold_category="O2 (Oxygen)"
+            ).values()
+        )[0]
+    elif consumable_name.lower() == "us food bobs":
+        threshold = list(
+            ThresholdsLimitsDefinition.objects.filter(
+                threshold_category="Food", threshold_owner="USOS"
+            ).values()
+        )[0]
     else:
         threshold = list(
             ThresholdsLimitsDefinition.objects.filter(
