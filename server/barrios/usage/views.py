@@ -1,18 +1,6 @@
-from datetime import date, datetime
+from datetime import datetime
 from django.shortcuts import redirect, render
 from common.forms import AnalysisForm
-from usage.charts import create_usage_chart
-from common.conditionalredirect import conditionalredirect
-from common.date_helpers import get_date_object
-import pandas as pd
-from data.models import (
-    InventoryMgmtSystemConsumables,
-    IssFlightPlanCrew,
-    IssFlightPlanCrewNationalityLookup,
-    RatesDefinition,
-    UsRsWeeklyConsumableGasSummary,
-    UsWeeklyConsumableWaterSummary,
-)
 from usage.Rater import Rater
 
 
