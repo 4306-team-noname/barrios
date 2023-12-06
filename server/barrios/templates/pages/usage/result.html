@@ -1,7 +1,21 @@
 <div id="analysis-section">
   <div class="txt-large flex-v gap-1" style="margin-block-end: 2rem;">
-    <h2 class="txt-large" style="font-size: 1.25rem">Assumed: {{rate_info.assumed_rate_per_day}}/day</h2>
-    <h2 class="txt-large" style="font-size: 1.25rem">Actual Rate: {{rate_info.actual_rate_per_day}}/day</h2>
+    {% if rate_info.assumed_rate_per_day is None %}
+    <h2 class="txt-large" style="font-size: 1.25rem">Assumed: --/--</h2>
+    {% else %}
+    <h2 class="txt-large" style="font-size: 1.25rem">Assumed: {{rate_info.assumed_rate_per_day}} {{rate_info.unit}}/day
+    </h2>
+    {% endif %}
+
+    {% if rate_info.predicted_rate_per_day is None %}
+    <h2 class="txt-large" style="font-size: 1.25rem">Predicted: --/--</h2>
+    {% else %}
+    <h2 class="txt-large" style="font-size: 1.25rem">Predicted: {{rate_info.predicted_rate_per_day}}
+      {{rate_info.unit}}/day</h2>
+    {% endif %}
+
+    <h2 class="txt-large" style="font-size: 1.25rem">Actual Rate: {{rate_info.actual_rate_per_day}}
+      {{rate_info.unit}}/day</h2>
     <h2 class="txt-large" style="font-size: 1.25rem">Days Sampled: {{rate_info.days_sampled}}</h2>
   </div>
   {% if usage_chart %}
