@@ -28,6 +28,7 @@ def create_forecast(consumable_name, min_date, max_date):
         prophet_data = df[["date", "corrected_total_l"]].rename(
             columns={"date": "ds", "corrected_total_l": "y"}
         )  # type: ignore
+
         split_index = int(len(prophet_data) * 0.8)
         train_data = prophet_data[:split_index]
         test_data = prophet_data[split_index:]
@@ -41,7 +42,7 @@ def create_forecast(consumable_name, min_date, max_date):
         )
         model.fit(train_data)
 
-        future = model.make_future_dataframe(periods=365)
+        future = model.make_future_dataframe(periods=732)
         forecast = model.predict(future)
 
         return {"model": model, "forecast": forecast}

@@ -3,12 +3,41 @@ from plotly.offline import plot
 import plotly.express as px
 import plotly.graph_objs as go
 from math import floor
+from prophet.plot import plot_plotly, plot_components_plotly
 
 
 def create_forecast_chart(model, forecast, consumable_name=None, with_title=True):
-    from prophet.plot import plot_plotly, plot_components_plotly
+    # fig = go.Figure(data=forecast)
 
-    fig = plot_plotly(model, forecast)
+    # yhat = go.Scatter(
+    #     x=forecast["ds"],
+    #     y=forecast["yhat"],
+    #     mode="lines",
+    #     marker={"color": "#3bbed7"},
+    #     line={"width": 3},
+    #     name="Forecast",
+    # )
+    #
+    # yhat_lower = go.Scatter(
+    #     x=forecast["ds"],
+    #     y=forecast["yhat_lower"],
+    #     marker={"color": "rgba(0,0,0,0)"},
+    #     showlegend=False,
+    #     hoverinfo="none",
+    # )
+    #
+    # yhat_upper = go.Scatter(
+    #     x=forecast["ds"],
+    #     y=forecast["yhat_upper"],
+    #     fill="tonexty",
+    #     fillcolor="rgba(231, 234, 241,.75)",
+    #     name="Confidence",
+    #     hoverinfo="none",
+    #     mode="none",
+    # )
+
+    # data = [yhat_lower, yhat_upper, yhat]
+    fig = go.Figure()
 
     # threshold_value = forecast_obj["threshold_value"]
     # threshold_plus_value = forecast_obj["threshold_plus_value"]
@@ -72,37 +101,63 @@ def create_forecast_chart(model, forecast, consumable_name=None, with_title=True
     fig.update_layout(
         paper_bgcolor="#091D41",
         plot_bgcolor="#091D41",
-        title_font_color="#ffffff",
         legend_font_color="#ffffff",
-        margin=dict(t=32, r=8, b=8, l=8),
+        margin=dict(t=32, r=8, b=8, l=0),
         font=dict(color="#ffffff"),
         hovermode="x",
         newshape_layer="below",
+        title=dict(
+            text=consumable_name,
+            automargin=False,
+            font=dict(
+                size=22,
+                color="#ffffff",
+            ),
+        ),
     )
 
     fig.update_xaxes(
-        showline=True,
         linewidth=1,
-        linecolor="#5d7bb0",
-        gridcolor="#5d7bb0",
+        linecolor="#264171",
+        gridcolor="#264171",
+        zerolinecolor="#264171",
+        title_text="",
     )
 
     fig.update_yaxes(
         showline=True,
         linewidth=1,
-        linecolor="#5d7bb0",
-        gridcolor="#5d7bb0",
+        linecolor="#264171",
+        gridcolor="#264171",
+        zerolinecolor="#264171",
+        title_text="",
     )
     #
     # if with_title:
     #     fig.update_layout(title={"text": consumable_name.upper()})
     #
+    fig.add_trace(
+        go.Scatter(
+            x=list(forecast["ds"]),
+            y=list(forecast["yhat"]),
+            name=consumable_name,
+            line=dict(color="#85a7e0", width=2),
+        )
+    )
     # fig.add_trace(
     #     go.Scatter(
-    #         x=list(df["date"]),
-    #         y=list(df[consumable_name]),
-    #         name=consumable_name,
-    #         line=dict(color="#dade35", width=2),
+    #         x=list(forecast["ds"]),
+    #         y=list(forecast["yhat_lower"]),
+    #         name="",
+    #         line=dict(color="#264171", width=1),
+    #     )
+    # )
+    # fig.add_trace(
+    #     go.Scatter(
+    #         x=list(forecast["ds"]),
+    #         y=list(forecast["yhat_lower"]),
+    #         name="",
+    #         line=dict(color="#264171", width=1),
     #     )
     # )
     chart = fig.to_html(

@@ -49,7 +49,7 @@ class Rater:
         actual_rate = self.rate_actual()
         predicted_rate = self.rate_predicted()
         delta_days = (self.max_date - self.min_date).days
-        unit = self.WATER_UNIT if consumable == "water" else self.GAS_UNIT
+        unit = self.get_consumable_unit()
 
         return {
             "unit": unit,
@@ -60,6 +60,30 @@ class Rater:
             "actual_rate_per_day": round(actual_rate, 2) if actual_rate else None,
             "days_sampled": delta_days,
         }
+
+    def get_consumable_unit(self):
+        # Shamefully hardcoding unit values
+        consumable = self.consumable.lower()
+        if consumable == "water":
+            unit = "liters"
+        elif consumable == "air" or consumable == "nitrogen" or consumable == "oxygen":
+            unit = "lbs"
+        elif consumable == "acy inserts":
+            unit = "inserts"
+        elif consumable == "kto":
+            unit = "kto"
+        elif consumable == "us food bobs":
+            unit = "bob"
+        elif consumable == "filter inserts":
+            unit = "insert filter"
+        elif consumable == "pretreat tank":
+            unit = "pretreat"
+        elif consumable == "urine receptacle":
+            unit = "urine receptacle"
+        else:
+            unit = ""
+
+        return unit
 
     def rate_actual(self):
         consumable = self.consumable.lower()
@@ -86,7 +110,62 @@ class Rater:
         return self.get_predicted_water_rate() if consumable == "water" else None
 
     def get_actual_ims_rate(self):
-        return 1
+        # Crew rates:
+        # US Food Bobs - BOBS/Crew/Day
+        # ACY Inserts - ACY/Crew/Day
+        # KTO - KTO/Crew/Day
+        # Pretreat Tank - Pretreat/Crew/Day
+        # Filter Inserts - Filter/Crew/Day
+        # Urine Receptacle - Urine Receptacle/Crew/Day
+        consumable_cat = RatesDefinition.objects.get(
+            affected_consumable=self.consumable
+        )
+        ims_qs = InventoryMgmtSystemConsumables.objects.filter(
+            category_id=consumable_cat.category,
+            datedim__range=[self.min_date, self.max_date],
+        ).values("datedim", "ims_id", "quantity", "status", "category", "category_name")
+
+        df = pd.DataFrame.from_records(ims_qs)
+
+        # Usage analysis code courtesy Josue Lozano
+        df = df.sort_values(by=["ims_id", "datedim"])
+
+        # Filter rows with category ''
+        category_df = df[df["category_name"] == consumable_cat.rate_category]
+        # print(category_df)
+
+        # Initialize variables
+        total_usage = 0
+        total_duration = 0
+
+        # Iterate through unique IDs
+        unique_ids = category_df["ims_id"].unique()
+        for unique_id in unique_ids:
+            id_df = category_df[category_df["ims_id"] == unique_id]
+
+            # Get the first and last date for each ID
+            first_date = id_df["datedim"].min()
+            last_date = id_df["datedim"].max()
+
+            # Calculate the duration between the first and last date for each ID in weeks
+            duration_weeks = (last_date - first_date).days // 7
+
+            # Calculate weekly usage rate for each ID
+            weekly_usage_rate = 1 / (
+                duration_weeks + 1
+            )  # Add 1 to include the single-week usage
+
+            # Add the total for the current ID to the overall total
+            total_usage += weekly_usage_rate
+            total_duration += 1  # Since it's a single instance, use 1 week
+
+        # Calculate the average usage rate per week
+        if total_duration > 0:
+            average_weekly_usage_rate = total_usage / total_duration
+        else:
+            average_weekly_usage_rate = total_usage
+        # print(f"average_weekly_usage_rate: {average_weekly_usage_rate}")
+        return average_weekly_usage_rate / 7
 
     def get_actual_gas_rate(self):
         consumable = self.consumable.lower()
@@ -95,86 +174,40 @@ class Rater:
         ).values()
 
         if consumable == "oxygen":
-            resupply_qs = UsRsWeeklyConsumableGasSummary.objects.filter(
-                Q(resupply_o2_kg__gte=1),
-                date__range=[self.min_date, self.max_date],
-            ).values("date")
+            field = "usos_o2_kg"
             usage_qs = UsRsWeeklyConsumableGasSummary.objects.filter(
                 date__range=[self.min_date, self.max_date]
-            ).values("date", "adjusted_o2_kg")
-            field = "adjusted_o2_kg"
+            ).values("date", field)
         elif consumable == "nitrogen":
-            resupply_qs = UsRsWeeklyConsumableGasSummary.objects.filter(
-                Q(resupply_n2_kg__gte=1),
-                date__range=[self.min_date, self.max_date],
-            ).values("date")
+            field = "us_n2_kg"
             usage_qs = UsRsWeeklyConsumableGasSummary.objects.filter(
                 date__range=[self.min_date, self.max_date]
-            ).values("date", "adjusted_n2_kg")
-            field = "adjusted_n2_kg"
+            ).values("date", field)
         else:  # consumable == 'air'
-            resupply_qs = UsRsWeeklyConsumableGasSummary.objects.filter(
-                Q(resupply_air_kg__gte=1),
-                date__range=[self.min_date, self.max_date],
-            ).values("date")
             usage_qs = UsRsWeeklyConsumableGasSummary.objects.filter(
                 date__range=[self.min_date, self.max_date]
-            ).values("date", "adjusted_o2_kg", "adjusted_n2_kg")
+            ).values("date", "usos_o2_kg", "us_n2_kg")
             field = "air"
 
-        # Flatten the resupply_dates CopyQueryset into a list of dates
-        resupply_dates = [q["date"] for q in resupply_qs]
+        df = pd.DataFrame.from_records(usage_qs)
 
-        # We need to calculate the average rate between
-        # resupplies. We'll iterate through all usage records
-        # and add them to 'current_partition.' When we hit a resupply
-        # date, append the current partition to 'resupply_partitions'
-        # and reset current_partition to an empty list.
-        resupply_partitions = []
-        current_partition = []
+        if field == "air":
+            df["air"] = (df["usos_o2_kg"] * 0.2) + (df["us_n2_kg"] * 0.8)
 
-        if len(resupply_dates) == 0:
-            for q in usage_qs:
-                if field == "air":
-                    current_partition.append(
-                        (q["adjusted_o2_kg"] * 0.2)
-                        + (q["adjusted_n2_kg"] * 0.8) * 2.20462
-                    )
-                else:
-                    current_partition.append(q[field] * 2.20462)
-            resupply_partitions.append(current_partition)
-        else:
-            for q in usage_qs:
-                if q["date"] not in resupply_dates:
-                    if field == "air":
-                        current_partition.append(
-                            (q["adjusted_o2_kg"] * 0.2)
-                            + (q["adjusted_n2_kg"] * 0.8) * 2.20462
-                        )
-                    else:
-                        current_partition.append(q[field] * 2.20462)
-                else:
-                    if field == "air":
-                        current_partition.append(
-                            (q["adjusted_o2_kg"] * 0.2)
-                            + (q["adjusted_n2_kg"] * 0.8) * 2.20462
-                        )
-                    else:
-                        current_partition.append(q[field] * 2.20462)
-                    resupply_partitions.append(current_partition)
-                    current_partition = []
+        # Convert the 'Date' column to datetime
+        df["date"] = pd.to_datetime(df["date"], format="%m/%d/%Y")
 
-        # Calculate the average weekly rate between resupplies.
-        # This will be a list of len(1), but we'll take care of
-        # that momentarily, when we sum/divide for the next variable.
-        usage_rates = [
-            (-1) * (partition[-1] - partition[0]) / (len(partition) - 1)
-            for partition in resupply_partitions
-        ]
+        # Sort the DataFrame by date
+        df = df.sort_values(by="date")
+        print(df)
 
-        average_weekly_usage_rate = sum(usage_rates) / len(usage_rates)
-        average_daily_usage_rate = average_weekly_usage_rate / 7
-        return average_daily_usage_rate
+        # Calculate the weekly consumption rate for 'Corrected Total'
+        df["weekly_consumption_rate"] = df[field].diff() / 7
+
+        # Calculate the average rate per week
+        average_rate = df["weekly_consumption_rate"].mean()
+
+        return average_rate
 
     def get_actual_water_rate(self):
         """
@@ -231,6 +264,8 @@ class Rater:
         # that momentarily, when we sum/divide for the next variable.
         usage_rates = [
             (-1) * (partition[-1] - partition[0]) / (len(partition) - 1)
+            if len(partition) > 1
+            else 0  # avoid division by zero
             for partition in resupply_partitions
         ]
 
@@ -532,7 +567,7 @@ class Rater:
             .reset_index(name="actual_value")
         )
 
-        print(group_one)
+        # print(group_one)
 
         grouped_df = (
             group_one.groupby(["datedim", "category_name"])
@@ -542,7 +577,7 @@ class Rater:
         grouped_df["predicted_value"] = None
         grouped_df = grouped_df.rename(columns={"datedim": "date"})
         # grouped_df = groups.size()
-        print(grouped_df)
+        # print(grouped_df)
         return grouped_df
 
     def init_water_data(self):
