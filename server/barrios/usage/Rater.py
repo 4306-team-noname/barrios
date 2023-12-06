@@ -17,6 +17,8 @@ from common.flight_plan_crew_helpers import (
 
 
 class Rater:
+    WATER_UNIT = "liters"
+    GAS_UNIT = "lbs"
     consumable: str
     min_date: dt.date
     max_date: dt.date
@@ -47,12 +49,7 @@ class Rater:
         actual_rate = self.rate_actual()
         predicted_rate = self.rate_predicted()
         delta_days = (self.max_date - self.min_date).days
-        unit = None
-
-        if consumable == "water":
-            unit = "liters"
-        elif consumable == "oxygen" or consumable == "nitrogen" or consumable == "air":
-            unit = "lbs"
+        unit = self.WATER_UNIT if consumable == "water" else self.GAS_UNIT
 
         return {
             "unit": unit,
@@ -68,32 +65,25 @@ class Rater:
         consumable = self.consumable.lower()
 
         if consumable == "water":
-            actual_rate = self.get_actual_water_rate()
-            return actual_rate
-
-        elif consumable == "oxygen" or consumable == "nitrogen" or consumable == "air":
-            actual_rate = self.get_actual_gas_rate()
-            return actual_rate
+            return self.get_actual_water_rate()
+        elif consumable in ["oxygen", "nitrogen", "air"]:
+            return self.get_actual_gas_rate()
         else:
-            actual_rate = self.get_actual_ims_rate()
-            return actual_rate
+            return self.get_actual_ims_rate()
 
     def rate_assumed(self):
         consumable = self.consumable.lower()
 
         if consumable == "water":
             return self.get_assumed_water_rate()
-        elif consumable == "oxygen" or consumable == "nitrogen" or consumable == "air":
+        elif consumable in ["oxygen", "nitrogen", "air"]:
             return self.get_assumed_gas_rate()
         else:
             return self.get_assumed_ims_rate()
 
     def rate_predicted(self):
         consumable = self.consumable.lower()
-        if consumable == "water":
-            self.get_predicted_water_rate()
-        else:
-            return None
+        return self.get_predicted_water_rate() if consumable == "water" else None
 
     def get_actual_ims_rate(self):
         return 1
@@ -423,12 +413,11 @@ class Rater:
         start_date = self.min_date
         end_date = self.max_date
 
-        # First, get the appropriate data from the database
         if consumable_name == "water":
             actual_usage_values = UsWeeklyConsumableWaterSummary.objects.filter(
                 date__range=[start_date, end_date]
             ).values()
-        elif consumable_name == "oxygen" or consumable_name == "nitrogen":
+        elif consumable_name in ["oxygen", "nitrogen"]:
             actual_usage_values = UsRsWeeklyConsumableGasSummary.objects.filter(
                 date__range=[start_date, end_date]
             ).values()
@@ -440,21 +429,11 @@ class Rater:
             consumable_cat = RatesDefinition.objects.get(
                 affected_consumable=self.consumable
             )
-            # you're going to have to create the usage dataframe from actual rates
-            water_crew_consumption_rate = RatesDefinition.objects.filter(
-                Q(affected_consumable="Water"), Q(type="usage"), units__contains="Crew"
-            ).aggregate(total=Sum("rate"))["total"]
-
             actual_usage_values = InventoryMgmtSystemConsumables.objects.filter(
                 category_id=consumable_cat.category,
                 datedim__range=[start_date, end_date],
             ).values(
-                "datedim",
-                "ims_id",
-                "quantity",
-                "status",
-                "category",
-                "category_name",
+                "datedim", "ims_id", "quantity", "status", "category", "category_name"
             )
 
         usage_df: pd.DataFrame | None = None
