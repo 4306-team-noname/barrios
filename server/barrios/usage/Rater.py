@@ -41,25 +41,16 @@ class Rater:
         pass
 
     def rate(self):
-        assumed_rate = None
-        actual_rate = None
-        predicted_rate = None
+        consumable = self.consumable.lower()
+        assumed_rate = self.rate_assumed()
+        actual_rate = self.rate_actual()
+        predicted_rate = self.rate_predicted()
+        delta_days = (self.max_date - self.min_date).days
         unit = None
 
-        delta_days = (self.max_date - self.min_date).days
-        consumable = self.consumable.lower()
-
         if consumable == "water":
-            # avg daily usage rate
-            actual_rate = self.get_actual_water_rate()
-            # avg daily assumed usage rate (based on rates definition)
-            assumed_rate = self.get_assumed_water_rate()
-            predicted_rate = self.get_predicted_water_rate()
             unit = "liters"
         elif consumable == "oxygen" or consumable == "nitrogen" or consumable == "air":
-            actual_rate = self.get_actual_gas_rate()
-            predicted_rate = None
-            assumed_rate = self.get_assumed_gas_rate()
             unit = "lbs"
 
         return {
@@ -72,8 +63,39 @@ class Rater:
             "days_sampled": delta_days,
         }
 
-    def get_ims_rate(self):
-        pass
+    def rate_actual(self):
+        consumable = self.consumable.lower()
+
+        if consumable == "water":
+            actual_rate = self.get_actual_water_rate()
+            return actual_rate
+
+        elif consumable == "oxygen" or consumable == "nitrogen" or consumable == "air":
+            actual_rate = self.get_actual_gas_rate()
+            return actual_rate
+        else:
+            actual_rate = self.get_actual_ims_rate()
+            return actual_rate
+
+    def rate_assumed(self):
+        consumable = self.consumable.lower()
+
+        if consumable == "water":
+            return self.get_assumed_water_rate()
+        elif consumable == "oxygen" or consumable == "nitrogen" or consumable == "air":
+            return self.get_assumed_gas_rate()
+        else:
+            return self.get_assumed_ims_rate()
+
+    def rate_predicted(self):
+        consumable = self.consumable.lower()
+        if consumable == "water":
+            self.get_predicted_water_rate()
+        else:
+            return None
+
+    def get_actual_ims_rate(self):
+        return 1
 
     def get_actual_gas_rate(self):
         consumable = self.consumable.lower()
@@ -285,6 +307,10 @@ class Rater:
             rate = air_flat_consumption_rate + eva_rate_per_day
             return rate
 
+    def get_assumed_ims_rate(self):
+        consumable = self.consumable.lower()
+        return 1
+
     def get_assumed_water_rate(self):
         water_generation_rate = RatesDefinition.objects.filter(
             Q(affected_consumable="Water"), Q(type="generation")
@@ -335,6 +361,7 @@ class Rater:
     def plot(self):
         df = self.create_usage_dataframe()
         consumable_name = self.consumable
+        # print(f"usage_dataframe: {df}")
 
         fig = go.Figure()
 
@@ -410,14 +437,19 @@ class Rater:
             ).values()
         else:
             consumable_cat = RatesDefinition.objects.get(
-                affected_consumable=consumable_name
+                affected_consumable=self.consumable
             )
+            # you're going to have to create the usage dataframe from actual rates
+            water_crew_consumption_rate = RatesDefinition.objects.filter(
+                Q(affected_consumable="Water"), Q(type="usage"), units__contains="Crew"
+            ).aggregate(total=Sum("rate"))["total"]
+
             actual_usage_values = InventoryMgmtSystemConsumables.objects.filter(
-                category_id=consumable_cat.category, date__range=[start_date, end_date]
+                category_id=consumable_cat.category,
+                datedim__range=[start_date, end_date],
             ).values(
                 "datedim",
                 "ims_id",
-                "english_name",
                 "quantity",
                 "status",
                 "category",
@@ -445,7 +477,7 @@ class Rater:
                         "corrected_predicted_l": "predicted_value",
                     }
                 )
-            if consumable_name == "oxygen":
+            elif consumable_name == "oxygen":
                 usage_df = usage_df.drop(
                     columns=[
                         "usos_o2_kg",
@@ -464,7 +496,7 @@ class Rater:
                     }
                 )
                 usage_df["predicted_value"] = None
-            if consumable_name == "nitrogen":
+            elif consumable_name == "nitrogen":
                 usage_df = usage_df.drop(
                     columns=[
                         "usos_o2_kg",
@@ -479,7 +511,7 @@ class Rater:
                 )
                 usage_df = usage_df.rename(columns={"adjusted_n2_kg": "actual_value"})
                 usage_df["predicted_value"] = None
-            if consumable_name == "air":
+            elif consumable_name == "air":
                 usage_df["actual_value"] = (
                     (usage_df["adjusted_n2_kg"] * 0.8)
                     + (usage_df["adjusted_o2_kg"] * 0.2)
@@ -499,7 +531,36 @@ class Rater:
                     ]
                 )
                 usage_df["predicted_value"] = None
+            else:
+                usage_df = self.derive_ims_df(usage_df)
+
             return usage_df
+
+    def derive_ims_df(self, df):
+        df = df[df["status"] != "Discard"]
+        df = df[df["status"] != "Return"]
+        df["datedim"] = df["datedim"].dt.date
+        group_one = (
+            df.groupby(["datedim", "ims_id", "category_name", "status"])
+            .size()
+            .reset_index(name="actual_value")
+        )
+        group_one_unique = group_one.drop_duplicates(
+            subset=["ims_id", "datedim", "category_name", "status"]
+        )
+        print(group_one_unique)
+        group_one_unique.to_csv("what_is_going_on.csv")
+
+        grouped_df = (
+            group_one_unique.groupby(["datedim", "category_name"])
+            .agg({"actual_value": "sum"})
+            .reset_index()
+        )
+        grouped_df["predicted_value"] = None
+        grouped_df = grouped_df.rename(columns={"datedim": "date"})
+        # grouped_df = groups.size()
+        print(grouped_df)
+        return grouped_df
 
     def init_water_data(self):
         water_summary_qs = UsWeeklyConsumableWaterSummary.objects.filter(
