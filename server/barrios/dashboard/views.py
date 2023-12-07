@@ -5,7 +5,7 @@ from forecast.create_forecast import create_forecast
 from forecast.create_forecast_chart import create_forecast_chart
 from optimization.Optimizer import Optimizer
 from common.consumable_helpers import get_consumable_units
-
+import datetime as dt
 
 from data.models import (
     ImsConsumablesCategoryLookup,
@@ -69,8 +69,8 @@ def index(request):
             )
 
         consumable_names = get_consumable_names()
-        forecast_obj = create_forecast("ACY Insert")
-        forecast_plot = create_forecast_chart(forecast_obj)
+        # forecast_obj = create_forecast("ACY Insert", dt.date(2022, 1, 14), dt.date(2023, 9, 5))
+        # forecast_plot = create_forecast_chart(forecast_obj,)
         next_optimization = get_next_optimization(consumable_names)
 
         return render(
@@ -79,7 +79,7 @@ def index(request):
             {
                 "usage_difference": get_usage_average_difference(),
                 "next_optimization": next_optimization,
-                "forecast_plot": forecast_plot,
+                # "forecast_plot": forecast_plot,
                 "consumable_names": consumable_names,
                 "current": "ACY Insert",
             },

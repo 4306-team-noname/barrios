@@ -29,20 +29,20 @@ def create_forecast(consumable_name, min_date, max_date):
             columns={"date": "ds", "corrected_total_l": "y"}
         )  # type: ignore
 
-        split_index = int(len(prophet_data) * 0.8)
-        train_data = prophet_data[:split_index]
-        test_data = prophet_data[split_index:]
+        split_index = int(len(prophet_data) * 0.3)
+        train_data = prophet_data[split_index:]
+        test_data = prophet_data[:split_index]
 
         model = Prophet(
-            yearly_seasonality=True,  # type: ignore
-            weekly_seasonality=True,  # type: ignore
-            daily_seasonality=False,  # type: ignore
+            yearly_seasonality=False,  # type: ignore
+            weekly_seasonality=False,  # type: ignore
+            daily_seasonality=True,  # type: ignore
             seasonality_mode="multiplicative",
             changepoint_prior_scale=0.05,
         )
         model.fit(train_data)
 
-        future = model.make_future_dataframe(periods=732)
+        future = model.make_future_dataframe(periods=365)
         forecast = model.predict(future)
 
         return {"model": model, "forecast": forecast}

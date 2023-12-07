@@ -1,3 +1,4 @@
+from django.db.models.query import Cast
 import pandas as pd
 import numpy as np
 from pandas import DataFrame
@@ -174,40 +175,88 @@ class Rater:
         ).values()
 
         if consumable == "oxygen":
-            field = "usos_o2_kg"
+            resupply_qs = UsRsWeeklyConsumableGasSummary.objects.filter(
+                Q(resupply_o2_kg__gte=1),
+                date__range=[self.min_date, self.max_date],
+            ).values("date")
             usage_qs = UsRsWeeklyConsumableGasSummary.objects.filter(
                 date__range=[self.min_date, self.max_date]
-            ).values("date", field)
+            ).values("date", "adjusted_o2_kg")
+            field = "adjusted_o2_kg"
         elif consumable == "nitrogen":
-            field = "us_n2_kg"
+            resupply_qs = UsRsWeeklyConsumableGasSummary.objects.filter(
+                Q(resupply_n2_kg__gte=1),
+                date__range=[self.min_date, self.max_date],
+            ).values("date")
             usage_qs = UsRsWeeklyConsumableGasSummary.objects.filter(
                 date__range=[self.min_date, self.max_date]
-            ).values("date", field)
+            ).values("date", "adjusted_n2_kg")
+            field = "adjusted_n2_kg"
         else:  # consumable == 'air'
+            resupply_qs = UsRsWeeklyConsumableGasSummary.objects.filter(
+                Q(resupply_air_kg__gte=1),
+                date__range=[self.min_date, self.max_date],
+            ).values("date")
             usage_qs = UsRsWeeklyConsumableGasSummary.objects.filter(
                 date__range=[self.min_date, self.max_date]
-            ).values("date", "usos_o2_kg", "us_n2_kg")
+            ).values("date", "adjusted_o2_kg", "adjusted_n2_kg")
             field = "air"
 
-        df = pd.DataFrame.from_records(usage_qs)
+        # Flatten the resupply_dates CopyQueryset into a list of dates
+        resupply_dates = [q["date"] for q in resupply_qs]
 
-        if field == "air":
-            df["air"] = (df["usos_o2_kg"] * 0.2) + (df["us_n2_kg"] * 0.8)
+        # We need to calculate the average rate between
+        # resupplies. We'll iterate through all usage records
+        # and add them to 'current_partition.' When we hit a resupply
+        # date, append the current partition to 'resupply_partitions'
+        # and reset current_partition to an empty list.
+        resupply_partitions = []
+        current_partition = []
 
-        # Convert the 'Date' column to datetime
-        df["date"] = pd.to_datetime(df["date"], format="%m/%d/%Y")
+        if len(resupply_dates) == 0:
+            for q in usage_qs:
+                if field == "air":
+                    current_partition.append(
+                        (q["adjusted_o2_kg"] * 0.2)
+                        + (q["adjusted_n2_kg"] * 0.8) * 2.20462
+                    )
+                else:
+                    current_partition.append(q[field] * 2.20462)
+            resupply_partitions.append(current_partition)
+        else:
+            for q in usage_qs:
+                if q["date"] not in resupply_dates:
+                    if field == "air":
+                        current_partition.append(
+                            (q["adjusted_o2_kg"] * 0.2)
+                            + (q["adjusted_n2_kg"] * 0.8) * 2.20462
+                        )
+                    else:
+                        current_partition.append(q[field] * 2.20462)
+                else:
+                    if field == "air":
+                        current_partition.append(
+                            (q["adjusted_o2_kg"] * 0.2)
+                            + (q["adjusted_n2_kg"] * 0.8) * 2.20462
+                        )
+                    else:
+                        current_partition.append(q[field] * 2.20462)
+                    resupply_partitions.append(current_partition)
+                    current_partition = []
 
-        # Sort the DataFrame by date
-        df = df.sort_values(by="date")
-        print(df)
+        # Calculate the average weekly rate between resupplies.
+        # This will be a list of len(1), but we'll take care of
+        # that momentarily, when we sum/divide for the next variable.
+        usage_rates = [
+            (partition[0] - partition[1]) / (len(partition) - 1)
+            if len(partition) > 1
+            else 1  # avoid division by zero
+            for partition in resupply_partitions
+        ]
 
-        # Calculate the weekly consumption rate for 'Corrected Total'
-        df["weekly_consumption_rate"] = df[field].diff() / 7
-
-        # Calculate the average rate per week
-        average_rate = df["weekly_consumption_rate"].mean()
-
-        return average_rate
+        average_weekly_usage_rate = sum(usage_rates) / len(usage_rates)
+        average_daily_usage_rate = average_weekly_usage_rate / 7
+        return average_daily_usage_rate
 
     def get_actual_water_rate(self):
         """
@@ -265,7 +314,7 @@ class Rater:
         usage_rates = [
             (-1) * (partition[-1] - partition[0]) / (len(partition) - 1)
             if len(partition) > 1
-            else 0  # avoid division by zero
+            else 1  # avoid division by zero
             for partition in resupply_partitions
         ]
 
@@ -552,6 +601,15 @@ class Rater:
             return usage_df
 
     def derive_ims_df(self, df):
+        # consumable = self.consumable.lower()
+        # ims_qs = (
+        #     InventoryMgmtSystemConsumables.objects
+        #         ,annotate(date_only=Cast)
+        #         .filter(category_name=consumable, datedim__range=[self.min_date, self.max_date])
+        #         .values('datedim', 'category_name', 'quantity')
+        #
+        # )
+
         df = df[df["status"] != "Discard"]
         df = df[df["status"] != "Return"]
         df = df[df["status"] != np.nan]
@@ -576,8 +634,9 @@ class Rater:
         )
         grouped_df["predicted_value"] = None
         grouped_df = grouped_df.rename(columns={"datedim": "date"})
+
         # grouped_df = groups.size()
-        # print(grouped_df)
+        print(grouped_df)
         return grouped_df
 
     def init_water_data(self):

@@ -10,6 +10,7 @@ from data.models import (
     IssFlightPlanCrewNationalityLookup,
     RatesDefinition,
 )
+from usage.Rater import Rater
 
 
 class Optimizer:
@@ -255,6 +256,8 @@ class Optimizer:
         dock_days_list = self.event_dates
         num_days = self.event_count
         consumable = self.consumable
+        raterclass = Rater(consumable)
+        real_usage_rate = raterclass.rate_actual()
 
         sum_usage, sum_usage_crew, sum_generated = self.rates(consumable)
         # create a list of base rates
@@ -273,6 +276,7 @@ class Optimizer:
         for i in range(0, len(listofrates)):
             res_list.append(
                 ((listofrates[i] + listofrates_crew[i]) - sum_generated)
+                # real_usage_rate
                 * self.event_deltas[i]
             )
 
