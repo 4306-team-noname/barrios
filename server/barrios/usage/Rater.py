@@ -5,6 +5,7 @@ from pandas import DataFrame
 import plotly.graph_objs as go
 from django.db.models import Q, Sum
 import datetime as dt
+import pytz
 from data.models import (
     InventoryMgmtSystemConsumables,
     UsWeeklyConsumableWaterSummary,
@@ -15,6 +16,8 @@ from data.models.RatesDefinition import RatesDefinition
 from common.flight_plan_crew_helpers import (
     get_total_crew_by_date,
 )
+from common.consumable_helpers import get_consumable_names
+from django.utils.timezone import make_aware
 
 
 class Rater:
@@ -22,7 +25,9 @@ class Rater:
     GAS_UNIT = "lbs"
     consumable: str
     min_date: dt.date
+    aware_min_date: dt.datetime
     max_date: dt.date
+    aware_max_date: dt.datetime
     rates_definition: DataFrame
     ims_consumables: DataFrame
     weekly_gas_summary: DataFrame
@@ -39,7 +44,12 @@ class Rater:
         """
         self.consumable = consumable
         self.min_date = min_date
+        min_dt = dt.datetime.combine(min_date, dt.datetime.min.time())
+        timezone = pytz.timezone("US/Central")
+        self.aware_min_date = make_aware(min_dt, timezone)
         self.max_date = max_date
+        max_dt = dt.datetime.combine(max_date, dt.datetime.min.time())
+        self.aware_max_date = make_aware(max_dt, timezone)
         if self.consumable.lower() == "water":
             self.init_water_data()
         pass
@@ -123,7 +133,7 @@ class Rater:
         )
         ims_qs = InventoryMgmtSystemConsumables.objects.filter(
             category_id=consumable_cat.category,
-            datedim__range=[self.min_date, self.max_date],
+            datedim__range=[self.aware_min_date, self.aware_max_date],
         ).values("datedim", "ims_id", "quantity", "status", "category", "category_name")
 
         df = pd.DataFrame.from_records(ims_qs)
@@ -515,7 +525,7 @@ class Rater:
             )
             actual_usage_values = InventoryMgmtSystemConsumables.objects.filter(
                 category_id=consumable_cat.category,
-                datedim__range=[start_date, end_date],
+                datedim__range=[self.aware_min_date, self.aware_max_date],
             ).values(
                 "datedim", "ims_id", "quantity", "status", "category", "category_name"
             )
@@ -647,3 +657,21 @@ class Rater:
             water_summary_qs, index="date"
         )
         pass
+
+    def get_usage_difference(self):
+        predicted = self.rate_predicted()
+        assumed = self.rate_assumed()
+        actual = self.rate_actual()
+
+        # print(f"assumed: {assumed}")
+        # print(f"actual: {actual}")
+
+        if predicted == actual:
+            return 0
+        if predicted is None:
+            return 0
+        try:
+            # return (abs(assumed - actual) / actual) * 100  # type: ignore
+            return ((actual - predicted) / predicted) * 100  # type: ignore
+        except ZeroDivisionError:
+            return float("inf")

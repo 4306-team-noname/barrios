@@ -6,7 +6,7 @@ from math import floor
 from prophet.plot import plot_plotly, plot_components_plotly
 
 
-def create_forecast_chart(model, forecast, consumable_name=None, with_title=True):
+def create_forecast_chart(model, forecast, consumable_name=None, title="Water"):
     # fig = go.Figure(data=forecast)
 
     # yhat = go.Scatter(
@@ -108,6 +108,7 @@ def create_forecast_chart(model, forecast, consumable_name=None, with_title=True
         newshape_layer="below",
         title=dict(
             text=consumable_name,
+            xanchor="center",
             automargin=False,
             font=dict(
                 size=22,
@@ -121,7 +122,7 @@ def create_forecast_chart(model, forecast, consumable_name=None, with_title=True
         linecolor="#264171",
         gridcolor="#264171",
         zerolinecolor="#264171",
-        title_text="",
+        title_text=None,
     )
 
     fig.update_yaxes(
@@ -130,11 +131,11 @@ def create_forecast_chart(model, forecast, consumable_name=None, with_title=True
         linecolor="#264171",
         gridcolor="#264171",
         zerolinecolor="#264171",
-        title_text="",
+        title_text=None,
     )
     #
     # if with_title:
-    #     fig.update_layout(title={"text": consumable_name.upper()})
+    fig.update_layout(title={"text": title.upper()})
     #
     fig.add_trace(
         go.Scatter(
@@ -144,22 +145,22 @@ def create_forecast_chart(model, forecast, consumable_name=None, with_title=True
             line=dict(color="#85a7e0", width=2),
         )
     )
-    # fig.add_trace(
-    #     go.Scatter(
-    #         x=list(forecast["ds"]),
-    #         y=list(forecast["yhat_lower"]),
-    #         name="",
-    #         line=dict(color="#264171", width=1),
-    #     )
-    # )
-    # fig.add_trace(
-    #     go.Scatter(
-    #         x=list(forecast["ds"]),
-    #         y=list(forecast["yhat_lower"]),
-    #         name="",
-    #         line=dict(color="#264171", width=1),
-    #     )
-    # )
+    fig.add_trace(
+        go.Scatter(
+            x=list(forecast["ds"]),
+            y=list(forecast["yhat_lower"]),
+            name="",
+            line=dict(color="#264171", width=1),
+        )
+    )
+    fig.add_trace(
+        go.Scatter(
+            x=list(forecast["ds"]),
+            y=list(forecast["yhat_lower"]),
+            name="",
+            line=dict(color="#264171", width=1),
+        )
+    )
     chart = fig.to_html(
         config={"displayModeBar": False, "responsive": True},
         full_html=False,
