@@ -1,16 +1,16 @@
 <div id="analysis-section">
-  <div class="card-header flex-h flex-between">
+  <div class="card-header flex-h flex-between" style="margin-bottom: 2rem;">
     <h2>Forecasts</h2>
-    <ul class="flex-h menu-h flex-end">
-      {% for consumable_name in consumable_names %}
-      <li>
-        <button hx-post="/forecast/get_forecast/{{consumable_name}}/" hx-target="#forecast-plot" hx-swap="innerHTML"
-          hx-trigger="click delay:0.2s" data-consumable={{consumable_name}}>
-          {{consumable_name}}
-        </button>
-      </li>
-      {% endfor %}
-    </ul>
+    <!-- <ul class="flex-h menu-h flex-end"> -->
+    <!--   {% for consumable_name in consumable_names %} -->
+    <!--   <li> -->
+    <!--     <button hx-post="/forecast/get_forecast/{{consumable_name}}/" hx-target="#forecast-plot" hx-swap="innerHTML" -->
+    <!--       hx-trigger="click delay:0.2s" data-consumable={{consumable_name}}> -->
+    <!--       {{consumable_name}} -->
+    <!--     </button> -->
+    <!--   </li> -->
+    <!--   {% endfor %} -->
+    <!-- </ul> -->
   </div>
   <div id="forecast-plot">
     {% autoescape off %}

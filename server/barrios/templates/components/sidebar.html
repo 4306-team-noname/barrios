@@ -23,12 +23,12 @@
           Optimization
         </a>
       </li>
-      <!-- <li> -->
-      <!--   <a href="/forecast/" class="icon-link"> -->
-      <!--     {% include 'assets/icons/chart.svg' %} -->
-      <!--     Forecast -->
-      <!--   </a> -->
-      <!-- </li> -->
+      <li>
+        <a href="/forecast/" class="icon-link">
+          {% include 'assets/icons/chart.svg' %}
+          Forecast
+        </a>
+      </li>
       <li>
         <a href="/data/" class="icon-link">
           {% include 'assets/icons/data.svg' %}
@@ -49,14 +49,14 @@
       <!--     Profile -->
       <!--   </a> -->
       <!-- </li> -->
-      {% if request.user.is_superuser %}
-      <li>
-        <a href="/admin/" class="icon-link" hx-boost="false">
-          {% include 'assets/icons/admin.svg' %}
-          Admin
-        </a>
-      </li>
-      {% endif %}
+      <!-- {% if request.user.is_superuser %} -->
+      <!-- <li> -->
+      <!--   <a href="/admin/" class="icon-link" hx-boost="false"> -->
+      <!--     {% include 'assets/icons/admin.svg' %} -->
+      <!--     Admin -->
+      <!--   </a> -->
+      <!-- </li> -->
+      <!-- {% endif %} -->
       <li>
         <a href="/accounts/logout/" hx-boost="false" class="icon-link">
           {% include 'assets/icons/logout.svg' %}

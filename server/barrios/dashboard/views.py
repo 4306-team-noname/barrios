@@ -6,6 +6,8 @@ from forecast.create_forecast_chart import create_forecast_chart
 from optimization.Optimizer import Optimizer
 from common.consumable_helpers import get_consumable_units
 import datetime as dt
+from usage.Rater import Rater
+
 
 from data.models import (
     ImsConsumablesCategoryLookup,
@@ -69,17 +71,38 @@ def index(request):
             )
 
         consumable_names = get_consumable_names()
-        # forecast_obj = create_forecast("ACY Insert", dt.date(2022, 1, 14), dt.date(2023, 9, 5))
-        # forecast_plot = create_forecast_chart(forecast_obj,)
+
+        forecast_obj = create_forecast(
+            "Water", dt.date(2022, 1, 14), dt.date(2023, 9, 5)
+        )
+        forecast_plot = create_forecast_chart(
+            forecast_obj["model"],
+            forecast_obj["forecast"],
+            title="Water",  # type: ignore
+        )
+
         next_optimization = get_next_optimization(consumable_names)
+
+        # get percentage difference in rates
+        # defined in Rater.get_usage_average_difference
+        all_differences = []
+        for consumable in consumable_names:
+            rater = Rater(consumable)
+            difference = rater.get_usage_difference()
+            if difference == float("inf") or difference == float("-inf"):
+                pass
+            else:
+                all_differences.append(difference)
+
+        overall_difference = sum(all_differences) / len(all_differences)
 
         return render(
             request,
             "pages/dashboard/index.html",
             {
-                "usage_difference": get_usage_average_difference(),
+                "usage_difference": round(overall_difference, 2),
                 "next_optimization": next_optimization,
-                # "forecast_plot": forecast_plot,
+                "forecast_plot": forecast_plot,
                 "consumable_names": consumable_names,
                 "current": "ACY Insert",
             },

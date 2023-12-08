@@ -73,8 +73,9 @@
     in the view and passing data to the forecast_plot template.
     We don't use HTMX unless the user clicks on one of the buttons.
   -->
-  <!-- <div class="row flex-v gap-1" hx-disinherit="*" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' style="overflow: hidden;"> -->
-  <!--     {#% include 'pages/usage/forecast_plot.html' %#} -->
-  <!-- </div> -->
+  
+  <div class="row flex-v gap-1" hx-disinherit="*" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' style="overflow: hidden;">
+      {% include 'pages/forecast/forecast_plot.html' %}
+  </div>
 </section>
 {% endblock %}
