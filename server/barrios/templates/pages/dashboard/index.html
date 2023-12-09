@@ -9,20 +9,20 @@
       <div class="card-header flex-h flex-between">
         <h2>Overall Usage</h2>
         <div class="txt-large">
-        {% include  'assets/icons/data.svg'%}
+          {% include 'assets/icons/data.svg'%}
         </div>
       </div>
       <div class="flex-v flex-center gap-2" style="height: 100%;">
-      
-      {% if usage_difference < 0 %}
-      <div class="flex-h gap-1 flex-center">
-        <span style="font-size: 8rem; font-weight: 800;">
-          {{ usage_difference|cut:"-" }}%
-        </span>
-        {% include 'assets/images/arrow.svg' %}
+
+        {% if usage_difference < 0 %} <div class="flex-h gap-1 flex-center">
+          <span style="font-size: 8rem; font-weight: 800;">
+            {{ usage_difference|cut:"-" }}%
+          </span>
+          {% include 'assets/images/arrow.svg' %}
       </div>
-      <span class="txt-xlarge flex-h flex-center" style="font-weight: 800; text-transform: uppercase; color: var(--accent);">
-          Below Predictions
+      <span class="txt-xlarge flex-h flex-center"
+        style="font-weight: 800; text-transform: uppercase; color: var(--accent);">
+        Below Assumptions
       </span>
       {% else %}
       <div class="flex-h gap-1 flex-center">
@@ -31,41 +31,42 @@
         </span>
         {% include 'assets/images/arrow-up.svg' %}
       </div>
-      <span class="txt-xlarge flex-h flex-center" style="font-weight: 800; text-transform: uppercase; color: var(--warn);">
-          Above Predictions
+      <span class="txt-xlarge flex-h flex-center"
+        style="font-weight: 800; text-transform: uppercase; color: var(--warn);">
+        Above Assumptions
       </span>
       {% endif %}
-      </div>
-    </a>
-    <a href="/optimization/" class="surface flex-v gap-1">
-      <div class="card-header flex-h flex-between">
-        <h2>Next Launch Optimization</h2>
-        <div class="txt-large">
+  </div>
+  </a>
+  <a href="/optimization/" class="surface flex-v gap-1">
+    <div class="card-header flex-h flex-between">
+      <h2>Next Launch Optimization</h2>
+      <div class="txt-large">
         {% include 'assets/icons/ruler.svg' %}
-        </div>
       </div>
-      <div class="flex-v gap-05">
-        <h3>{{next_optimization.vehicle}}</h3>
-        <date>{{next_optimization.date}}</date>
-      </div>
-      <table>
-          <thead>
-            <th>Consumable</th>
-            <th>Amount</th>
-          </thead>
-          {% for item in next_optimization.payload %}
-          <tr>
-            <td>{{item.name}}</td>
-            <td>
-              {{item.amount}}
-              {% if item.units != item.name %}
-              {{item.units}}
-              {% endif %}
-            </td>
-          </tr>
-          {% endfor %}
-        </table>
-    </a>
+    </div>
+    <div class="flex-v gap-05">
+      <h3>{{next_optimization.vehicle}}</h3>
+      <date>{{next_optimization.date}}</date>
+    </div>
+    <table>
+      <thead>
+        <th>Consumable</th>
+        <th>Amount</th>
+      </thead>
+      {% for item in next_optimization.payload %}
+      <tr>
+        <td>{{item.name}}</td>
+        <td>
+          {{item.amount}}
+          {% if item.units != item.name %}
+          {{item.units}}
+          {% endif %}
+        </td>
+      </tr>
+      {% endfor %}
+    </table>
+  </a>
   </div>
   <!-- 
     Remember, we're initially (on first index page load)
@@ -73,9 +74,10 @@
     in the view and passing data to the forecast_plot template.
     We don't use HTMX unless the user clicks on one of the buttons.
   -->
-  
-  <div class="row flex-v gap-1" hx-disinherit="*" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' style="overflow: hidden;">
-      {% include 'pages/forecast/forecast_plot.html' %}
+
+  <div class="row flex-v gap-1" hx-disinherit="*" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
+    style="overflow: hidden;">
+    {% include 'pages/forecast/forecast_plot.html' %}
   </div>
 </section>
 {% endblock %}

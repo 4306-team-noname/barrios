@@ -1,3 +1,7 @@
+from common.flight_plan_crew_helpers import (
+    get_usos_crew_by_date,
+    get_commercial_crew_by_date,
+)
 from django.db.models.query import Cast
 import pandas as pd
 import numpy as np
@@ -42,7 +46,7 @@ class Rater:
         to rate, a min_date with a default of 1/1/2022, and
         a max_date with a default of today.
         """
-        self.consumable = consumable
+        self.consumable = consumable.lower()
         self.min_date = min_date
         min_dt = dt.datetime.combine(min_date, dt.datetime.min.time())
         timezone = pytz.timezone("US/Central")
@@ -74,22 +78,21 @@ class Rater:
 
     def get_consumable_unit(self):
         # Shamefully hardcoding unit values
-        consumable = self.consumable.lower()
-        if consumable == "water":
+        if self.consumable == "water":
             unit = "liters"
-        elif consumable == "air" or consumable == "nitrogen" or consumable == "oxygen":
+        elif self.consumable == "air" or self.consumable == "nitrogen" or self.consumable == "oxygen":
             unit = "lbs"
-        elif consumable == "acy inserts":
+        elif self.consumable == "acy inserts":
             unit = "inserts"
-        elif consumable == "kto":
+        elif self.consumable == "kto":
             unit = "kto"
-        elif consumable == "us food bobs":
+        elif self.consumable == "us food bobs":
             unit = "bob"
-        elif consumable == "filter inserts":
+        elif self.consumable == "filter inserts":
             unit = "insert filter"
-        elif consumable == "pretreat tank":
+        elif self.consumable == "pretreat tank":
             unit = "pretreat"
-        elif consumable == "urine receptacle":
+        elif self.consumable == "urine receptacle":
             unit = "urine receptacle"
         else:
             unit = ""
@@ -97,94 +100,48 @@ class Rater:
         return unit
 
     def rate_actual(self):
-        consumable = self.consumable.lower()
-
-        if consumable == "water":
+        if self.consumable == "water":
             return self.get_actual_water_rate()
-        elif consumable in ["oxygen", "nitrogen", "air"]:
+        elif self.consumable in ["oxygen", "nitrogen", "air"]:
             return self.get_actual_gas_rate()
         else:
             return self.get_actual_ims_rate()
 
     def rate_assumed(self):
-        consumable = self.consumable.lower()
-
-        if consumable == "water":
+        if self.consumable == "water":
             return self.get_assumed_water_rate()
-        elif consumable in ["oxygen", "nitrogen", "air"]:
+        elif self.consumable in ["oxygen", "nitrogen", "air"]:
             return self.get_assumed_gas_rate()
         else:
             return self.get_assumed_ims_rate()
 
     def rate_predicted(self):
-        consumable = self.consumable.lower()
-        return self.get_predicted_water_rate() if consumable == "water" else None
+        return self.get_predicted_water_rate() if self.consumable == "water" else None
 
     def get_actual_ims_rate(self):
-        # Crew rates:
-        # US Food Bobs - BOBS/Crew/Day
-        # ACY Inserts - ACY/Crew/Day
-        # KTO - KTO/Crew/Day
-        # Pretreat Tank - Pretreat/Crew/Day
-        # Filter Inserts - Filter/Crew/Day
-        # Urine Receptacle - Urine Receptacle/Crew/Day
         consumable_cat = RatesDefinition.objects.get(
-            affected_consumable=self.consumable
+            affected_consumable__istartswith=self.consumable
         )
         ims_qs = InventoryMgmtSystemConsumables.objects.filter(
+            (Q(status="Installed") | Q(status="Stowed")),
             category_id=consumable_cat.category,
             datedim__range=[self.aware_min_date, self.aware_max_date],
         ).values("datedim", "ims_id", "quantity", "status", "category", "category_name")
 
         df = pd.DataFrame.from_records(ims_qs)
 
-        # Usage analysis code courtesy Josue Lozano
-        df = df.sort_values(by=["ims_id", "datedim"])
+        df_dd_group = df.groupby(["datedim"]).agg({"quantity": "sum"})
+        qtys = list(df_dd_group["quantity"])
+        usages = []
+        for idx, qty in enumerate(qtys[:-1]):
+            if qtys[idx + 1] < qty:
+                usages.append(qty - qtys[idx + 1])
+        usage_rate = sum(usages) / len(usages)
 
-        # Filter rows with category ''
-        category_df = df[df["category_name"] == consumable_cat.rate_category]
-        # print(category_df)
-
-        # Initialize variables
-        total_usage = 0
-        total_duration = 0
-
-        # Iterate through unique IDs
-        unique_ids = category_df["ims_id"].unique()
-        for unique_id in unique_ids:
-            id_df = category_df[category_df["ims_id"] == unique_id]
-
-            # Get the first and last date for each ID
-            first_date = id_df["datedim"].min()
-            last_date = id_df["datedim"].max()
-
-            # Calculate the duration between the first and last date for each ID in weeks
-            duration_weeks = (last_date - first_date).days // 7
-
-            # Calculate weekly usage rate for each ID
-            weekly_usage_rate = 1 / (
-                duration_weeks + 1
-            )  # Add 1 to include the single-week usage
-
-            # Add the total for the current ID to the overall total
-            total_usage += weekly_usage_rate
-            total_duration += 1  # Since it's a single instance, use 1 week
-
-        # Calculate the average usage rate per week
-        if total_duration > 0:
-            average_weekly_usage_rate = total_usage / total_duration
-        else:
-            average_weekly_usage_rate = total_usage
-        # print(f"average_weekly_usage_rate: {average_weekly_usage_rate}")
-        return average_weekly_usage_rate / 7
+        return usage_rate
 
     def get_actual_gas_rate(self):
-        consumable = self.consumable.lower()
-        gas_summary_qs = UsRsWeeklyConsumableGasSummary.objects.filter(
-            date__range=[self.min_date, self.max_date]
-        ).values()
-
-        if consumable == "oxygen":
+        if self.consumable == "oxygen":
             resupply_qs = UsRsWeeklyConsumableGasSummary.objects.filter(
                 Q(resupply_o2_kg__gte=1),
                 date__range=[self.min_date, self.max_date],
@@ -193,7 +150,7 @@ class Rater:
                 date__range=[self.min_date, self.max_date]
             ).values("date", "adjusted_o2_kg")
             field = "adjusted_o2_kg"
-        elif consumable == "nitrogen":
+        elif self.consumable == "nitrogen":
             resupply_qs = UsRsWeeklyConsumableGasSummary.objects.filter(
                 Q(resupply_n2_kg__gte=1),
                 date__range=[self.min_date, self.max_date],
@@ -277,28 +234,20 @@ class Rater:
         # water levels on the ISS — 'corrected_total_l'
         field = "corrected_total_l"
 
-        # We need to remember that the reported values include
-        # big jumps in supply when a new shipment of water arrives.
-        # So, get a set of the days in which 'resupply_potable_l'
+        # Get a set of the days in which 'resupply_potable_l'
         # is at least 1.
         resupply_qs = UsWeeklyConsumableWaterSummary.objects.filter(
             Q(resupply_potable_l__gte=1),
             date__range=[self.min_date, self.max_date],
         ).values("date")
 
-        # The main data we need to be working with should be
-        # between the user-selected start date and end date. So,
-        # select records in the water report that fall between those
-        # dates.
         usage_qs = UsWeeklyConsumableWaterSummary.objects.filter(
             date__range=[self.min_date, self.max_date]
         ).values("date", field)
 
-        # Flatten the resupply_dates CopyQueryset into a list of dates
         resupply_dates = [q["date"] for q in resupply_qs]
 
-        # We need to calculate the average rate between
-        # resupplies. We'll iterate through all usage records
+        # Iterate through all usage records
         # and add them to 'current_partition.' When we hit a resupply
         # date, append the current partition to 'resupply_partitions'
         # and reset current_partition to an empty list.
@@ -333,9 +282,7 @@ class Rater:
         return average_daily_usage_rate
 
     def get_assumed_gas_rate(self):
-        consumable = self.consumable.lower()
-
-        if consumable == "oxygen":
+        if self.consumable == "oxygen":
             oxygen_generation_rate = RatesDefinition.objects.filter(
                 Q(affected_consumable="Oxygen"), Q(type="generation")
             ).aggregate(total=Sum("rate"))["total"]
@@ -368,11 +315,11 @@ class Rater:
             ) - oxygen_generation_rate
             return total_consumption_rate
 
-        elif consumable == "nitrogen":
+        elif self.consumable == "nitrogen":
             return RatesDefinition.objects.filter(
                 Q(affected_consumable="Nitrogen"), Q(type="usage")
             ).aggregate(total=Sum("rate"))["total"]
-        elif consumable == "air":
+        elif self.consumable == "air":
             air_flat_consumption_rate = RatesDefinition.objects.filter(
                 Q(affected_consumable="Air"), Q(type="usage"), units__contains="Day"
             ).aggregate(total=Sum("rate"))["total"]
@@ -393,8 +340,36 @@ class Rater:
             return rate
 
     def get_assumed_ims_rate(self):
-        consumable = self.consumable.lower()
-        return 1
+        rates_qs = RatesDefinition.objects.filter(
+            Q(affected_consumable__iexact=self.consumable), Q(type="usage")
+        ).values("rate", "units")
+
+        flat_rates = []
+        crew_rates = []
+
+        for q in rates_qs:
+            if "Crew" in q["units"]:
+                crew_rates.append(q["rate"])
+            else:
+                flat_rates.append(q["rate"])
+
+        if len(flat_rates) > 0:
+            flat_rate = sum(flat_rates) / len(flat_rates)
+        else:
+            flat_rate = 0
+
+        if len(crew_rates) > 0:
+            usos_counts = []
+            for date in pd.date_range(self.min_date, self.max_date):
+                usos_counts.append(get_usos_crew_by_date(date))
+            mean_crew = sum(usos_counts) / len(usos_counts)
+            adjusted_crew_rates = [rate + mean_crew for rate in crew_rates]
+            crew_rate = sum(adjusted_crew_rates) / len(adjusted_crew_rates)
+        else:
+            crew_rate = 0
+
+        # print(f"assumed_rate: {flat_rate + crew_rate}")
+        return flat_rate + crew_rate
 
     def get_assumed_water_rate(self):
         water_generation_rate = RatesDefinition.objects.filter(
@@ -446,8 +421,6 @@ class Rater:
     def plot(self):
         df = self.create_usage_dataframe()
         consumable_name = self.consumable
-        # print(f"usage_dataframe: {df}")
-
         fig = go.Figure()
 
         fig.update_layout(
@@ -503,25 +476,24 @@ class Rater:
         return line_plot
 
     def create_usage_dataframe(self):
-        consumable_name = self.consumable.lower()
         start_date = self.min_date
         end_date = self.max_date
 
-        if consumable_name == "water":
+        if self.consumable == "water":
             actual_usage_values = UsWeeklyConsumableWaterSummary.objects.filter(
                 date__range=[start_date, end_date]
             ).values()
-        elif consumable_name in ["oxygen", "nitrogen"]:
+        elif self.consumable in ["oxygen", "nitrogen"]:
             actual_usage_values = UsRsWeeklyConsumableGasSummary.objects.filter(
                 date__range=[start_date, end_date]
             ).values()
-        elif consumable_name == "air":
+        elif self.consumable == "air":
             actual_usage_values = UsRsWeeklyConsumableGasSummary.objects.filter(
                 date__range=[start_date, end_date]
             ).values()
         else:
             consumable_cat = RatesDefinition.objects.get(
-                affected_consumable=self.consumable
+                affected_consumable__istartswith=self.consumable
             )
             actual_usage_values = InventoryMgmtSystemConsumables.objects.filter(
                 category_id=consumable_cat.category,
@@ -536,7 +508,7 @@ class Rater:
             usage_df = pd.DataFrame(actual_usage_values)
 
         if usage_df is not None:
-            if consumable_name == "water":
+            if self.consumable == "water":
                 usage_df = usage_df.drop(
                     columns=[
                         "corrected_potable_l",
@@ -551,7 +523,7 @@ class Rater:
                         "corrected_predicted_l": "predicted_value",
                     }
                 )
-            elif consumable_name == "oxygen":
+            elif self.consumable == "oxygen":
                 usage_df = usage_df.drop(
                     columns=[
                         "usos_o2_kg",
@@ -570,7 +542,7 @@ class Rater:
                     }
                 )
                 usage_df["predicted_value"] = None
-            elif consumable_name == "nitrogen":
+            elif self.consumable == "nitrogen":
                 usage_df = usage_df.drop(
                     columns=[
                         "usos_o2_kg",
@@ -585,7 +557,7 @@ class Rater:
                 )
                 usage_df = usage_df.rename(columns={"adjusted_n2_kg": "actual_value"})
                 usage_df["predicted_value"] = None
-            elif consumable_name == "air":
+            elif self.consumable == "air":
                 usage_df["actual_value"] = (
                     (usage_df["adjusted_n2_kg"] * 0.8)
                     + (usage_df["adjusted_o2_kg"] * 0.2)
@@ -646,7 +618,7 @@ class Rater:
         grouped_df = grouped_df.rename(columns={"datedim": "date"})
 
         # grouped_df = groups.size()
-        print(grouped_df)
+        # print(grouped_df)
         return grouped_df
 
     def init_water_data(self):
@@ -659,19 +631,16 @@ class Rater:
         pass
 
     def get_usage_difference(self):
-        predicted = self.rate_predicted()
         assumed = self.rate_assumed()
         actual = self.rate_actual()
 
-        # print(f"assumed: {assumed}")
-        # print(f"actual: {actual}")
-
-        if predicted == actual:
+        if assumed == actual:
             return 0
-        if predicted is None:
+        if assumed is None:
             return 0
         try:
-            # return (abs(assumed - actual) / actual) * 100  # type: ignore
-            return ((actual - predicted) / predicted) * 100  # type: ignore
+            difference = ((assumed - actual) / assumed) * 100
+            print(f"difference: {difference}%")
+            return difference
         except ZeroDivisionError:
             return float("inf")
