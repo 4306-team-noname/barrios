@@ -1,4 +1,3 @@
-from django.db.models.query import Cast
 import pandas as pd
 import numpy as np
 from pandas import DataFrame
@@ -16,9 +15,8 @@ from data.models.RatesDefinition import RatesDefinition
 from common.flight_plan_crew_helpers import (
     get_total_crew_by_date,
 )
-from common.consumable_helpers import get_consumable_names
 from django.utils.timezone import make_aware
-
+from common.flight_plan_crew_helpers import get_usos_crew_by_date
 
 class Rater:
     WATER_UNIT = "liters"
@@ -55,7 +53,14 @@ class Rater:
         pass
 
     def rate(self):
-        consumable = self.consumable.lower()
+        """
+        Returns a dictionary with the following keys:
+        - unit: the unit of the consumable
+        - assumed_rate_per_day: the assumed rate per day
+        - predicted_rate_per_day: the predicted rate per day
+        - actual_rate_per_day: the actual rate per day
+        - days_sampled: the number of days sampled
+        """
         assumed_rate = self.rate_assumed()
         actual_rate = self.rate_actual()
         predicted_rate = self.rate_predicted()
@@ -73,7 +78,9 @@ class Rater:
         }
 
     def get_consumable_unit(self):
-        # Shamefully hardcoding unit values
+        """
+        Returns the unit of the consumable.
+        """
         consumable = self.consumable.lower()
         if consumable == "water":
             unit = "liters"
@@ -97,6 +104,9 @@ class Rater:
         return unit
 
     def rate_actual(self):
+        """
+        Returns the actual rate for the consumable.
+        """
         consumable = self.consumable.lower()
 
         if consumable == "water":
@@ -107,6 +117,9 @@ class Rater:
             return self.get_actual_ims_rate()
 
     def rate_assumed(self):
+        """
+        Returns the assumed rate for the consumable.
+        """
         consumable = self.consumable.lower()
 
         if consumable == "water":
@@ -117,17 +130,18 @@ class Rater:
             return self.get_assumed_ims_rate()
 
     def rate_predicted(self):
+        """
+        Returns the predicted rate for the consumable.
+        """
         consumable = self.consumable.lower()
         return self.get_predicted_water_rate() if consumable == "water" else None
 
     def get_actual_ims_rate(self):
-        # Crew rates:
-        # US Food Bobs - BOBS/Crew/Day
-        # ACY Inserts - ACY/Crew/Day
-        # KTO - KTO/Crew/Day
-        # Pretreat Tank - Pretreat/Crew/Day
-        # Filter Inserts - Filter/Crew/Day
-        # Urine Receptacle - Urine Receptacle/Crew/Day
+        """
+        Calculates the actual daily usage rate according to weekly
+        reported values on the space station.
+        Contributor: Josue Lozano
+        """
         consumable_cat = RatesDefinition.objects.get(
             affected_consumable=self.consumable
         )
@@ -143,7 +157,6 @@ class Rater:
 
         # Filter rows with category ''
         category_df = df[df["category_name"] == consumable_cat.rate_category]
-        # print(category_df)
 
         # Initialize variables
         total_usage = 0
@@ -179,10 +192,12 @@ class Rater:
         return average_weekly_usage_rate / 7
 
     def get_actual_gas_rate(self):
+        """
+        Calculates the actual daily usage rate according to weekly
+        reported values on the space station.
+        Adapted from code contributed by Josue Lozano
+        """
         consumable = self.consumable.lower()
-        gas_summary_qs = UsRsWeeklyConsumableGasSummary.objects.filter(
-            date__range=[self.min_date, self.max_date]
-        ).values()
 
         if consumable == "oxygen":
             resupply_qs = UsRsWeeklyConsumableGasSummary.objects.filter(
@@ -333,6 +348,10 @@ class Rater:
         return average_daily_usage_rate
 
     def get_assumed_gas_rate(self):
+        """
+        Calculates the assumed daily usage rate according to
+        the rates definition table.
+        """
         consumable = self.consumable.lower()
 
         if consumable == "oxygen":
@@ -358,11 +377,9 @@ class Rater:
                 daily_crew_rates.append(
                     (total_crew_count + oxygen_crew_consumption_rate)
                 )
-                # daily_crew_rates.append((usos_crew_count + water_crew_consumption_rate))
                 current_date += delta
 
             real_crew_rate = sum(daily_crew_rates) / len(daily_crew_rates)
-            # water_generation_rate = 0
             total_consumption_rate = (
                 real_crew_rate + oxygen_flat_consumption_rate
             ) - oxygen_generation_rate
@@ -393,10 +410,45 @@ class Rater:
             return rate
 
     def get_assumed_ims_rate(self):
-        consumable = self.consumable.lower()
-        return 1
+        """
+        Calculates the assumed daily usage rate according to
+        the rates definition table.
+        """
+        rates_qs = RatesDefinition.objects.filter(
+            Q(affected_consumable__iexact=self.consumable), Q(type="usage")
+        ).values("rate", "units")
+
+        flat_rates = []
+        crew_rates = []
+
+        for q in rates_qs:
+            if "Crew" in q["units"]:
+                crew_rates.append(q["rate"])
+            else:
+                flat_rates.append(q["rate"])
+
+        if len(flat_rates) > 0:
+            flat_rate = sum(flat_rates) / len(flat_rates)
+        else:
+            flat_rate = 0
+
+        if len(crew_rates) > 0:
+            usos_counts = []
+            for date in pd.date_range(self.min_date, self.max_date):
+                usos_counts.append(get_usos_crew_by_date(date))
+            mean_crew = sum(usos_counts) / len(usos_counts)
+            adjusted_crew_rates = [rate + mean_crew for rate in crew_rates]
+            crew_rate = sum(adjusted_crew_rates) / len(adjusted_crew_rates)
+        else:
+            crew_rate = 0
+
+        return flat_rate + crew_rate
 
     def get_assumed_water_rate(self):
+        """
+        Calculates the assumed daily usage rate according to
+        the rates definition table.
+        """
         water_generation_rate = RatesDefinition.objects.filter(
             Q(affected_consumable="Water"), Q(type="generation")
         ).aggregate(total=Sum("rate"))["total"]
@@ -429,7 +481,8 @@ class Rater:
 
     def get_predicted_water_rate(self):
         """
-        Calculates the predicted usage rate from weekly reporting in UsWeeklyConsumableWaterSummary.
+        Calculates the predicted usage rate from weekly reporting
+        in UsWeeklyConsumableWaterSummary.
         """
         # Get all 'corrected_predicted_l' from weekly water report within
         # min_date and max_date
@@ -444,9 +497,12 @@ class Rater:
         return average_weekly_rate / 7
 
     def plot(self):
+        """
+        Returns a Plotly graph of the actual and predicted
+        usage rates for the consumable.
+        """
         df = self.create_usage_dataframe()
         consumable_name = self.consumable
-        # print(f"usage_dataframe: {df}")
 
         fig = go.Figure()
 
@@ -496,13 +552,15 @@ class Rater:
         line_plot = fig.to_html(
             config={"displayModeBar": False, "responsive": True},
             full_html=False,
-            # default_height=600,
-            # include_plotlyjs=False,
             include_mathjax=False,
         )
         return line_plot
 
     def create_usage_dataframe(self):
+        """
+        Returns a dataframe with the actual and predicted
+        usage rates for the consumable.
+        """
         consumable_name = self.consumable.lower()
         start_date = self.min_date
         end_date = self.max_date
@@ -611,15 +669,10 @@ class Rater:
             return usage_df
 
     def derive_ims_df(self, df):
-        # consumable = self.consumable.lower()
-        # ims_qs = (
-        #     InventoryMgmtSystemConsumables.objects
-        #         ,annotate(date_only=Cast)
-        #         .filter(category_name=consumable, datedim__range=[self.min_date, self.max_date])
-        #         .values('datedim', 'category_name', 'quantity')
-        #
-        # )
-
+        """
+        Returns a dataframe with the actual and predicted
+        usage rates for the consumable.
+        """
         df = df[df["status"] != "Discard"]
         df = df[df["status"] != "Return"]
         df = df[df["status"] != np.nan]
@@ -635,8 +688,6 @@ class Rater:
             .reset_index(name="actual_value")
         )
 
-        # print(group_one)
-
         grouped_df = (
             group_one.groupby(["datedim", "category_name"])
             .agg({"actual_value": "sum"})
@@ -645,11 +696,12 @@ class Rater:
         grouped_df["predicted_value"] = None
         grouped_df = grouped_df.rename(columns={"datedim": "date"})
 
-        # grouped_df = groups.size()
-        print(grouped_df)
         return grouped_df
 
     def init_water_data(self):
+        """
+        Initializes the water data for the Rater.
+        """
         water_summary_qs = UsWeeklyConsumableWaterSummary.objects.filter(
             date__range=[self.min_date, self.max_date]
         ).values()
@@ -659,19 +711,18 @@ class Rater:
         pass
 
     def get_usage_difference(self):
+        """
+        Returns the difference between the actual and predicted
+        usage rates for the consumable.
+        """
         predicted = self.rate_predicted()
-        assumed = self.rate_assumed()
         actual = self.rate_actual()
-
-        # print(f"assumed: {assumed}")
-        # print(f"actual: {actual}")
 
         if predicted == actual:
             return 0
         if predicted is None:
             return 0
         try:
-            # return (abs(assumed - actual) / actual) * 100  # type: ignore
             return ((actual - predicted) / predicted) * 100  # type: ignore
         except ZeroDivisionError:
             return float("inf")
