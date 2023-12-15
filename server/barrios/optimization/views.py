@@ -6,7 +6,6 @@ from optimization.forms import OptimizationForm
 from optimization.Optimizer import Optimizer
 from common.conditionalredirect import conditionalredirect
 from common.consumable_helpers import get_consumable_names, get_consumable_units
-from optimization.OrOptimizer import OrOptimizer
 
 
 def index(request):
@@ -69,6 +68,7 @@ def missions(request):
 
     # Convert to a dataframe for easy organization of the information
     opt_df = pd.DataFrame(current_optimization)
+    opt_df.to_csv("optimization.csv", index=False)
 
     # and convert DataFrame to a list of dicts
     # for easy display on the template.

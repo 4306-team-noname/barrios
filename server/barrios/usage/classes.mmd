@@ -1,0 +1,41 @@
+classDiagram
+  class Rater {
+    GAS_UNIT : str
+    WATER_UNIT : str
+    aware_max_date : datetime
+    aware_min_date : datetime
+    consumable : str
+    crew_flight_plan : DataFrame
+    ims_consumables : DataFrame
+    max_date : date
+    min_date : date
+    rates_definition : DataFrame
+    weekly_gas_summary : DataFrame
+    weekly_water_summary : DataFrame
+    create_usage_dataframe()
+    derive_ims_df(df)
+    get_actual_gas_rate()
+    get_actual_ims_rate()
+    get_actual_water_rate()
+    get_assumed_gas_rate()
+    get_assumed_ims_rate()
+    get_assumed_water_rate()
+    get_consumable_unit()
+    get_predicted_water_rate()
+    get_usage_difference()
+    init_water_data()
+    plot()
+    rate()
+    rate_actual()
+    rate_assumed()
+    rate_predicted()
+  }
+  class UsageAnalysis {
+    actual_rate : FloatField
+    analysis_end_date : DateField
+    analysis_start_date : DateField
+    assumed_rate : FloatField
+    consumable : ForeignKey
+    created_by : ForeignKey
+    date_created : DateField
+  }

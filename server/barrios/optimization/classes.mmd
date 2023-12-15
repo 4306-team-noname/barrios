@@ -1,0 +1,27 @@
+classDiagram
+  class Optimizer {
+    commercial_crew_per_event : list[int]
+    consumable : str
+    crew_flight_plan : DataFrame
+    crew_per_event : list[int]
+    event_count : int
+    event_dates : list[dt.date]
+    event_deltas : list[int]
+    event_type : str
+    event_vehicles : list[str]
+    flight_plan : DataFrame
+    other_crew_per_event : list[int]
+    rates_definition : DataFrame
+    rsos_crew_per_event : list[int]
+    usos_crew_per_event : list[int]
+    consumable_ascension() list[int]
+    get_crew_counts()
+    get_event_dates()
+    get_event_vehicles()
+    get_optimization_dataframe() DataFrame
+    init_crew_data() None
+    init_flightplan_data() None
+    plot()
+    rates(consumable)
+    run_optimization()
+  }

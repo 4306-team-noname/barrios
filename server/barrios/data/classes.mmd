@@ -1,0 +1,330 @@
+classDiagram
+  class Category {
+    category_id : IntegerField
+    category_name : CharField
+    rate_category : CharField
+  }
+  class Command {
+    handle()
+  }
+  class Consumable {
+    actual_rate : FloatField
+    assumed_rate : FloatField
+    category : ForeignKey
+    name : CharField
+  }
+  class DataConfig {
+    default_auto_field : str
+    name : str
+  }
+  class DataService {
+    file : str
+    get_count_by_slug(slug: str) int
+    get_data_by_slug(slug: str) Result
+    get_num_lines(csv_path)
+    get_uploaded_file(csv_path)
+    insert_csv(model_name: str, file_object) Result
+    keys_to_snake(original_dict)
+  }
+  class EmptyKeywordManager {
+    create()
+  }
+  class EmptyKeywordManager {
+    create()
+  }
+  class EmptyStringToNoneFloatField {
+    get_prep_value(value)
+  }
+  class EmptyStringToNoneIntegerField {
+    get_prep_value(value)
+  }
+  class FieldFileCsvHelper {
+    get_csv_column_dtypes(filepath)
+    get_csv_header(filepath)
+    get_file_info(filepath)
+    rewrite_csv(filepath: str, fieldnames: list[str]) Result
+  }
+  class FlightPlanManager {
+    create()
+  }
+  class FlightPlanManager {
+    create()
+  }
+  class ImsConsumablesCategoryLookup {
+    category : OneToOneField
+    category_name : CharField
+    module_id : IntegerField
+    module_name : CharField
+    readable_name : str
+    unique_cat_mod_id : CharField
+  }
+  class ImsFlightplanModel {
+    objects
+  }
+  class ImsManager {
+    date_fields : list
+    create()
+  }
+  class ImsModel {
+    objects
+  }
+  class InventoryMgmtSystemConsumables {
+    action_date : DateTimeField
+    barcode : CharField
+    calculated_volume
+    category : ForeignKey
+    category_name : CharField
+    children_volume
+    current_ip_owner : CharField
+    datedim : DateTimeField
+    diameter
+    english_name : CharField
+    expire_date : DateTimeField
+    fill_status : CharField
+    hazard : CharField
+    height
+    id_parent
+    id_path : CharField
+    ims_id
+    is_container : BooleanField
+    is_moveable : BooleanField
+    launch : CharField
+    length
+    location_name : CharField
+    move_date : DateTimeField
+    objects
+    operational_nomenclature : CharField
+    original_ip_owner : CharField
+    ovrrd_notes : CharField
+    part_number : CharField
+    quantity
+    readable_name : str
+    russian_name : CharField
+    serial_number : CharField
+    state : CharField
+    status : CharField
+    stwg_ovrrd_chldrn_vol
+    stwg_ovrrd_vol
+    subsystem : CharField
+    system : CharField
+    tree : CharField
+    tree_depth
+    type : CharField
+    volume_notes : CharField
+    width
+  }
+  class IssFlightPlan {
+    datedim : DateField
+    eva_accuracy : CharField
+    eva_name : CharField
+    eva_type : CharField
+    event : CharField
+    port_name : CharField
+    readable_name : str
+    vehicle_name : CharField
+    vehicle_type : CharField
+  }
+  class IssFlightPlanCrew {
+    crew_count : IntegerField
+    datedim : DateField
+    nationality_category : CharField
+    readable_name : str
+  }
+  class IssFlightPlanCrewNationalityLookup {
+    is_rsa_crew : BooleanField
+    is_usos_crew : BooleanField
+    nationality : CharField
+    readable_name : str
+  }
+  class Meta {
+    fields : tuple
+    model
+  }
+  class Meta {
+    db_table : str
+  }
+  class Meta {
+    db_table : str
+  }
+  class Meta {
+    abstract : bool
+  }
+  class Meta {
+    abstract : bool
+  }
+  class Meta {
+    db_table : str
+  }
+  class Meta {
+    db_table : str
+  }
+  class Meta {
+    db_table : str
+  }
+  class Meta {
+    db_table : str
+  }
+  class Meta {
+    db_table : str
+  }
+  class Meta {
+    db_table : str
+  }
+  class Meta {
+    db_table : str
+  }
+  class Meta {
+    db_table : str
+  }
+  class Meta {
+    db_table : str
+  }
+  class Meta {
+    db_table : str
+  }
+  class Meta {
+    db_table : str
+  }
+  class Meta {
+    db_table : str
+  }
+  class Meta {
+    db_table : str
+  }
+  class Migration {
+    dependencies : list
+    initial : bool
+    operations : list
+  }
+  class RatesDefinition {
+    affected_consumable : CharField
+    category : OneToOneField
+    efficiency : CharField
+    rate : FloatField
+    rate_category : CharField
+    readable_name : str
+    type : CharField
+    units : CharField
+  }
+  class RsaConsumableWaterSummary {
+    objects
+    readable_name : str
+    remain_potable_liters : FloatField
+    remain_rodnik_liters : FloatField
+    remain_technical_liters : FloatField
+    report_date : DateField
+  }
+  class RsaConsumablesManager {
+    create()
+  }
+  class TankCapacityDefinition {
+    readable_name : str
+    tank_capacity : FloatField
+    tank_category : CharField
+    units : CharField
+  }
+  class TestDataViews {
+    test_csv : SimpleUploadedFile
+    test_nocol_csv : SimpleUploadedFile
+    user
+    setUp()
+    test_file_upload_rejects_unauthed_user()
+    test_file_upload_works_for_authed_user()
+    test_file_upload_works_for_non_header_csv()
+    test_get_request_to_upload_not_allowed()
+    test_upload_post_not_authenticated()
+    test_user_authenticated_base_route()
+    test_user_not_authenticated_base_route()
+  }
+  class ThresholdsLimitsDefinition {
+    category : ForeignKey
+    readable_name : str
+    threshold_category : CharField
+    threshold_owner : CharField
+    threshold_value : FloatField
+    units : CharField
+  }
+  class Upload {
+    file : FileField
+    upload_date : DateTimeField
+  }
+  class UploadForm {
+  }
+  class UploadManager {
+    get_queryset()
+  }
+  class UsRsWeeklyConsumableGasSummary {
+    adjusted_n2_kg
+    adjusted_o2_kg
+    date : DateField
+    objects
+    readable_name : str
+    resupply_air_kg
+    resupply_n2_kg
+    resupply_o2_kg
+    rs_n2_kg
+    rs_o2_kg
+    us_n2_kg
+    usos_o2_kg
+  }
+  class UsRsWeeklyConsumableManager {
+    create()
+  }
+  class UsWeeklyConsumableManager {
+    create()
+  }
+  class UsWeeklyConsumableWaterSummary {
+    corrected_potable_l
+    corrected_predicted_l
+    corrected_technical_l
+    corrected_total_l
+    date : DateField
+    objects
+    readable_name : str
+    resupply_potable_l
+    resupply_technical_l
+  }
+  class VehicleCapacityDef {
+    ascent_capacity_ctbe : IntegerField
+    descent_capacity_ctbe : IntegerField
+    objects
+    total_capacity_ctbe : FloatField
+    trash_capacity_ctbe : IntegerField
+    vehicle : CharField
+  }
+  FlightPlanManager --|> EmptyKeywordManager
+  FlightPlanManager --|> EmptyKeywordManager
+  RsaConsumablesManager --|> EmptyKeywordManager
+  UsRsWeeklyConsumableManager --|> EmptyKeywordManager
+  UsWeeklyConsumableManager --|> EmptyKeywordManager
+  EmptyStringToNoneFloatField --* InventoryMgmtSystemConsumables : width
+  EmptyStringToNoneFloatField --* InventoryMgmtSystemConsumables : height
+  EmptyStringToNoneFloatField --* InventoryMgmtSystemConsumables : length
+  EmptyStringToNoneFloatField --* InventoryMgmtSystemConsumables : diameter
+  EmptyStringToNoneFloatField --* InventoryMgmtSystemConsumables : calculated_volume
+  EmptyStringToNoneFloatField --* InventoryMgmtSystemConsumables : stwg_ovrrd_vol
+  EmptyStringToNoneFloatField --* InventoryMgmtSystemConsumables : children_volume
+  EmptyStringToNoneFloatField --* InventoryMgmtSystemConsumables : stwg_ovrrd_chldrn_vol
+  EmptyStringToNoneFloatField --* UsRsWeeklyConsumableGasSummary : usos_o2_kg
+  EmptyStringToNoneFloatField --* UsRsWeeklyConsumableGasSummary : rs_o2_kg
+  EmptyStringToNoneFloatField --* UsRsWeeklyConsumableGasSummary : us_n2_kg
+  EmptyStringToNoneFloatField --* UsRsWeeklyConsumableGasSummary : rs_n2_kg
+  EmptyStringToNoneFloatField --* UsRsWeeklyConsumableGasSummary : adjusted_o2_kg
+  EmptyStringToNoneFloatField --* UsRsWeeklyConsumableGasSummary : adjusted_n2_kg
+  EmptyStringToNoneFloatField --* UsRsWeeklyConsumableGasSummary : resupply_o2_kg
+  EmptyStringToNoneFloatField --* UsRsWeeklyConsumableGasSummary : resupply_n2_kg
+  EmptyStringToNoneFloatField --* UsRsWeeklyConsumableGasSummary : resupply_air_kg
+  EmptyStringToNoneFloatField --* UsWeeklyConsumableWaterSummary : corrected_potable_l
+  EmptyStringToNoneFloatField --* UsWeeklyConsumableWaterSummary : corrected_technical_l
+  EmptyStringToNoneFloatField --* UsWeeklyConsumableWaterSummary : corrected_total_l
+  EmptyStringToNoneFloatField --* UsWeeklyConsumableWaterSummary : resupply_potable_l
+  EmptyStringToNoneFloatField --* UsWeeklyConsumableWaterSummary : resupply_technical_l
+  EmptyStringToNoneFloatField --* UsWeeklyConsumableWaterSummary : corrected_predicted_l
+  EmptyStringToNoneIntegerField --* InventoryMgmtSystemConsumables : ims_id
+  EmptyStringToNoneIntegerField --* InventoryMgmtSystemConsumables : id_parent
+  EmptyStringToNoneIntegerField --* InventoryMgmtSystemConsumables : tree_depth
+  EmptyStringToNoneIntegerField --* InventoryMgmtSystemConsumables : quantity
+  ImsManager --* InventoryMgmtSystemConsumables : objects
+  RsaConsumablesManager --* RsaConsumableWaterSummary : objects
+  UsRsWeeklyConsumableManager --* UsRsWeeklyConsumableGasSummary : objects
+  UsWeeklyConsumableManager --* UsWeeklyConsumableWaterSummary : objects
