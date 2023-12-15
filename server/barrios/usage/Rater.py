@@ -19,6 +19,24 @@ from django.utils.timezone import make_aware
 from common.flight_plan_crew_helpers import get_usos_crew_by_date
 
 class Rater:
+    """
+    A class that rates the usage of a consumable.
+
+    Note
+    ----
+    Usage analysis code created by Josue Lozano in the `prototypes` directory
+    and integrated into the server architecture afterward.
+
+    Attributes:
+        consumable (str): The name of the consumable to rate.
+        min_date (datetime): The earliest date to include in the rating.
+        max_date (datetime): The latest date to include in the rating.
+        rates_definition (DataFrame): The rates definition table.
+        ims_consumables (DataFrame): The IMS consumables table.
+        weekly_gas_summary (DataFrame): The weekly gas summary table.
+        weekly_water_summary (DataFrame): The weekly water summary table.
+        crew_flight_plan (DataFrame): The crew flight plan table.
+    """
     WATER_UNIT = "liters"
     GAS_UNIT = "lbs"
     consumable: str

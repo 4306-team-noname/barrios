@@ -77,6 +77,9 @@ class Optimizer:
         pass
 
     def run_optimization(self):
+        """
+        Runs the optimization algorithm and returns a dictionary of the results.
+        """
         launch_dates = self.event_dates
         optimized_amounts = self.consumable_ascension()
 
@@ -87,11 +90,17 @@ class Optimizer:
         }
 
     def get_optimization_dataframe(self) -> DataFrame:
+        """
+        Runs the optimization algorithm and returns a DataFrame of the results.
+        """
         optimization_object = self.run_optimization()
         optim_df = pd.DataFrame(optimization_object)
         return optim_df
 
     def plot(self):
+        """
+        Runs the optimization algorithm and returns a Plotly bar plot of the results.
+        """
         df = self.get_optimization_dataframe()
         # fig = go.Figure()
         fig = px.bar(df, x="date", y="amount")
@@ -140,12 +149,21 @@ class Optimizer:
         return bar_plot
 
     def get_event_dates(self):
+        """
+        Returns a list of dates that correspond to the event type.
+        """
         return self.event_dates
 
     def get_event_vehicles(self):
+        """
+        Returns a list of vehicles that correspond to the event type.
+        """
         return self.event_vehicles
 
     def get_crew_counts(self):
+        """
+        Returns a dictionary of crew counts for each event type.
+        """
         return {
             "usos_crew_per_event": self.usos_crew_per_event,
             "rsos_crew_per_event": self.rsos_crew_per_event,
@@ -176,6 +194,9 @@ class Optimizer:
         self.event_count = len(self.event_dates) - 1
 
     def init_crew_data(self) -> None:
+        """
+        Initializes the crew data for the optimizer.
+        """
         # Uses self.crew_flight_plan to generate a
         # list of the number of people on the space station
         for date in self.event_dates:
@@ -214,9 +235,11 @@ class Optimizer:
             self.other_crew_per_event.append(other_sum)
 
     def rates(self, consumable):
+        """
+        Returns the sum of the usage rates and the sum of the generation rates
+        for a given consumable.
+        """
         # wants the csv rates_definition, and a consumable
-        # TODO: Use Josue's rate calculation code instead of
-        # the assumed rates.
         rater = self.rates_definition
         # sum of generated
         sum_generated = sum(
@@ -250,8 +273,11 @@ class Optimizer:
 
         return sum_usage, sum_usage_crew, sum_generated
 
-    # idk yet
     def consumable_ascension(self) -> list[int]:
+        """
+        Returns a list of the amount of consumables to send to the ISS
+        for each event in `event_dates`.
+        """
         df = self.event_deltas
         dock_days_list = self.event_dates
         num_days = self.event_count
