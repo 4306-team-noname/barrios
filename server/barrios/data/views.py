@@ -13,7 +13,9 @@ from .forms import UploadForm
 
 
 def index(request, context=None):
-    # - Main view of the /data route -
+    """
+    Main view for the /data route
+    """
     # This is basically a "dumb" view that
     # lists the different types of data enumerated
     # in the imported data_dictionary
@@ -26,8 +28,6 @@ def index(request, context=None):
 
     # loop through the data_dictionary and build
     # the response data
-    # TODO: Perhaps, set the data dictionary items
-    # as model attributes instead
     data = [
         {
             "name": data_dictionary[key]["readable_name"],
@@ -45,8 +45,9 @@ def index(request, context=None):
 
 
 def data_detail(request, slug):
-    # Detailed table view for a given type of
-    # user data.
+    """
+    Detailed view for a given type of user data
+    """
     if not request.user.is_authenticated:
         return conditionalredirect(request, "/accounts/login/")
 
@@ -69,6 +70,9 @@ def data_detail(request, slug):
 
 
 def upload_post(request):
+    """
+    View for uploading a file
+    """
     if not request.user.is_authenticated:
         # send error if not authenticated
         # TODO: Add error templates

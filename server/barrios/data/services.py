@@ -22,6 +22,9 @@ from data.models import (
 
 
 class DataService:
+    """
+    A service for interacting with the database
+    """
     file: str
 
     def __init__(self, filepath: str | None = None) -> None:
@@ -76,9 +79,11 @@ class DataService:
         return import_csv(model_name, self.file)
 
     def get_uploaded_file(self, csv_path):
-        # TODO: Return a result with the dataframe,
-        # whether the dataframe is a truncated preview
-        # and the total number of rows  in the file
+        """
+        Returns a dataframe of the given csv file
+        :param csv_path: str
+            The path to a csv file
+        """
         num_lines = self.get_num_lines(csv_path)
         print(f"num_lines: {num_lines}")
 
@@ -92,6 +97,14 @@ class DataService:
             return df
 
     def get_count_by_slug(self, slug: str) -> int:
+        """
+        Retrieves the number of records associated with a slug.
+        :param slug: str:
+            The slug, defined in the data dictionary,
+            for the model to retrieve
+        :returns int:
+            The number of records associated with the given slug
+        """
         model = None
         if slug == "ims_consumables":
             model = InventoryMgmtSystemConsumables
