@@ -1,0 +1,33 @@
+event_date,vehicle_name,ACY Inserts,Air,Filter Inserts,KTO,Nitrogen,Oxygen,Pretreat Tanks,Urine Receptacle,US Food BOBs,Water
+2024-01-10,Ax-3,63 ,282 lbs,0 ,1 ,3 lbs,52 lbs,0 ,0 ,1 ,177 Liters
+2024-01-17,DCC-1,172 ,484 lbs,1 ,5 ,6 lbs,177 lbs,1 ,1 ,3 ,560 Liters
+2024-01-29,NG-20,155 ,686 lbs,1 ,4 ,8 lbs,127 lbs,0 ,1 ,4 ,431 Liters
+2024-02-15,87Progress,27 ,121 lbs,0 ,1 ,1 lbs,23 lbs,0 ,0 ,0 ,76 Liters
+2024-02-18,Crew-8,136 ,605 lbs,1 ,4 ,8 lbs,112 lbs,1 ,1 ,3 ,380 Liters
+2024-03-04,SpX-30,346 ,1534 lbs,2 ,9 ,18 lbs,283 lbs,1 ,2 ,7 ,962 Liters
+2024-04-11,Boe-CFT,182 ,807 lbs,1 ,5 ,10 lbs,150 lbs,1 ,1 ,4 ,507 Liters
+2024-05-01,HTV-X1,82 ,363 lbs,0 ,2 ,4 lbs,67 lbs,0 ,0 ,2 ,228 Liters
+2024-05-10,Ax-4,191 ,847 lbs,1 ,6 ,10 lbs,157 lbs,1 ,1 ,4 ,532 Liters
+2024-05-31,88Progress,273 ,1211 lbs,2 ,7 ,15 lbs,224 lbs,1 ,2 ,5 ,760 Liters
+2024-06-30,SpX-31,319 ,1412 lbs,2 ,9 ,17 lbs,261 lbs,2 ,2 ,7 ,886 Liters
+2024-08-04,USCV-9,136 ,605 lbs,1 ,4 ,7 lbs,112 lbs,0 ,1 ,3 ,380 Liters
+2024-08-19,89Progress,55 ,242 lbs,0 ,1 ,3 lbs,45 lbs,1 ,0 ,1 ,152 Liters
+2024-08-25,NG-21,191 ,848 lbs,1 ,5 ,10 lbs,157 lbs,0 ,1 ,4 ,532 Liters
+2024-09-15,DCC-2,611 ,1896 lbs,4 ,17 ,23 lbs,609 lbs,3 ,4 ,13 ,1943 Liters
+2024-11-01,PAM-5,291 ,1291 lbs,1 ,8 ,16 lbs,239 lbs,1 ,1 ,6 ,811 Liters
+2024-12-03,HTV-X2,36 ,162 lbs,1 ,1 ,1 lbs,30 lbs,0 ,1 ,0 ,101 Liters
+2024-12-07,90Progress,210 ,928 lbs,1 ,6 ,12 lbs,172 lbs,1 ,1 ,5 ,583 Liters
+2024-12-30,SPM,9 ,40 lbs,0 ,0 ,0 lbs,7 lbs,0 ,0 ,0 ,25 Liters
+2024-12-31,SpX-32,291 ,1291 lbs,2 ,8 ,16 lbs,239 lbs,2 ,2 ,6 ,811 Liters
+2025-02-01,NG-22,45 ,202 lbs,0 ,2 ,2 lbs,37 lbs,0 ,0 ,1 ,126 Liters
+2025-02-06,USCV-10,164 ,726 lbs,1 ,4 ,9 lbs,135 lbs,1 ,1 ,3 ,456 Liters
+2025-02-24,91Progress,728 ,3228 lbs,4 ,20 ,39 lbs,597 lbs,3 ,4 ,15 ,2027 Liters
+2025-05-15,PAM-6,9 ,41 lbs,0 ,0 ,0 lbs,8 lbs,0 ,0 ,1 ,25 Liters
+2025-05-16,DCC-3,415 ,1170 lbs,2 ,12 ,14 lbs,428 lbs,1 ,2 ,8 ,1354 Liters
+2025-06-14,92Progress,437 ,1937 lbs,3 ,12 ,23 lbs,359 lbs,2 ,3 ,9 ,1216 Liters
+2025-08-01,NG-23,27 ,121 lbs,0 ,0 ,2 lbs,22 lbs,0 ,0 ,1 ,76 Liters
+2025-08-04,USCV-11,255 ,1130 lbs,2 ,7 ,13 lbs,209 lbs,2 ,2 ,5 ,709 Liters
+2025-09-01,93Progress,273 ,1210 lbs,1 ,8 ,15 lbs,224 lbs,1 ,1 ,6 ,760 Liters
+2025-10-01,CRS 2-24,282 ,1251 lbs,2 ,8 ,15 lbs,232 lbs,1 ,2 ,6 ,785 Liters
+2025-11-01,NG-24,228 ,1009 lbs,1 ,6 ,12 lbs,187 lbs,1 ,1 ,4 ,634 Liters
+2025-11-26,PAM-7,218 ,968 lbs,1 ,6 ,12 lbs,179 lbs,1 ,1 ,5 ,607 Liters
